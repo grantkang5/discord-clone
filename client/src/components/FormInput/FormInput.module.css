@@ -1,0 +1,52 @@
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputLabel {
+  color: var(--grayple);
+  display: block;
+  margin-bottom: 8px;
+  text-align: left;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: .5px;
+}
+
+.inputLabel.error {
+  color: var(--error);
+}
+
+.inputLabel.error > span {
+  font-style: italic;
+  font-size: 0.7rem;
+  font-weight: 300;
+  text-transform: none;
+}
+
+.inputField {
+  outline: none;
+  padding: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  height: 20px;
+  border-radius: 3px;
+  font-size: 0.9rem;
+  background-color: rgba(0, 0, 0, 0.1);
+  color: #f6f6f7;
+  font-weight: 600;
+}
+
+.inputField.touched {
+  background-color: #fff;
+  color: #000;
+  font-weight: 400;
+}
+
+.inputField.error {
+  border-color: var(--error);
+}
+
+.inputField:focus {
+  border-color: #7289da;
+}

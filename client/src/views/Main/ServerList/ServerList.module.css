@@ -1,0 +1,67 @@
+.serverList {
+  background-color: #202225;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow: hidden;
+  position: relative;
+  width: 50px;
+  padding: 8px;
+  align-items: center;
+  padding-top: 10px;
+}
+
+.serverIconWrapper {
+  height: 50px;
+  width: 50px;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 10px;
+}
+.serverIconWrapper.active::before {
+  background: #FFF;
+  height: 40px;
+  transition: height .25s ease-in-out, margin-top .25s ease-in-out;
+  border-radius: 20px;
+  position: absolute;
+  top: 50%;
+  width: 10px;
+  left: -14px;
+  content: " ";
+  transform: translateY(-50%);
+}
+
+.serverIcon {
+  border-radius: 25px;
+  background-color: rgb(47, 49, 54);
+  background: #2f3136;
+  cursor: pointer;
+  font-size: 1.4rem;
+  line-height: 50px;
+  text-align: center;
+  transform: translateZ(0);
+  overflow: hidden;
+  transition: border-radius 200ms ease, background-color 200ms ease;
+}
+.serverIcon:hover {
+  border-radius: 15px;
+}
+.serverIcon.active {
+  background-color: rgb(114, 137, 218);
+  border-radius: 15px;
+}
+
+.serverIconLink {
+  color: #fff;
+  display: block;
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+hr {
+  width: 66.66%;
+  margin-bottom: 10px;
+  opacity: 0.3;
+}

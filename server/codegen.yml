@@ -1,0 +1,15 @@
+overwrite: true
+schema: ./src/modules/schema.ts
+require: ts-node/register/transpile-only
+generates:
+  ./src/types.d.ts:
+    plugins:
+      - typescript-common
+      - typescript-resolvers
+    config:
+      optionalType: undefined | null
+      mappers:
+        User: ./src/entity/User#User
+        Server: ./src/entity/Server#Server
+      scalars:
+        Date: Date

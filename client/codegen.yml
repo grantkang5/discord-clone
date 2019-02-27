@@ -1,0 +1,12 @@
+schema: http://localhost:5000/graphql
+documents:
+  - ./src/**/*.tsx
+  - ./src/**/*.ts
+overwrite: true
+require:
+  - ts-node/../../codegen-interpreter.ts
+generates:
+  ./src/graphql/types.ts:
+    plugins:
+      - typescript-common
+      - typescript-client

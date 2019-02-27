@@ -1,0 +1,23 @@
+.button {
+  background-color: var(--blurple);
+  color: #fff;
+  line-height: 24px;
+  height: 44px;
+  min-width: 130px;
+  border-radius: 3px;
+  border: none;
+  font-weight: 500;
+  padding: 2px 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  user-select: none;
+  outline: 0;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.button.full {
+  width: 100%;
+}
