@@ -22,6 +22,9 @@ export class User extends BaseEntity {
   @Column()
   password: string
 
+  @Column({ default: 'Goober' })
+  name: string
+
   @OneToMany(() => Server, server => server.host)
   hostedServers: Server[]
 

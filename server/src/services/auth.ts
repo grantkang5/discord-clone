@@ -38,7 +38,9 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, async (email, passwor
 
 const signup = async ({ email, password, req }) => {
   const hashedPassword = await bcrypt.hash(password, 10) 
-  const user = User.create({ email, password: hashedPassword })
+  const name = email.slice(0, email.indexOf('@'))
+  const user = User.create({ email, password: hashedPassword, name })
+
   if (!email || !password) throw new Error('You must provide an email and password.')
 
   return getRepository(User).findOne({ email })

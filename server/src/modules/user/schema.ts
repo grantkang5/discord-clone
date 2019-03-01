@@ -5,6 +5,7 @@ export default gql`
     id: ID
     email: String
     password: String
+    name: String
     hostedServers: [Server]
     joinedServers: [Server]
   }
