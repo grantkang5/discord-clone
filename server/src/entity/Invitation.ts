@@ -5,12 +5,10 @@ import {
   ManyToOne,
   ManyToMany,
   JoinTable,
-  JoinColumn,
   CreateDateColumn,
-  OneToOne
 } from 'typeorm'
-import { User } from './User';
-import { Server } from './Server';
+import { User } from './User'
+import { Server } from './Server'
 
 export type InvitationType = 'server' | 'friend'
 
@@ -21,16 +19,23 @@ export class Invitation extends BaseEntity {
 
   @CreateDateColumn()
   createdAt: Date
-  
-  @OneToOne(() => Server)
-  @JoinColumn()
-  server: Server 
 
-  @ManyToOne(() => User, user => user.sentInvitations, { cascade: ["insert", "update"], eager: true })
+  @ManyToOne(() => Server, server => server.id, {
+    cascade: ['insert', 'update'],
+    eager: true
+  })
+  server: Server
+
+  @ManyToOne(() => User, user => user.sentInvitations, {
+    cascade: ['insert', 'update'],
+    eager: true
+  })
   sender: User
 
-  @ManyToMany(() => User, user => user.receivedInvitations, { cascade: ["insert", "update"], eager: true })
+  @ManyToMany(() => User, user => user.receivedInvitations, {
+    cascade: ['insert', 'update'],
+    eager: true
+  })
   @JoinTable()
   recipients: User[]
 }
- 

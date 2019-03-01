@@ -11,6 +11,7 @@ import {
 } from 'typeorm'
 import { User } from './User'
 import { Channel } from './Channel';
+import { Invitation } from './Invitation';
 
 @Unique(["name"])
 @Entity()
@@ -30,4 +31,7 @@ export class Server extends BaseEntity {
 
   @OneToMany(() => Channel, channel => channel.server, { cascade: ["insert", "update"], eager: true })
   channels: Channel[]
+
+  @OneToMany(() => Invitation, invitation => invitation.id)
+  invitations: Invitation[]
 }
