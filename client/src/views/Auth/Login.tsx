@@ -1,27 +1,31 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { LOG_IN } from '../../graphql/mutations'
 import AuthForm from './AuthForm'
 import { ReactComponent as Logo } from '../../assets/logo1.svg'
+import classNames from 'classnames'
+import discordLogo from '../../assets/discordLogo.png'
 
-import style from './Auth.module.css'
+import './Auth.css'
 
-const Login = (props: any) => (
-  <div className={style.authBackground}>
-    <Logo className={style.logo} />
-    <div className={style.authBox}>
-      <header>
-        <p className={style.title}>Welcome back!</p>
-        <p className={style.subTitle}>We're so excited to see you again!</p>
-      </header>
+const Login = (props: any) => {
+  return (
+    <div className='authBackground'>
+      <img src={discordLogo} className='logo' alt="Logo" />
+      <div className='authBox'>
+        <header>
+          <p className='title'>Welcome back!</p>
+          <p className='subTitle'>We're so excited to see you again!</p>
+        </header>
 
-      <AuthForm mutation={LOG_IN} buttonLabel="Log in" />
+        <AuthForm mutation={LOG_IN} buttonLabel="Log in" />
 
-      <Link to="/signup" className="app-link">
-        Need an account?
-      </Link>
+        <Link to="/signup" className="app-link">
+          Need an account?
+        </Link>
+      </div>
     </div>
-  </div>
-)
+  )
+}
 
 export default Login

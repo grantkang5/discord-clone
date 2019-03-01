@@ -31,4 +31,6 @@ export default App
  * TODO: Make sure to do lazy imports
  * ANCHOR: look into persist-cache
  * TODO: Rewrite imports using es7
+ * TODO: CHANGE GRAPHQL authentication to REST to handle auth middleware simpler
+ * TODO: use `const resetStore = useApolloClient().resetStore()` on logout
  */

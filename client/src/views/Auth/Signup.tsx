@@ -4,14 +4,14 @@ import { SIGN_UP } from '../../graphql/mutations'
 import AuthForm from './AuthForm'
 import { ReactComponent as Logo } from '../../assets/logo1.svg'
 
-import style from './Auth.module.css'
+import './Auth.css'
 
 const Signup = () => (
-  <div className={style.authBackground}>
-    <Logo className={style.logo} />
-    <div className={style.authBox}>
+  <div className='authBackground'>
+    <Logo className='logo' />
+    <div className='authBox'>
       <header>
-        <p className={style.title}>Create an account</p>
+        <p className='title'>Create an account</p>
       </header>
       <AuthForm mutation={SIGN_UP} buttonLabel="Sign up" />
 

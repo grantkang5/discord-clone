@@ -11,6 +11,7 @@ const Button = ({
     [style.full]: buttonProps.fullwidth
   })
 
+  // TODO - Add loading render and prop
   return (
     <button className={buttonStyle} {...buttonProps}>
       {children}

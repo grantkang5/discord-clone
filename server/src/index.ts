@@ -30,7 +30,7 @@ createConnection().then(async () => {
         })
       })
     )
-
+  
   app.use(passport.initialize())
   app.use(passport.session())
 
@@ -48,3 +48,8 @@ createConnection().then(async () => {
     console.log(`Listening on port ${PORT}`)
   })
 })
+
+/**
+ * TODO - Create error handlers for repositories
+ * TODO - Create tests for graphql resolvers
+ */

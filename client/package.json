@@ -44,7 +44,7 @@
     "classnames": "^2.2.6"
   },
   "scripts": {
-    "dev": "concurrently \"npm run generate:watch\" \"react-scripts start\"",
+    "dev": "concurrently \"nodemon ./server.ts\" \"react-scripts start\"",
     "start": "react-scripts start",
     "generate": "gql-gen",
     "generate:watch": "nodemon --exec npm run generate -e graphql",

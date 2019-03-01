@@ -17,7 +17,13 @@ export default gql`
     createServer(name: String!, userId: ID!): Server
     deleteServer(serverId: ID!): Server
     editServer: Server
-    addUserToServer(serverId: ID!, userId: ID!): Server 
-    # removeUserFromServer: User
+    addUserToServer(serverId: ID!, userId: ID!): User 
+    removeUserFromServer(serverId: ID!): User
+  }
+
+  extend type Subscription {
+    deletedServer: Server
+    addedUserToServer: User
+    removedUserFromServer: User
   }
 `

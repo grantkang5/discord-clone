@@ -65,3 +65,49 @@ hr {
   margin-bottom: 10px;
   opacity: 0.3;
 }
+
+.addServerWrapper {
+  height: 50px;
+  width: 50px;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 10px;
+}
+
+.addServerIcon {
+  border: 1px dashed var(--gray);
+  border-radius: 25px;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 1.4rem;
+  line-height: 50px;
+  text-align: center;
+  transform: translateZ(0);
+  overflow: hidden;
+  transition: border-radius 200ms ease, background-color 200ms ease;
+}
+.addServerIcon:hover {
+  border-color: #FFF;
+}
+
+.addServerIconLink {
+  color: #fff;
+  opacity: 0.4;
+  display: block;
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+  text-decoration: none;
+  transform: opacity 200ms ease;
+}
+.addServerIconLink:hover {
+  opacity: 1;
+}
+
+.addIcon {
+  position: absolute;
+  height: 32px;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}

@@ -4,7 +4,7 @@ import { Formik, FormikActions, FormikProps } from 'formik'
 import { DocumentNode } from 'graphql'
 import { useMutation, useQuery } from 'react-apollo-hooks'
 import { useMe } from '../../../services/requireAuth'
-import style from '../Auth.module.css'
+import '../Auth.css'
 import validationSchema from './validationSchema'
 import { CURRENT_USER } from '../../../graphql/queries'
 import FormInput from '../../../components/FormInput'
@@ -50,7 +50,7 @@ const AuthForm = ({ mutation, buttonLabel }: Props) => {
         validationSchema={validationSchema}
         render={(props: FormikProps<FormValues>) => (
           <form onSubmit={props.handleSubmit}>
-            <div className={style.inputWrapper}>
+            <div className='inputWrapper'>
               <FormInput
                 type="text"
                 name="email"
@@ -60,7 +60,7 @@ const AuthForm = ({ mutation, buttonLabel }: Props) => {
               />
             </div>
 
-            <div className={style.inputWrapper}>
+            <div className='inputWrapper'>
               <FormInput
                 type="password"
                 name="password"
@@ -75,7 +75,7 @@ const AuthForm = ({ mutation, buttonLabel }: Props) => {
             </div>
 
 
-            <div className={style.buttonWrapper}>
+            <div className='buttonWrapper'>
               <Button type="submit" fullwidth={true} disabled={props.isSubmitting}>
                 {buttonLabel}
               </Button>

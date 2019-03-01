@@ -2,6 +2,7 @@ import { IResolvers } from "graphql-tools";
 import { getCustomRepository } from 'typeorm'
 import { Server } from "../../entity/Server";
 import ServerRepository from './repository'
+import { pubsub, SERVER_DELETED } from "../subscriptions";
 
 const resolvers: IResolvers = {
   Query: {
@@ -23,10 +24,18 @@ const resolvers: IResolvers = {
       return await getCustomRepository(ServerRepository).createServer({ name, userId })
     },
     deleteServer: async (_, { serverId }: { serverId: number }) => {
-      return await getCustomRepository(ServerRepository).deleteServer({ serverId })
+      const deletedServer = await getCustomRepository(ServerRepository).deleteServer({ serverId })
+      pubsub.publish(SERVER_DELETED, { deletedServer })
+      return deletedServer
     },
     addUserToServer: async (_, { serverId, userId }: { serverId: number, userId: number }) => {
       return await getCustomRepository(ServerRepository).addUserToServer({ serverId, userId })
+    }
+  },
+
+  Subscription: {
+    deletedServer: {
+      subscribe: () => pubsub.asyncIterator([SERVER_DELETED])
     }
   }
 }
