@@ -64,6 +64,7 @@ const ServerHeader = ({ server, serverId }: Props) => {
             <span className={style.delete}>Delete Server</span>
           </StyledMenuItem>
         ) : (
+          // TODO - Add Leave Server api
           <StyledMenuItem>
             <span className={style.delete}>Leave Server</span>
           </StyledMenuItem>
@@ -75,16 +76,18 @@ const ServerHeader = ({ server, serverId }: Props) => {
 
 const StyledPopover = withStyles({
   paper: {
-    backgroundColor: 'rgba(0, 0, 0, 0.1)',
-    width: 200,
-    marginTop: 5
+    backgroundColor: '#282b30',
+    width: 280,
+    marginTop: 4,
+    zIndex: 4
   }
 })(Popover)
 
 const StyledMenuItem = withStyles({
   root: {
     color: '#FFF',
-    fontSize: '0.9rem'
+    fontSize: '0.9rem',
+    zIndex: 4
   }
 })(MenuItem)
 

@@ -5,6 +5,7 @@ import HomeHeader from './HomeContent/HomeHeader'
 import ServerChannels from './ServerContent/ServerChannels'
 import ServerHeader from './ServerContent/ServerHeader'
 import { Server } from '../../../graphql/types';
+import UserControls from './UserControls';
 
 interface Props {
   server: Server,
@@ -12,19 +13,22 @@ interface Props {
 }
 
 const ServerContent = ({ server, serverId }: Props) => {
-  if (!server) {
-    return (
-      <div className={style.serverContent}>
-        <HomeHeader />
-        <HomeChannels />
-      </div>
-    )
-  }
-
   return (
     <div className={style.serverContent}>
-      <ServerHeader server={server} serverId={serverId} />
-      <ServerChannels />
+      {
+        server ? (
+          <React.Fragment>
+            <ServerHeader server={server} serverId={serverId} />
+            <ServerChannels />
+          </React.Fragment>
+        ) : (
+          <React.Fragment>
+            <HomeHeader />
+            <HomeChannels />
+          </React.Fragment>
+        )
+      }
+      <UserControls />
     </div>
   )
 }

@@ -5,9 +5,7 @@ const HomeHeader = () => {
   return (
     <div className={style.headerWrapper}>
       <header className={style.header}>
-        <span>
-          Home
-        </span>
+        <span>Home</span>
       </header>
     </div>
   )
