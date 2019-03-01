@@ -1,22 +1,22 @@
 import React, { useState } from 'react'
-import style from './ServerContent.module.css'
+import style from '../ServerContent.module.css'
 import ExpandMore from '@material-ui/icons/ExpandMore'
 import Popover from '@material-ui/core/Popover'
 import MenuItem from '@material-ui/core/MenuItem'
 import { withStyles } from '@material-ui/core/styles'
-import { Server } from '../../../graphql/types'
-import { useMe } from '../../../services/requireAuth'
-import { DELETE_SERVER } from '../../../graphql/mutations'
-import { GET_USER_SERVERS } from '../../../graphql/queries'
+import { Server } from '../../../../graphql/types'
+import { useMe } from '../../../../services/requireAuth'
+import { DELETE_SERVER } from '../../../../graphql/mutations'
+import { GET_USER_SERVERS } from '../../../../graphql/queries'
 import { useMutation } from 'react-apollo-hooks'
-import history from '../../../config/history'
+import history from '../../../../config/history'
 
 interface Props {
   server: Server
   serverId: string | number
 }
 
-const Header = ({ server, serverId }: Props) => {
+const ServerHeader = ({ server, serverId }: Props) => {
   const me = useMe()
   const [anchorEl, handleMenu] = useState(null)
   const handleClose = () => handleMenu(null)
@@ -24,16 +24,6 @@ const Header = ({ server, serverId }: Props) => {
   const deleteServer = useMutation(DELETE_SERVER, {
     variables: { serverId }
   })
-
-  if (serverId === '@me') {
-    return (
-      <div className={style.headerWrapper}>
-        <header className={style.header}>
-          <span>Home</span>
-        </header>
-      </div>
-    )
-  }
 
   return (
     <div className={style.headerWrapper}>
@@ -98,4 +88,4 @@ const StyledMenuItem = withStyles({
   }
 })(MenuItem)
 
-export default Header
+export default ServerHeader

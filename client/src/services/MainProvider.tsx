@@ -5,20 +5,12 @@ const MainContext = React.createContext(null)
 export const useMainState = () => useContext(MainContext)
 
 const MainProvider = ({ children }) => {
-  const [globalState, handleState] = useState({
-    activeServer: null
-  })
-
-  const handleServerChange = (serverId) => handleState({
-    ...globalState,
-    activeServer: serverId
-  })
+  const [globalState, handleState] = useState({})
 
   return (
     <MainContext.Provider
       value={{
         ...globalState,
-        handleServerChange
       }}
     >
       {children}

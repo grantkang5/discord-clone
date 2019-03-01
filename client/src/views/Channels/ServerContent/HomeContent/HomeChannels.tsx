@@ -1,7 +1,7 @@
 import React from 'react'
-import style from './ServerContent.module.css'
+import style from '../ServerContent.module.css'
 
-const Channels = () => {
+const HomeChannels = () => {
   return (
     <div className={style.channelsWrapper}>
       <div className={style.channelsScroller}>
@@ -17,4 +17,4 @@ const Channels = () => {
   )
 }
 
-export default Channels
+export default HomeChannels

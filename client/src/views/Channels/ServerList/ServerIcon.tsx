@@ -1,7 +1,6 @@
 import React from 'react'
 import style from './ServerList.module.css'
 import classNames from 'classnames'
-import { useMainState } from '../../../services/MainProvider';
 import history from '../../../config/history';
 
 interface Props {

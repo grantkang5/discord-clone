@@ -1,7 +1,9 @@
 import React from 'react'
 import style from './ServerContent.module.css'
-import Channels from './Channels'
-import Header from './Header'
+import HomeChannels from './HomeContent/HomeChannels'
+import HomeHeader from './HomeContent/HomeHeader'
+import ServerChannels from './ServerContent/ServerChannels'
+import ServerHeader from './ServerContent/ServerHeader'
 import { Server } from '../../../graphql/types';
 
 interface Props {
@@ -13,15 +15,16 @@ const ServerContent = ({ server, serverId }: Props) => {
   if (!server) {
     return (
       <div className={style.serverContent}>
-        WIP
+        <HomeHeader />
+        <HomeChannels />
       </div>
     )
   }
 
   return (
     <div className={style.serverContent}>
-      <Header server={server} serverId={serverId} />
-      <Channels />
+      <ServerHeader server={server} serverId={serverId} />
+      <ServerChannels />
     </div>
   )
 }
