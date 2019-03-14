@@ -34,6 +34,6 @@ export class User extends BaseEntity {
   @OneToMany(() => Invitation, invitation => invitation.sender)
   sentInvitations: Invitation[]
 
-  @ManyToMany(() => Invitation, invitation => invitation.recipients)
+  @OneToMany(() => Invitation, invitation => invitation.receiver)
   receivedInvitations: Invitation[]
 }

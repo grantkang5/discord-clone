@@ -8,7 +8,7 @@ export default gql`
     server: Server
     createdAt: Date 
     sender: User
-    recipients: [User]
+    receiver: User
   }
 
   extend type Query {
@@ -17,7 +17,7 @@ export default gql`
   }
 
   extend type Mutation {
-    sendInvitation(senderId: ID!, receivers: [ID], serverId: ID!): Invitation
+    sendInvitation(senderId: ID!, receiverId: ID!, serverId: ID!): Invitation
     deleteInvitation(invitationId: ID!): Invitation
   }
 

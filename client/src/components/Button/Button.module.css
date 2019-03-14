@@ -21,3 +21,25 @@
 .button.full {
   width: 100%;
 }
+
+.button.small {
+  font-size: 14px;
+  height: 32px;
+  min-height: 32px;
+  min-width: 72px;
+  padding: 2px 10px;
+}
+
+.inverted {
+  border-color: rgba(67, 181, 129, .3);
+  border-width: 1px;
+  border-style: solid;
+  color: #43b581;
+  background-color: transparent;
+  transition: background-color 200ms ease, color 200ms ease;
+}
+.inverted:hover {
+  border-color: rgba(67,181,129,.6);
+  background-color: #3ca374;
+  color: #FFF;
+}

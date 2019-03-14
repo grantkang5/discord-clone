@@ -2,10 +2,18 @@ import { IResolvers } from "graphql-tools";
 import { getCustomRepository } from 'typeorm'
 import { Server } from "../../entity/Server";
 import ServerRepository from './repository'
-import { pubsub, SERVER_DELETED } from "../subscriptions";
+import { pubsub, SERVER_DELETED, USER_JOINED_SERVER, USER_LEFT_SERVER } from "../subscriptions";
 
 const resolvers: IResolvers = {
   Query: {
+    server: async (_, { serverId }) => {
+      try {
+        const server = await Server.findOne({ id: serverId })
+        return server
+      } catch (error) {
+        return new Error(error)
+      }
+    },
     servers: async () => {
       try {
         const servers = await Server.find()
@@ -28,14 +36,27 @@ const resolvers: IResolvers = {
       pubsub.publish(SERVER_DELETED, { deletedServer })
       return deletedServer
     },
-    addUserToServer: async (_, { serverId, userId }: { serverId: number, userId: number }) => {
-      return await getCustomRepository(ServerRepository).addUserToServer({ serverId, userId })
+    joinServer: async (_, { serverId, userId }: { serverId: number, userId: number }) => {
+      const joinedServer = await getCustomRepository(ServerRepository).joinServer({ serverId, userId })
+      return await joinedServer
+    },
+    acceptServerInvitation: async (_, { invitationId }) => {
+      return await getCustomRepository(ServerRepository).acceptServerInvitation({ invitationId })
+    },
+    removeUserFromServer: async (_, { serverId, userId }) => {
+      return await getCustomRepository(ServerRepository).removeUserFromServer({ serverId, userId })
     }
   },
 
   Subscription: {
     deletedServer: {
       subscribe: () => pubsub.asyncIterator([SERVER_DELETED])
+    },
+    userAdded: {
+      subscribe: () => pubsub.asyncIterator([USER_JOINED_SERVER])
+    },
+    removedUser: {
+      subscribe: () => pubsub.asyncIterator([USER_LEFT_SERVER])
     }
   }
 }

@@ -25,7 +25,7 @@ export class Server extends BaseEntity {
   @ManyToOne(() => User, user => user.hostedServers, { cascade: ["insert", "update"], eager: true })
   host: User
 
-  @ManyToMany(() => User, user => user.joinedServers, { eager: true })
+  @ManyToMany(() => User, user => user.joinedServers, { cascade: true, eager: true })
   @JoinTable()
   users: User[]
 

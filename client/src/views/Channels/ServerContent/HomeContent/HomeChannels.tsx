@@ -1,19 +1,25 @@
 import React from 'react'
-import style from '../ServerContent.module.css'
+import style from './HomeContent.module.css'
+import { useQuery } from 'react-apollo-hooks'
+import { GET_RECEIVED_INVITATIONS } from '../../../../graphql/mutations'
+import { useMe } from '../../../../services/requireAuth'
+import ChannelWrapper from '../../../../components/ChannelWrapper'
+import Invitations from './Invitations'
 
 const HomeChannels = () => {
-  return (
-    <div className={style.channelsWrapper}>
-      <div className={style.channelsScroller}>
-        <div className={style.channelContainer}>
-          <span>Text Channels</span>
-        </div>
+  const me = useMe()
+  const { data } = useQuery(GET_RECEIVED_INVITATIONS, {
+    variables: { userId: me.id },
+    suspend: true
+  })
+  const invitations = data.getReceivedInvitations
 
-        <div className={style.channelContainer}>
-          <span>Voice channels</span>
-        </div>
+  return (
+    <ChannelWrapper>
+      <div className={style.homeNavigation}>
+        <Invitations invitations={invitations} />
       </div>
-    </div>
+    </ChannelWrapper>
   )
 }
 

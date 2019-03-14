@@ -3,7 +3,7 @@ import { IResolvers } from 'graphql-tools'
 import { getCustomRepository } from 'typeorm'
 import { User } from '../../entity/User'
 import UserRepository from './repository'
-import { USER_CREATED } from '../subscriptions'
+import { USER_CREATED, USER_LOGGED_IN, USER_LOGGED_OUT } from '../subscriptions'
 
 const pubsub = new PubSub()
 
@@ -22,6 +22,9 @@ export const resolvers: IResolvers = {
     },
     me: async (_, __, { req }) => {
       return req.user
+    },
+    usersByName: async (_, { name }) => {
+      return await getCustomRepository(UserRepository).getUsersByName({ name })
     }
   },
 
@@ -44,22 +47,34 @@ export const resolvers: IResolvers = {
       { email, password }: { email: string; password: string },
       { req }: any
     ) => {
-      return await getCustomRepository(UserRepository).signIn({
+      const userLoggedIn = await getCustomRepository(UserRepository).signIn({
         email,
         password,
         req
       })
+      pubsub.publish(USER_LOGGED_IN, { userLoggedIn })
+      return userLoggedIn
     },
     logOut: async (_, __, { req }) => {
       const { user } = req // save user before logging out
       req.logout()
+      pubsub.publish(USER_LOGGED_OUT, { userLoggedOut: user })
       return user
+    },
+    editName: async (_, { userId, name }) => {
+      return await getCustomRepository(UserRepository).editName({ userId, name })
     }
   },
 
   Subscription: {
     userCreated: {
       subscribe: () => pubsub.asyncIterator([USER_CREATED])
+    },
+    userLoggedIn: {
+      subscribe: () => pubsub.asyncIterator([USER_LOGGED_IN])
+    },
+    userLoggedOut: {
+      subscribe: () => pubsub.asyncIterator([USER_LOGGED_OUT])
     }
   }
 }

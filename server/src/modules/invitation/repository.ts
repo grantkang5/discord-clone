@@ -1,8 +1,7 @@
-import { EntityRepository, Repository, In } from 'typeorm'
-import { Invitation } from '../../entity/Invitation';
-import { User } from '../../entity/User';
-import { Server } from '../../entity/Server';
-
+import { EntityRepository, Repository } from 'typeorm'
+import { Invitation } from '../../entity/Invitation'
+import { User } from '../../entity/User'
+import { Server } from '../../entity/Server'
 
 @EntityRepository(Invitation)
 class InvitationRepository extends Repository<Invitation> {
@@ -11,20 +10,22 @@ class InvitationRepository extends Repository<Invitation> {
   }
 
   async getReceivedInvitations({ userId }) {
-    return await this.find({ recipients: { id: userId } })
+    return await this.find({ receiver: { id: userId } })
   }
 
-  async sendInvitation({ senderId, receivers, serverId }) {
-    const recipients = await User.find({
-      id: In([...receivers])
-    })
+  async sendInvitation({ senderId, receiverId, serverId }) {
+    if (receiverId === senderId) {
+      throw new Error('Cannot send invites to yourself')
+    }
+
+    const receiver = await User.findOne({ id: receiverId })
     const sender = await User.findOne({ id: senderId })
     const server = await Server.findOne({ id: serverId })
 
     return await this.create({
       server,
       sender,
-      recipients: [...recipients]
+      receiver
     }).save()
   }
 

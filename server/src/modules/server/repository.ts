@@ -2,12 +2,16 @@ import { EntityRepository, Repository } from 'typeorm'
 import { Server } from '../../entity/Server'
 import { User } from '../../entity/User'
 import { Channel } from '../../entity/Channel';
+import { Invitation } from '../../entity/Invitation';
 
 @EntityRepository(Server)
 class ServerRepository extends Repository<Server> {
   async getUserServers(userId: number) {
     try {
-      const userServers = await this.find({ host: { id: userId } })
+      const userServers = await this.createQueryBuilder('server')
+        .leftJoinAndSelect('server.users', 'user')
+        .where('user.id = :id', { id: userId })
+        .getMany()
       return userServers
     } catch (error) {
       return new Error(error)
@@ -46,12 +50,28 @@ class ServerRepository extends Repository<Server> {
     }
   }
 
-  // TODO - TEST THIS ON PLAYGROUND
-  async addUserToServer({ serverId, userId }) {
+  async joinServer({ serverId, userId }) {
     const server = await this.findOne({ id: serverId })
     const user = await User.findOne({ id: userId })
     server.users = [...server.users, user]
     return await server.save()
+  }
+
+  async acceptServerInvitation({ invitationId }) {
+    const invitation = await Invitation.findOne({ id: invitationId })
+    const user = await User.findOne({ id: invitation.receiver.id })
+    const server = await this.findOne({ id: invitation.server.id })
+    server.users = [...server.users, user]
+    invitation.remove()
+    return await server.save()
+  }
+
+  async removeUserFromServer({ userId, serverId }) {
+    const server = await this.findOne({ id: serverId })
+    const user = await User.findOne({ id: userId })
+    server.users = server.users.filter(serverUser => serverUser.id !== user.id)
+    server.save()
+    return await user
   }
 }
 

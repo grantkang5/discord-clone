@@ -17,7 +17,7 @@ const ServerList = ({ serverId, servers }: Props) => {
         name={'Home'}
         active={serverId === '@me' || !serverId}
       />
-      <hr />
+      <hr className={style.separator} />
       {servers.map(server => {
         return (
           <ServerIcon
@@ -30,7 +30,7 @@ const ServerList = ({ serverId, servers }: Props) => {
       })}
 
       <AddServer />
-      <hr />
+      <hr className={style.separator} />
     </div>
   )
 }

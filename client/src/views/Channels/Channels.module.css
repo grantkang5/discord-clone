@@ -9,10 +9,14 @@
 .contentBox {
   display: flex;
   flex: 1;
-  flex-direction: column;
+  flex-direction: row;
 }
 
-.mainContent {
+.channelsBox {
+  background-color: #2f3136;
+  flex-shrink: 0;
+  width: 240px;
   display: flex;
-  flex: 1;
+  flex-direction: column;
+  height: 100%;
 }

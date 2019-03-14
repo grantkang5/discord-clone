@@ -14,16 +14,20 @@ export default gql`
     users: [User!]
     user(id: ID!): User
     me: User
+    usersByName(name: String!): [User]
   }
 
   type Mutation {
     signUp(email: String!, password: String!): User!
     logIn(email: String!, password: String!): User!
+    editName(userId: ID!, name: String!): User!
     logOut: User
     deleteUser(id: ID!): User
   }
 
   type Subscription {
     userCreated: User
+    userLoggedIn: User
+    userLoggedOut: User
   }
 `

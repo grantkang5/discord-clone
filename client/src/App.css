@@ -42,3 +42,30 @@ p {
   display: flex;
   align-items: center;
 }
+
+.input {
+  resize: none;
+  height: 30px;
+  font-size: 0.9rem;
+  min-width: 50px!important;
+  color: #f6f6f7;
+  border-radius: 3px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(0,0,0,.3);
+  background: rgba(0,0,0, 0.1);
+  outline: none;
+  padding-left: 10px;
+}
+h5 {
+  color: #b9bbbe;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  font-weight: 600;
+  line-height: 16px;
+  font-size: 0.8rem;
+  flex: 1;
+  margin-block-start: 0;
+  margin-block-end: 1em;
+}

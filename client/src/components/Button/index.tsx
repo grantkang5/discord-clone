@@ -8,7 +8,9 @@ const Button = ({
   ...buttonProps
 }) => {
   const buttonStyle = classNames(style.button, {
-    [style.full]: buttonProps.fullwidth
+    [style.full]: buttonProps.fullwidth,
+    [style.small]: buttonProps.small,
+    [style.inverted]: buttonProps.inverted
   })
 
   // TODO - Add loading render and prop

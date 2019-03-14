@@ -1,0 +1,102 @@
+.sideBarView {
+  background: #36393f;
+  position: relative;
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+/** SIDE BAR **/
+
+.leftSideBar {
+  background: #2f3136;
+  display: flex;
+  z-index: 1;
+  justify-content: flex-end;
+  flex: 1 0 218px;
+}
+
+.scrollerWrap {
+  display: flex;
+  flex: 1 1 auto;
+  height: 100%;
+  position: relative;
+}
+
+.scroller {
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: row;
+  justify-content: flex-end;
+  overflow-y: scroll;
+}
+
+.navigationWrapper {
+  padding: 60px 6px 60px 20px;
+  width: 218px;
+}
+
+.navigationBar {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.navigationBar > .header {
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 16px;
+  color: #72767d;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  flex-shrink: 0;
+  padding: 6px 10px;
+}
+
+.navigationBar > .item {
+  color: #b9bbbe;
+  font-weight: 500;
+  line-height: 20px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: background 200ms ease, color 200ms ease;
+  padding: 6px 10px;
+  border-radius: 3px;
+  margin-bottom: 2px;
+}
+.navigationBar > .item:hover {
+  background: rgba(185,187,190,.1);
+  color: #f6f6f7;
+}
+.navigationBar > .item.selected {
+  background-color: #7289da;
+  color: #FFF;
+}
+.navigationBar > .item.logout {
+  color: var(--error);
+}
+.navigationBar > hr {
+  height: 1px;
+  margin: 8px 10px;
+  background-color:rgb(114,118,125, 0.3);
+  outline: 0;
+  border: none;
+}
+
+.exitWrapper {
+  z-index: 10;
+  position: absolute;
+  top: 60px;
+  right: 60px;
+  color: #FFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+}

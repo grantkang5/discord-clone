@@ -41,7 +41,10 @@
       "passport-local": "^1.0.0",
       "pg": "^7.3.0",
       "reflect-metadata": "^0.1.10",
-      "typeorm": "0.2.14"
+      "typeorm": "0.2.14",
+      "hashids": "1.2.2",
+      "passport-jwt-cookiecombo": "1.0.5",
+      "jsonwebtoken": "8.5.0"
    },
    "scripts": {
       "generate": "gql-gen",

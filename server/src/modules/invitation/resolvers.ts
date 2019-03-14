@@ -14,8 +14,8 @@ const resolvers: IResolvers = {
   },
 
   Mutation: {
-    sendInvitation: async (_, { senderId, receivers, serverId }) => {
-      const sentInvitation = await getCustomRepository(InvitationRepository).sendInvitation({ senderId, receivers, serverId })
+    sendInvitation: async (_, { senderId, receiverId, serverId }) => {
+      const sentInvitation = await getCustomRepository(InvitationRepository).sendInvitation({ senderId, receiverId, serverId })
       pubsub.publish(INVITATION_SENT, { sentInvitation })
       return sentInvitation
     },

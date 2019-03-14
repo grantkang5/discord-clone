@@ -1,0 +1,18 @@
+.chatContainer {
+  background-color: var(--darker);
+  display: flex;
+  position: relative;
+  contain: layout;
+  flex: 1;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.chatContent {
+  background-color: var(--darker);
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: row;
+  min-height: 0;
+}

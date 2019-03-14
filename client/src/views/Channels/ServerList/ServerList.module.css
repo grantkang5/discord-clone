@@ -59,7 +59,7 @@
   text-decoration: none;
 }
 
-hr {
+.separator {
   width: 66.66%;
   margin-bottom: 10px;
   opacity: 0.3;

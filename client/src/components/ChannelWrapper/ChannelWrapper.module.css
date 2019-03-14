@@ -1,0 +1,14 @@
+.channelsWrapper {
+  display: flex;
+  flex: 1 1 auto;
+  height: 100%;
+  position: relative;
+  min-height: 0;
+}
+
+.channelsScroller {
+  padding-bottom: 20px;
+  flex: 1 1 auto;
+  overflow-y: scroll;
+  min-height: 0;
+}

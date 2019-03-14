@@ -11,32 +11,32 @@ import schema from './modules/schema'
 
 const RedisStore = require('connect-redis')(session)
 const PORT = 5000
+const expressSession = session({
+  resave: true,
+  saveUninitialized: true,
+  secret: 'wiojfioqjo',
+  name: 'qid',
+  store: new RedisStore({
+    host: process.env.REDIS_HOST,
+    port: parseInt(process.env.REDIS_PORT),
+    logErrors: process.env.NODE_ENV === 'development'
+  })
+})
 
 createConnection().then(async () => {
   const app = express()
     .use(cors())
     .use(bodyParser.json())
     .use(helmet())
-    .use(
-      session({
-        resave: true,
-        saveUninitialized: true,
-        secret: 'wiojfioqjo',
-        name: "qid",
-        store: new RedisStore({
-          host: process.env.REDIS_HOST,
-          port: parseInt(process.env.REDIS_PORT),
-          logErrors: process.env.NODE_ENV === 'development'
-        })
-      })
-    )
-  
+    .use(expressSession)
+
   app.use(passport.initialize())
   app.use(passport.session())
 
   const apolloServer = new ApolloServer({
     schema,
-    context: ({ req }) => ({ req })
+    context: ({ req }) => ({ req }),
+    subscriptions: {}
   })
 
   apolloServer.applyMiddleware({ app })

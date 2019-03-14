@@ -1,0 +1,43 @@
+/* USER */
+.userWrapper {
+  flex: 0 0 auto;
+}
+
+.user {
+  height: 42px;
+  padding: 0 20px;
+  background-color: rgba(32,34,37,.3);
+  display: flex;
+  color: #fff;
+  align-items: center;
+  margin-bottom: 1px;
+  justify-content: space-between;
+}
+
+.user > .name {
+  font-size: 0.8rem;
+}
+
+.buttonsWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.buttonContainer {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+  transition: background-color 250ms ease;
+  background-color: transparent;
+}
+.buttonContainer:hover {
+  background-color: rgba(24,25,28,.3)
+}
+.buttonContainer > .button {
+  height: 18px;
+}

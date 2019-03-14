@@ -3,7 +3,6 @@ import {
   PrimaryGeneratedColumn,
   BaseEntity,
   ManyToOne,
-  ManyToMany,
   JoinTable,
   CreateDateColumn,
 } from 'typeorm'
@@ -32,10 +31,10 @@ export class Invitation extends BaseEntity {
   })
   sender: User
 
-  @ManyToMany(() => User, user => user.receivedInvitations, {
+  @ManyToOne(() => User, user => user.receivedInvitations, {
     cascade: ['insert', 'update'],
     eager: true
   })
   @JoinTable()
-  recipients: User[]
+  receiver: User
 }

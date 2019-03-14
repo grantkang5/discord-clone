@@ -2,11 +2,12 @@ import React, { useState } from 'react'
 import style from './ServerList.module.css'
 import Add from '@material-ui/icons/Add'
 import { useMutation } from 'react-apollo-hooks'
-import { CREATE_SERVER } from '../../../graphql/mutations'
+import { CREATE_SERVER, JOIN_SERVER } from '../../../graphql/mutations'
 import { useMe } from '../../../services/requireAuth'
 import Dialog from '@material-ui/core/Dialog'
 import Button from '../../../components/Button'
 import { GET_USER_SERVERS } from '../../../graphql/queries'
+import { hashids } from '../../../services/hashIds'
 
 const AddServer = () => {
   const me = useMe()
@@ -14,6 +15,41 @@ const AddServer = () => {
   const handleOpen = () => handleDialog(true)
   const handleClose = () => handleDialog(false)
   const addServer = useMutation(CREATE_SERVER)
+  const joinServer = useMutation(JOIN_SERVER)
+
+  const handleAddServer = () => {
+    const serverName = prompt('Server name: ')
+    addServer({
+      variables: { name: serverName, userId: me.id },
+      refetchQueries: [
+        { query: GET_USER_SERVERS, variables: { userId: me.id } }
+      ],
+      optimisticResponse: {
+        createServer: {
+          id: -1,
+          name: serverName,
+          host: {
+            id: me.id,
+            email: me.email,
+            __typename: 'User'
+          },
+          __typename: 'Server'
+        }
+      }
+    }).then(() => handleClose())
+  }
+  const handleJoinServer = () => {
+    /* STUB - subscribe this */
+    const serverIdEncoded = prompt('Server id: ')
+    const serverId = hashids.decode(serverIdEncoded)[0]
+    console.log(serverId)
+    joinServer({
+      variables: {
+        userId: me.id,
+        serverId
+      }
+    })
+  }
 
   return (
     <React.Fragment>
@@ -31,33 +67,14 @@ const AddServer = () => {
         aria-labelledby="add-server-dialog"
       >
         <div className="modal">
-          <Button
-            onClick={() => {
-              const serverName = prompt('Server name: ')
-              addServer({
-                variables: { name: serverName, userId: me.id },
-                refetchQueries: [
-                  { query: GET_USER_SERVERS, variables: { userId: me.id } }
-                ],
-                optimisticResponse: {
-                  createServer: {
-                    id: -1,
-                    name: serverName,
-                    host: {
-                      id: me.id,
-                      email: me.email,
-                      __typename: "User"
-                    },
-                    __typename: "Server"
-                  }
-                }
-              }).then(() => handleClose())
-            }}
-          >
-            Create a server
-          </Button>
+          <Button onClick={handleAddServer}>Create a server</Button>
           <span style={{ margin: '15px' }}>or</span>
-          <Button style={{ backgroundColor: '#3ca374' }}>Join a server</Button>
+          <Button
+            style={{ backgroundColor: '#3ca374' }}
+            onClick={handleJoinServer}
+          >
+            Join a server
+          </Button>
         </div>
       </Dialog>
     </React.Fragment>
@@ -65,3 +82,5 @@ const AddServer = () => {
 }
 
 export default AddServer
+
+// TODO - use repo: hashIds to create server hash ids to send to users

@@ -6,8 +6,9 @@ import requireAuth from './services/requireAuth'
 
 const Main = lazy(() => import('./views/Main'))
 const Login = lazy(() => import('./views/Auth/Login'))
+const Logout = lazy(() => import ('./views/Auth/Logout'))
 const Signup = lazy(() => import('./views/Auth/Signup'))
-
+const AuthLogout = requireAuth(Logout)
 const AuthMain = requireAuth(Main)
 
 const App = () => (
@@ -16,6 +17,7 @@ const App = () => (
       <Switch>
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={Signup} />
+        <Route exact path="/logout" component={AuthLogout} />
         <Route path="/" component={AuthMain} />
       </Switch>
     </Suspense>

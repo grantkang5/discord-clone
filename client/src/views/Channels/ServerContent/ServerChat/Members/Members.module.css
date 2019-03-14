@@ -1,0 +1,19 @@
+.membersWrap {
+  min-width: 240px;
+  display: flex;
+  position: relative; 
+}
+.membersScrollWrapper {
+  height: auto;
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+.membersScroller {
+  background-color: #2f3136;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding: 0 0 20px;
+  flex: 1;
+  min-height: 0;
+}

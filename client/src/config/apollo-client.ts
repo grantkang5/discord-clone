@@ -16,7 +16,10 @@ const httpLink = new HttpLink({
 const webSocketLink = new WebSocketLink({
   uri: webSocketURI,
   options: {
-    reconnect: true
+    reconnect: true,
+    connectionParams: () => ({
+      
+    })
   }
 })
 

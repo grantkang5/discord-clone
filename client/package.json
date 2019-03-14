@@ -41,7 +41,9 @@
     "subscriptions-transport-ws": "^0.9.15",
     "typescript": "3.3.3",
     "yup": "^0.26.10",
-    "classnames": "^2.2.6"
+    "classnames": "^2.2.6",
+    "path-to-regexp": "3.0.0",
+    "hashids": "1.2.2"
   },
   "scripts": {
     "dev": "concurrently \"nodemon ./server.ts\" \"react-scripts start\"",

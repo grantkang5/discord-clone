@@ -1,0 +1,38 @@
+.container {
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.inner {
+  background: rgba(0,0,0,0.2);
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 4px;
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 2px;
+  position: relative;
+}
+
+.input {
+  resize: none;
+  height: 26px;
+  font-size: 0.9rem;
+  min-width: 50px!important;
+  color: #b9bbbe;
+  border: none;
+  background: transparent;
+  outline: none;
+  padding-left: 10px;
+  width: 90%;
+}
+
+.searchBarIcon {
+  margin: 3px 5px;
+  position: absolute;
+  width: 18px;
+  right: 4px;
+  color: #b9bbbe;
+}

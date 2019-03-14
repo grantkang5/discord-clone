@@ -1,5 +1,5 @@
 import React from 'react'
-import style from '../ServerContent.module.css'
+import style from './HomeContent.module.css'
 
 const HomeHeader = () => {
   return (

@@ -1,4 +1,4 @@
-function arrowGenerator(color) {
+export const arrowGenerator = (color) => {
   return {
     '&[x-placement*="bottom"] $arrow': {
       top: 0,

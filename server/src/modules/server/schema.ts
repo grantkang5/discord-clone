@@ -9,6 +9,7 @@ export default gql`
   }
 
   extend type Query {
+    server(serverId: ID!): Server
     servers: [Server]
     userServers(userId: ID!): [Server]
   }
@@ -17,13 +18,14 @@ export default gql`
     createServer(name: String!, userId: ID!): Server
     deleteServer(serverId: ID!): Server
     editServer: Server
-    addUserToServer(serverId: ID!, userId: ID!): User 
-    removeUserFromServer(serverId: ID!): User
+    joinServer(serverId: ID!, userId: ID!): Server 
+    removeUserFromServer(serverId: ID!, userId: ID!): User
+    acceptServerInvitation(invitationId: ID!): Server
   }
 
   extend type Subscription {
     deletedServer: Server
-    addedUserToServer: User
-    removedUserFromServer: User
+    removedUser: User
+    userAdded: Server
   }
 `

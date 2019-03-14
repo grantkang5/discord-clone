@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import style from '../ServerContent.module.css'
+import style from './ServerContent.module.css'
 import ExpandMore from '@material-ui/icons/ExpandMore'
 import Popover from '@material-ui/core/Popover'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -10,19 +10,21 @@ import { DELETE_SERVER } from '../../../../graphql/mutations'
 import { GET_USER_SERVERS } from '../../../../graphql/queries'
 import { useMutation } from 'react-apollo-hooks'
 import history from '../../../../config/history'
+import ServerInvite from './ServerInvite'
 
 interface Props {
   server: Server
-  serverId: string | number
 }
 
-const ServerHeader = ({ server, serverId }: Props) => {
+const ServerHeader = ({ server }: Props) => {
   const me = useMe()
   const [anchorEl, handleMenu] = useState(null)
+  const [inviteDialog, handleInviteDialog] = useState(false)
   const handleClose = () => handleMenu(null)
+  const closeInviteDialog = () => handleInviteDialog(false)
 
   const deleteServer = useMutation(DELETE_SERVER, {
-    variables: { serverId }
+    variables: { serverId: server.id }
   })
 
   return (
@@ -52,9 +54,15 @@ const ServerHeader = ({ server, serverId }: Props) => {
         onClose={handleClose}
         className={style.popover}
       >
-        <StyledMenuItem>
+        <StyledMenuItem onClick={() => handleInviteDialog(true)}>
           <span style={{ color: '#7289DA' }}>Invite People</span>
         </StyledMenuItem>
+        <ServerInvite
+          open={inviteDialog}
+          handleClose={closeInviteDialog}
+          server={server}
+        />
+
         {me.id === server.host.id ? (
           <StyledMenuItem
             onClick={() =>

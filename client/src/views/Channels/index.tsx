@@ -1,37 +1,52 @@
-import React from 'react'
+import React, { lazy, Suspense } from 'react'
+import { Route, Switch, Redirect } from 'react-router-dom'
+import { withRouter } from 'react-router'
 import ServerList from './ServerList'
-import ServerContent from './ServerContent'
 import style from './Channels.module.css'
 import { GET_USER_SERVERS } from '../../graphql/queries'
 import { useMe } from '../../services/requireAuth'
 import { useQuery } from 'react-apollo-hooks'
+import pathToRegexp from 'path-to-regexp'
+import UserContent from './ServerContent/UserContent';
+import { Loading } from '../../components/Loaders';
+import ServerChat from './ServerContent/ServerChat';
 
-const Channels = ({ match }) => {
+const ServerContent = lazy(() => import('./ServerContent/ServerContent'))
+const HomeContent = lazy(() => import('./ServerContent/HomeContent'))
+
+const Channels = ({ location }) => {
   const me = useMe()
   const { data } = useQuery(GET_USER_SERVERS, {
     variables: { userId: me.id },
     suspend: true
   })
-
-  const currentServer = data.userServers.find(
-    server => server.id === match.params.serverId
-  )
+  const re = pathToRegexp('/channels/:serverId')
+  const path = re.exec(location.pathname)
 
   return (
     <main className={style.mainApp}>
       <ServerList
-        serverId={match.params.serverId}
+        serverId={path ? path[1] : null}
         servers={data.userServers}
       />
 
       <div className={style.contentBox}>
-        <ServerContent
-          server={currentServer}
-          serverId={match.params.serverId}
-        />
+        <div className={style.channelsBox}>
+          <Suspense fallback={<Loading />}>
+            <Switch>
+              <Route path='/channels/@me' component={HomeContent} />
+              <Route path='/channels/:serverId' component={ServerContent} />
+              <Redirect to="/channels/@me" />
+            </Switch>
+          </Suspense>
+
+          <UserContent />
+        </div>
+
+        <ServerChat />
       </div>
     </main>
   )
 }
 
-export default Channels
+export default withRouter(Channels)

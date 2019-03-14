@@ -1,0 +1,71 @@
+.headerWrapepr {
+  flex: 0 0 auto;
+}
+
+.header {
+  cursor: pointer;
+  color: #fff;
+  box-shadow: 0 1px 0 rgba(0,0,0,.2), 0 2px 0 rgba(0,0,0,.06);
+  height: 48px;
+  display: flex;
+  font-weight: 500;
+  padding: 0 12px 0 16px;
+  position: relative;
+  background-color: rgba(0,0,0,.1);
+}
+
+.header > span {
+  flex: 1;
+  line-height: 48px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+/* content */
+  .homeNavigation {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 60px 6px 60px 20px;
+  }
+.subHeader {
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 16px;
+  color: #72767d;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  flex-shrink: 0;
+  padding: 6px 10px;
+}
+
+.invitationItem {
+  color: #b9bbbe;
+  font-weight: 500;
+  line-height: 20px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: background 200ms ease, color 200ms ease;
+  padding: 6px 10px;
+  border-radius: 3px;
+  margin-bottom: 2px;
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.invitationItem:hover {
+  background: rgba(185,187,190,.1);
+  color: #f6f6f7;
+}
+
+.arrow {
+  width: 12px;
+}

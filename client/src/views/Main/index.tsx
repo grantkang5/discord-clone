@@ -1,15 +1,13 @@
-import React from 'react'
-import { Switch, Route, Redirect } from 'react-router-dom'
+import React, { Suspense } from 'react'
+import { Redirect, Route, Switch } from 'react-router-dom'
 import MainProvider from '../../services/MainProvider';
 import Channels from '../Channels'
+import { Loading } from '../../components/Loaders';
 
 const Main = () => {
   return (
     <MainProvider>
-      <Switch>
-        <Route path="/channels/:serverId" component={Channels} />
-        <Redirect to="/channels/@me" />
-      </Switch>
+      <Channels />
     </MainProvider>
   )
 }
