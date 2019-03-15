@@ -42,7 +42,6 @@ const AddServer = () => {
     /* STUB - subscribe this */
     const serverIdEncoded = prompt('Server id: ')
     const serverId = hashids.decode(serverIdEncoded)[0]
-    console.log(serverId)
     joinServer({
       variables: {
         userId: me.id,

@@ -13,7 +13,7 @@ const Signup = () => (
       <header>
         <p className='title'>Create an account</p>
       </header>
-      <AuthForm mutation={SIGN_UP} buttonLabel="Sign up" />
+      <AuthForm type='SIGNUP' buttonLabel="Sign up" />
 
       <Link to="/login" className="app-link">
         Already have an account?

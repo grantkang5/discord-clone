@@ -1,0 +1,76 @@
+import * as express from 'express'
+import * as passport from 'passport'
+import * as bcrypt from 'bcryptjs'
+import * as jwt from 'jsonwebtoken'
+import { jwtConfig } from '../../config/passport'
+import { getRepository } from 'typeorm'
+import { User } from '../../entity/User'
+const router = express.Router()
+
+router.post(
+  '/login',
+  passport.authenticate('local', { session: false }),
+  async (req, res) => {
+    req.logIn(req.user, { session: false }, error => {
+      if (error) res.status(400).send(error)
+    })
+
+    const token = await jwt.sign(
+      {
+        user: req.user.id
+      },
+      jwtConfig.jwt.secret,
+      jwtConfig.jwt.options
+    )
+
+    await res.cookie('jwt', token, jwtConfig.cookie)
+    return res.status(200).json({ token: 'JWT ' + token })
+  }
+)
+
+router.post(
+  '/signup',
+  async (req, _, next) => {
+    const { email, password } = req.body
+
+    const hashedPassword = await bcrypt.hash(password, 10)
+    const name = email.slice(0, email.indexOf('@'))
+    const user = User.create({ email, password: hashedPassword, name })
+
+    if (!email || !password)
+      throw new Error('You must provide an email and password')
+
+    return getRepository(User)
+      .findOne({ email })
+      .then(existingUser => {
+        if (existingUser) throw new Error('This email is already in use')
+        return user.save()
+      })
+      .then(() => next())
+  },
+  passport.authenticate('local', { session: false }),
+  async (req, res) => {
+    req.logIn(req.user, { session: false }, error => {
+      if (error) res.status(400).send(error)
+    })
+    const token = await jwt.sign(
+      {
+        user: req.user.id
+      },
+      jwtConfig.jwt.secret,
+      jwtConfig.jwt.options
+    )
+
+    res.cookie('jwt', token, jwtConfig.cookie)
+    return res.status(200).json({ token: 'JWT ' + token })
+  }
+)
+
+router.post('/logout', async (req, res) => {
+  const { user } = req;
+  req.logout()
+  res.clearCookie('jwt', jwtConfig.cookie)
+  return res.status(200).json({ user })
+})
+
+export default router

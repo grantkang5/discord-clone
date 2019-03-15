@@ -2,44 +2,42 @@ import { ApolloServer } from 'apollo-server-express'
 import * as bodyParser from 'body-parser'
 import * as cors from 'cors'
 import * as express from 'express'
-import * as session from 'express-session'
+import * as cookieParser from 'cookie-parser'
 import * as helmet from 'helmet'
 import { createServer } from 'http'
 import * as passport from 'passport'
 import { createConnection } from 'typeorm'
 import schema from './modules/schema'
+import './config/passport'
+import auth from './modules/auth'
+import { jwtConfig } from './config/passport';
 
-const RedisStore = require('connect-redis')(session)
 const PORT = 5000
-const expressSession = session({
-  resave: true,
-  saveUninitialized: true,
-  secret: 'wiojfioqjo',
-  name: 'qid',
-  store: new RedisStore({
-    host: process.env.REDIS_HOST,
-    port: parseInt(process.env.REDIS_PORT),
-    logErrors: process.env.NODE_ENV === 'development'
-  })
-})
+const path ='/graphql'
 
 createConnection().then(async () => {
   const app = express()
+    .use(cookieParser(jwtConfig.jwt.secret, jwtConfig.cookie))
     .use(cors())
     .use(bodyParser.json())
     .use(helmet())
-    .use(expressSession)
 
   app.use(passport.initialize())
-  app.use(passport.session())
+  app.use('/auth', auth)
 
   const apolloServer = new ApolloServer({
     schema,
     context: ({ req }) => ({ req }),
-    subscriptions: {}
+    subscriptions: {
+      onConnect: (_, webSocket) => {
+        const ws = webSocket['upgradeReq']
+        const authToken = ws['headers']['cookie'].slice(4)
+      }
+    }
   })
 
-  apolloServer.applyMiddleware({ app })
+  app.use(path, passport.authenticate('jwt', { session: false }))
+  apolloServer.applyMiddleware({ app, path })
 
   const ws = createServer(app)
   apolloServer.installSubscriptionHandlers(ws)

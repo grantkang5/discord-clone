@@ -29,38 +29,6 @@ export const resolvers: IResolvers = {
   },
 
   Mutation: {
-    signUp: async (
-      _,
-      { email, password }: { email: string; password: string },
-      { req }: any
-    ) => {
-      const userCreated = await getCustomRepository(UserRepository).signUp({
-        email,
-        password,
-        req
-      })
-      pubsub.publish(USER_CREATED, { userCreated })
-      return userCreated
-    },
-    logIn: async (
-      _,
-      { email, password }: { email: string; password: string },
-      { req }: any
-    ) => {
-      const userLoggedIn = await getCustomRepository(UserRepository).signIn({
-        email,
-        password,
-        req
-      })
-      pubsub.publish(USER_LOGGED_IN, { userLoggedIn })
-      return userLoggedIn
-    },
-    logOut: async (_, __, { req }) => {
-      const { user } = req // save user before logging out
-      req.logout()
-      pubsub.publish(USER_LOGGED_OUT, { userLoggedOut: user })
-      return user
-    },
     editName: async (_, { userId, name }) => {
       return await getCustomRepository(UserRepository).editName({ userId, name })
     }
