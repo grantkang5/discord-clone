@@ -18,7 +18,7 @@ const Login = (props: any) => {
           <p className='subTitle'>We're so excited to see you again!</p>
         </header>
 
-        <AuthForm mutation={LOG_IN} buttonLabel="Log in" />
+        <AuthForm type='LOGIN' buttonLabel="Log in" />
 
         <Link to="/signup" className="app-link">
           Need an account?
