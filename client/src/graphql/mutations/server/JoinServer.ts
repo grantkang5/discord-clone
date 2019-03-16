@@ -1,10 +1,10 @@
 import { gql } from 'apollo-boost'
+import * as fragments from '../../fragments'
 
 export default gql`
   mutation JoinServer($serverId: ID!, $userId: ID!) {
     joinServer(serverId: $serverId, userId: $userId) {
-      id
-      name
+      ...Server
       users {
         id
         email
@@ -12,4 +12,5 @@ export default gql`
       }
     }
   }
+  ${fragments.server}
 `

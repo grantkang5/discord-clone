@@ -1,4 +1,5 @@
 import { gql } from 'apollo-boost'
+import * as fragments from '../../fragments'
 
 export default gql`
   mutation sendInvitation($senderId: ID!, $receiverId: ID!, $serverId: ID!) {
@@ -7,19 +8,8 @@ export default gql`
       receiverId: $receiverId
       serverId: $serverId
     ) {
-      id
-      server {
-        id
-      }
-      sender {
-        id
-        email
-      }
-      receiver {
-        id
-        email
-      }
-      createdAt
+      ...Invitation
     }
   }
+  ${fragments.invitation}
 `

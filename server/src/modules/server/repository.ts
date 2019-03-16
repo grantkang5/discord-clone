@@ -10,8 +10,10 @@ class ServerRepository extends Repository<Server> {
     try {
       const userServers = await this.createQueryBuilder('server')
         .leftJoinAndSelect('server.users', 'user')
+        .leftJoinAndSelect('server.host', 'host')
         .where('user.id = :id', { id: userId })
         .getMany()
+ 
       return userServers
     } catch (error) {
       return new Error(error)
@@ -58,12 +60,16 @@ class ServerRepository extends Repository<Server> {
   }
 
   async acceptServerInvitation({ invitationId }) {
-    const invitation = await Invitation.findOne({ id: invitationId })
-    const user = await User.findOne({ id: invitation.receiver.id })
-    const server = await this.findOne({ id: invitation.server.id })
-    server.users = [...server.users, user]
-    invitation.remove()
-    return await server.save()
+    try {
+      const invitation = await Invitation.findOne({ id: invitationId })
+      const user = await User.findOne({ id: invitation.receiver.id })
+      const server = await this.findOne({ id: invitation.server.id })
+      server.users = [...server.users, user]
+      invitation.remove()
+      return await server.save()
+    } catch (error) {
+      throw new Error(error)
+    }
   }
 
   async removeUserFromServer({ userId, serverId }) {

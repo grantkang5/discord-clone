@@ -1,19 +1,11 @@
 import { gql } from 'apollo-boost'
+import * as fragments from '../../fragments'
 
 export default gql`
   query GetReceivedInvitations($userId: ID!) {
     getReceivedInvitations(userId: $userId) {
-      id
-      server {
-        id
-        name
-      }
-      createdAt
-      sender {
-        id
-        email
-        name
-      }
+      ...Invitation
     }
   }
+  ${fragments.invitation}
 `

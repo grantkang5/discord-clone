@@ -21,7 +21,8 @@ export class Invitation extends BaseEntity {
 
   @ManyToOne(() => Server, server => server.id, {
     cascade: ['insert', 'update'],
-    eager: true
+    eager: true,
+    onDelete: "CASCADE"
   })
   server: Server
 

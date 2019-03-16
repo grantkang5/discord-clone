@@ -353,10 +353,6 @@ export namespace InvitationResolvers {
 
 export namespace MutationResolvers {
   export interface Resolvers<Context = {}, TypeParent = {}> {
-    signUp?: SignUpResolver<User, TypeParent, Context>;
-
-    logIn?: LogInResolver<User, TypeParent, Context>;
-
     editName?: EditNameResolver<User, TypeParent, Context>;
 
     logOut?: LogOutResolver<Maybe<User>, TypeParent, Context>;
@@ -398,30 +394,6 @@ export namespace MutationResolvers {
       TypeParent,
       Context
     >;
-  }
-
-  export type SignUpResolver<R = User, Parent = {}, Context = {}> = Resolver<
-    R,
-    Parent,
-    Context,
-    SignUpArgs
-  >;
-  export interface SignUpArgs {
-    email: string;
-
-    password: string;
-  }
-
-  export type LogInResolver<R = User, Parent = {}, Context = {}> = Resolver<
-    R,
-    Parent,
-    Context,
-    LogInArgs
-  >;
-  export interface LogInArgs {
-    email: string;
-
-    password: string;
   }
 
   export type EditNameResolver<R = User, Parent = {}, Context = {}> = Resolver<

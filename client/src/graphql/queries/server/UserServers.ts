@@ -1,14 +1,11 @@
 import { gql } from 'apollo-boost'
+import * as fragments from '../../fragments'
 
 export default gql`
   query UserServers($userId: ID!) {
     userServers(userId: $userId) {
-      id
-      name
-      host {
-        id
-        email
-      }
+      ...Server
     }
   }
+  ${fragments.server}
 `

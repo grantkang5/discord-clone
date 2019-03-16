@@ -17,7 +17,7 @@ interface Props {
 }
 
 const ServerHeader = ({ server }: Props) => {
-  console.log('[ServeRHeader]: ', server)
+  console.log('[ServerHeader]: ', server)
   const me = useMe()
   const [anchorEl, handleMenu] = useState(null)
   const [inviteDialog, handleInviteDialog] = useState(false)

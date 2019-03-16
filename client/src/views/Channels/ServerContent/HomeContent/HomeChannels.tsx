@@ -1,7 +1,7 @@
 import React from 'react'
 import style from './HomeContent.module.css'
 import { useQuery } from 'react-apollo-hooks'
-import { GET_RECEIVED_INVITATIONS } from '../../../../graphql/mutations'
+import { GET_RECEIVED_INVITATIONS } from '../../../../graphql/queries'
 import { useMe } from '../../../../services/requireAuth'
 import ChannelWrapper from '../../../../components/ChannelWrapper'
 import Invitations from './Invitations'

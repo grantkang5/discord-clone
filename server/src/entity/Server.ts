@@ -23,6 +23,7 @@ export class Server extends BaseEntity {
   name: string
 
   @ManyToOne(() => User, user => user.hostedServers, { cascade: ["insert", "update"], eager: true })
+  @JoinTable()
   host: User
 
   @ManyToMany(() => User, user => user.joinedServers, { cascade: true, eager: true })
@@ -32,6 +33,6 @@ export class Server extends BaseEntity {
   @OneToMany(() => Channel, channel => channel.server, { cascade: ["insert", "update"], eager: true })
   channels: Channel[]
 
-  @OneToMany(() => Invitation, invitation => invitation.id)
+  @OneToMany(() => Invitation, invitation => invitation.id, { onDelete: 'CASCADE' })
   invitations: Invitation[]
 }

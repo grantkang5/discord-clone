@@ -1,22 +1,11 @@
 import { gql } from 'apollo-boost'
+import * as fragments from '../fragments'
 
 export default gql`
   subscription {
     sentInvitation {
-      id
-      server {
-        id
-        name
-      }
-      createdAt
-      sender {
-        id
-        email
-      }
-      receiver {
-        id
-        email
-      }
+      ...Invitation
     }
   }
+  ${fragments.invitation}
 `

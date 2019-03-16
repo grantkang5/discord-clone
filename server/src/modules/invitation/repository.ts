@@ -22,6 +22,22 @@ class InvitationRepository extends Repository<Invitation> {
     const sender = await User.findOne({ id: senderId })
     const server = await Server.findOne({ id: serverId })
 
+    const existingInvitation = await this.findOne({
+      server: {
+        id: server.id
+      },
+      sender: {
+        id: senderId
+      },
+      receiver: {
+        id: receiverId
+      }
+    })
+
+    if (existingInvitation) {
+      throw new Error("You've already sent this invitation")
+    }
+
     return await this.create({
       server,
       sender,

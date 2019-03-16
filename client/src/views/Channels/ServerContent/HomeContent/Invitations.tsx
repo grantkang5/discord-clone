@@ -11,6 +11,7 @@ const Invitations = ({ invitations }) => {
   const handleOpen = () => handleDialog(true)
   const handleClose = () => handleDialog(false)
   const acceptInvitation = useMutation(ACCEPT_SERVER_INVITATION)
+  console.log('[Invitations]: ', invitations)
 
   return (
     <React.Fragment>
