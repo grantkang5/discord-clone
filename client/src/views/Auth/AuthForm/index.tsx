@@ -10,7 +10,7 @@ import { CURRENT_USER } from '../../../graphql/queries'
 import FormInput from '../../../components/FormInput'
 import Button from '../../../components/Button'
 import axios from 'axios'
-import history from '../../../config/history';
+import history from '../../../config/history'
 
 interface FormValues {
   email: string
@@ -37,19 +37,21 @@ const AuthForm = ({ onSubmit, buttonLabel }: Props) => {
           { email, password }: FormValues,
           { setSubmitting, setFieldError }: FormikActions<FormValues>
         ) => {
-          onSubmit({ email, password })
-            .then(() => {
+          onSubmit({ email, password }).then(
+            () => {
               setSubmitting(false)
               history.push('/')
-            }, ({ response }) => {
+            },
+            ({ response }) => {
               setFieldError('email', response.data)
               setSubmitting(false)
-            })
+            }
+          )
         }}
         validationSchema={validationSchema}
         render={(props: FormikProps<FormValues>) => (
           <form onSubmit={props.handleSubmit}>
-            <div className='inputWrapper'>
+            <div className="inputWrapper">
               <FormInput
                 type="text"
                 name="email"
@@ -59,7 +61,7 @@ const AuthForm = ({ onSubmit, buttonLabel }: Props) => {
               />
             </div>
 
-            <div className='inputWrapper'>
+            <div className="inputWrapper">
               <FormInput
                 type="password"
                 name="password"
@@ -73,9 +75,13 @@ const AuthForm = ({ onSubmit, buttonLabel }: Props) => {
               )}
             </div>
 
-
-            <div className='buttonWrapper'>
-              <Button type="submit" fullwidth={true} disabled={props.isSubmitting}>
+            <div className="buttonWrapper">
+              <Button
+                type="submit"
+                fullwidth={true}
+                loading={props.isSubmitting}
+                disabled={props.isSubmitting}
+              >
                 {buttonLabel}
               </Button>
             </div>

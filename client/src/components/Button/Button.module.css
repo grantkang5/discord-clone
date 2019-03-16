@@ -43,3 +43,8 @@
   background-color: #3ca374;
   color: #FFF;
 }
+
+.spinnerWrapper {
+  width: 15px;
+  color: #FFF;
+}
