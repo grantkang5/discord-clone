@@ -35,8 +35,8 @@ export const resolvers: IResolvers = {
     logOut: async (_, __, { req, res }) => {
       const { user } = req
       req.logout()
-      res.clearCookie('jwt', { path: '/' })
       pubsub.publish(USER_LOGGED_OUT, { userLoggedOut: user })
+      res.clearCookie('jwt', { path: '/' })
       return user
     }
   },

@@ -15,7 +15,7 @@ export const useSubscriptions = () => {
           variables: { userId: data.deletedServer.host.id }
         })
       } catch (e) {
-        console.log(e)
+        history.push('/')
       }
 
       if (servers.userServers) {
@@ -46,9 +46,8 @@ export const useSubscriptions = () => {
           query: queries.CURRENT_USER
         })
       } catch (e) {
-        console.log(e)
+        console.log('[User Logged out Error]: ', e)
       }
-
       if (user.me) {
         client.clearStore().then(() => history.push('/'))
       }

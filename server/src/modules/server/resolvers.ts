@@ -9,9 +9,10 @@ const resolvers: IResolvers = {
     server: async (_, { serverId }) => {
       try {
         const server = await Server.findOne({ id: serverId })
+        if (!server) throw new Error('This server is no longer available')
         return server
       } catch (error) {
-        return new Error(error)
+        throw new Error(error)
       }
     },
     servers: async () => {

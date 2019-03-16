@@ -1,0 +1,23 @@
+.errorScreen {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  background: var(--gray);
+  color: #FFF;
+  font-size: 1.6rem;
+  font-weight: 600;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 1000;
+  flex-direction: column;
+}
+
+.errorPicture {
+  height: 150px;
+  width: 150px;
+  margin: 20px 0;
+}
