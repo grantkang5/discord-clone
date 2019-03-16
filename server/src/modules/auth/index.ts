@@ -12,7 +12,7 @@ router.post(
   passport.authenticate('local', { session: false }),
   async (req, res) => {
     req.logIn(req.user, { session: false }, error => {
-      if (error) res.status(400).send(error)
+      if (error) throw new Error(error)
     })
 
     const token = await jwt.sign(
@@ -22,15 +22,19 @@ router.post(
       jwtConfig.jwt.secret,
       jwtConfig.jwt.options
     )
-
-    await res.cookie('jwt', token, jwtConfig.cookie)
-    return res.status(200).json({ token: 'JWT ' + token })
+    
+    try {
+      await res.cookie('jwt', token, jwtConfig.cookie)
+      return res.status(200).json({ token })
+    } catch (err) {
+      throw new Error('Try again in a few minutes')
+    }
   }
 )
 
 router.post(
   '/signup',
-  async (req, _, next) => {
+  async (req, res, next) => {
     const { email, password } = req.body
 
     const hashedPassword = await bcrypt.hash(password, 10)
@@ -43,7 +47,7 @@ router.post(
     return getRepository(User)
       .findOne({ email })
       .then(existingUser => {
-        if (existingUser) throw new Error('This email is already in use')
+        if (existingUser) res.status(500).send('This email is already in use')
         return user.save()
       })
       .then(() => next())
@@ -51,7 +55,7 @@ router.post(
   passport.authenticate('local', { session: false }),
   async (req, res) => {
     req.logIn(req.user, { session: false }, error => {
-      if (error) res.status(400).send(error)
+      if (error) throw new Error(error)
     })
     const token = await jwt.sign(
       {
@@ -61,16 +65,13 @@ router.post(
       jwtConfig.jwt.options
     )
 
-    res.cookie('jwt', token, jwtConfig.cookie)
-    return res.status(200).json({ token: 'JWT ' + token })
+    try {
+      await res.cookie('jwt', token, jwtConfig.cookie)
+      return res.status(200).json({ token })
+    } catch (err) {
+      throw new Error('Try again in a few minutes')
+    }
   }
 )
-
-router.post('/logout', async (req, res) => {
-  const { user } = req;
-  req.logout()
-  res.clearCookie('jwt', jwtConfig.cookie)
-  return res.status(200).json({ user })
-})
 
 export default router

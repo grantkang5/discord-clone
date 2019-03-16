@@ -17,9 +17,12 @@ const webSocketLink = new WebSocketLink({
   uri: webSocketURI,
   options: {
     reconnect: true,
-    connectionParams: () => ({
-      
-    })
+    connectionParams: () => {
+      const match = document.cookie.match(new RegExp('(^| )' + 'jwt' + '=([^;]+)'))
+      return ({
+        authToken: match[2].substr(4).split('.', 3).join('.')
+      })
+    }
   }
 })
 

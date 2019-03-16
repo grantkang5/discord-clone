@@ -14,10 +14,11 @@ export const jwtConfig = {
     }
   },
   cookie: {
-    httpOnly: false,
+    httpOnly: true,
     sameSite: false,
     signed: true,
-    secure: false
+    secure: false,
+    path: '/'
   }
 }
 
@@ -41,12 +42,13 @@ passport.use(new LocalStrategy({ usernameField: 'email', session: false }, async
 
 passport.use(new JwtStrategy({
   secretOrKey: jwtConfig.jwt.secret,
-  jwtFromRequest: req => req.signedCookies['jwt']
+  jwtFromRequest: req => {
+    return req.signedCookies['jwt']
+  }
 }, (jwtPayload, done) => {
   if (Date.now() > jwtPayload.expires) {
     return done('Token expired')
   }
-  console.log('Authenticating SIGNED user with id: ', jwtPayload.user)
   User.findOne({ id: jwtPayload.user })
     .then(user => {
       if (!user) throw new Error('Invalid credentials')

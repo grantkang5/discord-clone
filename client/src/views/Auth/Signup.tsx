@@ -5,6 +5,7 @@ import AuthForm from './AuthForm'
 import { ReactComponent as Logo } from '../../assets/logo1.svg'
 
 import './Auth.css'
+import { signUp } from '../../services/requireAuth';
 
 const Signup = () => (
   <div className='authBackground'>
@@ -13,7 +14,7 @@ const Signup = () => (
       <header>
         <p className='title'>Create an account</p>
       </header>
-      <AuthForm type='SIGNUP' buttonLabel="Sign up" />
+      <AuthForm onSubmit={signUp} buttonLabel="Sign up" />
 
       <Link to="/login" className="app-link">
         Already have an account?
