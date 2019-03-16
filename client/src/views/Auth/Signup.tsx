@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { SIGN_UP } from '../../graphql/mutations'
 import AuthForm from './AuthForm'
 import { ReactComponent as Logo } from '../../assets/logo1.svg'
 

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { LOG_IN } from '../../graphql/mutations'
 import AuthForm from './AuthForm'
 import { ReactComponent as Logo } from '../../assets/logo1.svg'
 import classNames from 'classnames'
