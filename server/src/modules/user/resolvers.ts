@@ -31,6 +31,13 @@ export const resolvers: IResolvers = {
   Mutation: {
     editName: async (_, { userId, name }) => {
       return await getCustomRepository(UserRepository).editName({ userId, name })
+    },
+    logOut: async (_, __, { req, res }) => {
+      const { user } = req
+      req.logout()
+      res.clearCookie('jwt', { path: '/' })
+      pubsub.publish(USER_LOGGED_OUT, { userLoggedOut: user })
+      return user
     }
   },
 

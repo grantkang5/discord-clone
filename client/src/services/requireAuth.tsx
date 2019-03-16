@@ -4,20 +4,12 @@ import { Redirect } from 'react-router-dom'
 import axios from 'axios'
 
 import { CURRENT_USER } from '../graphql/queries'
-import { useSubscriptions } from './useSubscriptions';
+import { useSubscriptions } from './useSubscriptions'
 
 export const MyContext = React.createContext(null)
 export const useMe = () => useContext(MyContext)
-
-export const logIn = ({ email, password }) => {
-  axios.post('/api/auth/login', { email, password })
-}
-
-export const signUp = ({ email, password }) => {
-  axios.post('/api/auth/signup', { email, password })
-}
-
-export const logout = () => axios.post('/api/auth/logout')
+export const logIn = ({ email, password }) => axios.post('/api/auth/login', { email, password })
+export const signUp = ({ email, password }) => axios.post('/api/auth/signup', { email, password })
 
 const requireAuth = (Component: React.ComponentType) => {
   return props => {
@@ -25,9 +17,7 @@ const requireAuth = (Component: React.ComponentType) => {
     console.log('[REQUIRE AUTH]: ', data.me)
 
     if (!data.me) {
-      return (
-        <Redirect to="/login" />
-      )
+      return <Redirect to="/login" />
     }
 
     useSubscriptions()

@@ -10,6 +10,7 @@ import { CURRENT_USER } from '../../../graphql/queries'
 import FormInput from '../../../components/FormInput'
 import Button from '../../../components/Button'
 import axios from 'axios'
+import history from '../../../config/history';
 
 interface FormValues {
   email: string
@@ -17,11 +18,11 @@ interface FormValues {
 }
 
 interface Props {
-  type: string
+  onSubmit: Function
   buttonLabel: string
 }
 
-const AuthForm = ({ type, buttonLabel }: Props) => {
+const AuthForm = ({ onSubmit, buttonLabel }: Props) => {
   const { data } = useQuery(CURRENT_USER)
 
   if (data.me) {
@@ -36,11 +37,14 @@ const AuthForm = ({ type, buttonLabel }: Props) => {
           { email, password }: FormValues,
           { setSubmitting, setFieldError }: FormikActions<FormValues>
         ) => {
-          if (type === 'LOGIN') {
-            logIn({ email, password })
-          } else {
-            signUp({ email, password })
-          }
+          onSubmit({ email, password })
+            .then(() => {
+              setSubmitting(false)
+              history.push('/')
+            }, ({ response }) => {
+              setFieldError('email', response.data)
+              setSubmitting(false)
+            })
         }}
         validationSchema={validationSchema}
         render={(props: FormikProps<FormValues>) => (
