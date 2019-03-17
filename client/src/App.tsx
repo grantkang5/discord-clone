@@ -28,11 +28,5 @@ export default App
 
 /*
  * TODO: Create graphql-code-generator types for client side
- * TODO: Create query/mutation fragments
  * TODO: Optimize performance for queries using `client.query()` on hover links
- * TODO: Make sure to do lazy imports
- * ANCHOR: look into persist-cache
- * TODO: Rewrite imports using es7
- * TODO: CHANGE GRAPHQL authentication to REST to handle auth middleware simpler
- * TODO: use `const resetStore = useApolloClient().resetStore()` on logout
  */
