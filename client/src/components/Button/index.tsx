@@ -13,7 +13,6 @@ const Button = ({ children, ...buttonProps }) => {
     [style.loading]: buttonProps.loading
   })
 
-  // TODO - Add loading render and prop
   return (
     <button className={buttonStyle} {...buttonProps}>
       {buttonProps.loading ? <StyledSpinner /> : children}
