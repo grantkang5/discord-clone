@@ -39,10 +39,13 @@ const resolvers: IResolvers = {
     },
     joinServer: async (_, { serverId, userId }: { serverId: number, userId: number }) => {
       const joinedServer = await getCustomRepository(ServerRepository).joinServer({ serverId, userId })
+      pubsub.publish(USER_JOINED_SERVER, { userJoinedServer: joinedServer })
       return await joinedServer
     },
     acceptServerInvitation: async (_, { invitationId }) => {
-      return await getCustomRepository(ServerRepository).acceptServerInvitation({ invitationId })
+      const server = await getCustomRepository(ServerRepository).acceptServerInvitation({ invitationId })
+      pubsub.publish(USER_JOINED_SERVER, { userJoinedServer: server })
+      return await server
     },
     removeUserFromServer: async (_, { serverId, userId }) => {
       return await getCustomRepository(ServerRepository).removeUserFromServer({ serverId, userId })
@@ -53,7 +56,7 @@ const resolvers: IResolvers = {
     deletedServer: {
       subscribe: () => pubsub.asyncIterator([SERVER_DELETED])
     },
-    userAdded: {
+    userJoinedServer: {
       subscribe: () => pubsub.asyncIterator([USER_JOINED_SERVER])
     },
     removedUser: {

@@ -26,6 +26,6 @@ export default gql`
   extend type Subscription {
     deletedServer: Server
     removedUser: User
-    userAdded: Server
+    userJoinedServer: Server
   }
 `

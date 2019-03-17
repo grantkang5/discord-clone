@@ -3,6 +3,7 @@ import { Server } from '../../entity/Server'
 import { User } from '../../entity/User'
 import { Channel } from '../../entity/Channel';
 import { Invitation } from '../../entity/Invitation';
+import { findIndex } from 'lodash'
 
 @EntityRepository(Server)
 class ServerRepository extends Repository<Server> {
@@ -53,10 +54,20 @@ class ServerRepository extends Repository<Server> {
   }
 
   async joinServer({ serverId, userId }) {
-    const server = await this.findOne({ id: serverId })
-    const user = await User.findOne({ id: userId })
-    server.users = [...server.users, user]
-    return await server.save()
+    try {
+      const server = await this.findOne({ id: serverId })
+      const user = await User.findOne({ id: userId })
+      console.log(server, user)
+      const findUser = findIndex(server.users, serverUser => serverUser.id === user.id)
+      console.log('[Found user index]: ', findUser)
+      if (findUser > 0) {
+        throw new Error("You're already joined into this server")
+      }
+      server.users = [...server.users, user]
+      return await server.save()
+    } catch (error) {
+      throw new Error(error)
+    }
   }
 
   async acceptServerInvitation({ invitationId }) {

@@ -6,7 +6,7 @@ import { CREATE_SERVER, JOIN_SERVER } from '../../../graphql/mutations'
 import { useMe } from '../../../services/requireAuth'
 import Dialog from '@material-ui/core/Dialog'
 import Button from '../../../components/Button'
-import { GET_USER_SERVERS } from '../../../graphql/queries'
+import { GET_USER_SERVERS, GET_RECEIVED_INVITATIONS } from '../../../graphql/queries'
 import { hashids } from '../../../services/hashIds'
 
 const AddServer = () => {
@@ -39,15 +39,18 @@ const AddServer = () => {
     }).then(() => handleClose())
   }
   const handleJoinServer = () => {
-    /* STUB - subscribe this */
     const serverIdEncoded = prompt('Server id: ')
     const serverId = hashids.decode(serverIdEncoded)[0]
     joinServer({
       variables: {
         userId: me.id,
         serverId
-      }
-    })
+      },
+      refetchQueries: [
+        { query: GET_USER_SERVERS, variables: { userId: me.id } },
+        { query: GET_RECEIVED_INVITATIONS, variables: { userId: me.id } }
+      ]
+    }).then(() => handleClose())
   }
 
   return (

@@ -73,7 +73,6 @@ const ServerHeader = ({ server }: Props) => {
             <span className={style.delete}>Delete Server</span>
           </StyledMenuItem>
         ) : (
-          // TODO - Add Leave Server api
           <StyledMenuItem>
             <span className={style.delete}>Leave Server</span>
           </StyledMenuItem>

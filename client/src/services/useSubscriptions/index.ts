@@ -3,13 +3,16 @@ import { useSubscription } from 'react-apollo-hooks'
 import {
   DELETED_SERVER,
   USER_LOGGED_OUT,
-  SENT_INVITATION
-} from '../graphql/subscriptions'
-import * as queries from '../graphql/queries'
-import * as fragments from '../graphql/fragments'
-import history from '../config/history'
-import { CURRENT_USER } from '../graphql/queries'
+  SENT_INVITATION,
+  USER_JOINED_SERVER
+} from '../../graphql/subscriptions'
+import * as queries from '../../graphql/queries'
+import * as fragments from '../../graphql/fragments'
+import history from '../../config/history'
+import { CURRENT_USER } from '../../graphql/queries'
+import { find } from 'lodash'
 
+/** TODO - Organize subscriptions by modules */
 export const useSubscriptions = () => {
   /** DeleteServer subscription */
   useSubscription(DELETED_SERVER, {
@@ -68,6 +71,33 @@ export const useSubscriptions = () => {
         } catch (error) {
           throw new Error(error)
         }
+      }
+    }
+  })
+
+  useSubscription(USER_JOINED_SERVER, {
+    onSubscriptionData: async ({ client, subscriptionData: { data } }) => {
+      try {
+        const { me } = client.readQuery({
+          query: queries.CURRENT_USER
+        })
+        const { userServers } = client.readQuery({
+          query: queries.GET_USER_SERVERS,
+          variables: { userId: me.id }
+        })
+        const foundServer = find(userServers, server => server.id === data.userJoinedServer.id)
+        if (foundServer) {
+          console.log('[User joined server]: fOund SERVER!')
+          client.writeQuery({
+            query: queries.GET_SERVER,
+            variables: { serverId: data.userJoinedServer.id },
+            data: {
+              server: data.userJoinedServer
+            }
+          })
+        }
+      } catch (error) {
+        throw new Error(error)
       }
     }
   })
