@@ -1,0 +1,24 @@
+.titleWrapper {
+  flex: 0 0 auto;
+  position: relative;
+  z-index: 100;
+}
+.titleContainer {
+  flex: 0 0 auto;
+  background: var(--darker);
+  box-shadow: 0 1px 0 rgba(0,0,0,.2), 0 2px 0 rgba(0,0,0,.06);
+  color: #FFF;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  padding: 0 8px 0 12px;
+  justify-content: space-between;
+  overflow: hidden;
+}
+.title {
+  line-height: 22px;
+  font-weight: 900;
+}
+.options {
+
+}

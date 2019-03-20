@@ -1,14 +1,14 @@
 import React, { Suspense } from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
-import MainProvider from '../../services/MainProvider'
+import ChannelsProvider from '../../services/ChannelsProvider'
 import Channels from '../Channels'
 import { Loading } from '../../components/Loaders'
 
 const Main = () => {
   return (
-    <MainProvider>
+    <ChannelsProvider>
       <Channels />
-    </MainProvider>
+    </ChannelsProvider>
   )
 }
 

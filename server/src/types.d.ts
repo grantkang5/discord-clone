@@ -284,9 +284,9 @@ export namespace ChannelResolvers {
 
     name?: NameResolver<Maybe<string>, TypeParent, Context>;
 
-    type?: TypeResolver<Maybe<ChannelType>, TypeParent, Context>;
+    type?: TypeResolver<Maybe<string>, TypeParent, Context>;
 
-    server?: ServerResolver<Maybe<(Maybe<Server>)[]>, TypeParent, Context>;
+    server?: ServerResolver<Maybe<Server>, TypeParent, Context>;
   }
 
   export type IdResolver<
@@ -300,12 +300,16 @@ export namespace ChannelResolvers {
     Context = {}
   > = Resolver<R, Parent, Context>;
   export type TypeResolver<
-    R = Maybe<ChannelType>,
+    R = Maybe<string>,
     Parent = Channel,
     Context = {}
-  > = Resolver<R, Parent, Context>;
+  > = Resolver<R, Parent, Context, TypeArgs>;
+  export interface TypeArgs {
+    channelType?: Maybe<ChannelType>;
+  }
+
   export type ServerResolver<
-    R = Maybe<(Maybe<Server>)[]>,
+    R = Maybe<Server>,
     Parent = Channel,
     Context = {}
   > = Resolver<R, Parent, Context>;
@@ -380,6 +384,8 @@ export namespace MutationResolvers {
     >;
 
     createChannel?: CreateChannelResolver<Maybe<Channel>, TypeParent, Context>;
+
+    changeChannel?: ChangeChannelResolver<Maybe<Channel>, TypeParent, Context>;
 
     deleteChannel?: DeleteChannelResolver<Maybe<Channel>, TypeParent, Context>;
 
@@ -484,11 +490,22 @@ export namespace MutationResolvers {
     Context = {}
   > = Resolver<R, Parent, Context, CreateChannelArgs>;
   export interface CreateChannelArgs {
-    type: ChannelType;
+    type: string;
 
     name: string;
 
     serverId: string;
+  }
+
+  export type ChangeChannelResolver<
+    R = Maybe<Channel>,
+    Parent = {},
+    Context = {}
+  > = Resolver<R, Parent, Context, ChangeChannelArgs>;
+  export interface ChangeChannelArgs {
+    channelId: string;
+
+    name: string;
   }
 
   export type DeleteChannelResolver<
@@ -535,7 +552,11 @@ export namespace SubscriptionResolvers {
 
     removedUser?: RemovedUserResolver<Maybe<User>, TypeParent, Context>;
 
-    userAdded?: UserAddedResolver<Maybe<Server>, TypeParent, Context>;
+    userJoinedServer?: UserJoinedServerResolver<
+      Maybe<Server>,
+      TypeParent,
+      Context
+    >;
 
     sentInvitation?: SentInvitationResolver<
       Maybe<Invitation>,
@@ -569,7 +590,7 @@ export namespace SubscriptionResolvers {
     Parent = {},
     Context = {}
   > = SubscriptionResolver<R, Parent, Context>;
-  export type UserAddedResolver<
+  export type UserJoinedServerResolver<
     R = Maybe<Server>,
     Parent = {},
     Context = {}

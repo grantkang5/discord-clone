@@ -1,0 +1,70 @@
+.channelForm {
+  width: 440px;
+  color: #FFF;
+}
+
+.header {
+  flex: 0 0 auto;
+  word-wrap: break-word;
+  overflow-x: hidden;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  padding: 20px;
+}
+
+.header > h4 {
+  font-weight: 800;
+  text-transform: uppercase;
+  margin: 0;
+}
+.header > p {
+  font-size: 0.8rem;
+  margin: 0;
+  color: #b9bbbe;
+}
+
+.channelType {
+  margin-bottom: 20px;
+  padding: 0 20px;
+}
+.channelType > p {
+  color: #b9bbbe;
+}
+
+.inputWrapper {
+  margin-bottom: 20px;
+  padding: 0 20px;
+}
+
+.scroller {
+  overflow-x: hidden;
+  padding: 0 12px 0 20px;
+  overflow-y: scroll;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.bottom {
+  box-shadow: inset 0 1px 0 rgba(47, 49, 54, .6);
+  background-color: #2f3136;
+  padding: 20px;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  flex-direction: row-reverse;
+}
+
+.button {
+  background: transparent;
+  outline: none;
+  border: none;
+  color: #FFF;
+  font-weight: 500;
+  font-size: 0.8rem;
+  margin-right: 10px;
+}

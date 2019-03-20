@@ -5,9 +5,9 @@ import {
   BaseEntity,
   ManyToOne
 } from 'typeorm'
-import { Server } from './Server';
+import { Server } from './Server'
 
-export type ChannelType = "text" | "voice"
+export type ChannelType = 'text' | 'voice'
 
 @Entity()
 export class Channel extends BaseEntity {
@@ -17,9 +17,11 @@ export class Channel extends BaseEntity {
   @Column()
   name: string
 
-  @Column({ type: "enum", enum: ["text", "voice"] })
+  @Column({ type: 'enum', enum: ['text', 'voice'] })
   type: ChannelType
 
-  @ManyToOne(() => Server, server => server.channels, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Server, server => server.channels, {
+    onDelete: "CASCADE"
+  })
   server: Server
 }

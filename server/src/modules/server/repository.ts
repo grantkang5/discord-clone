@@ -57,9 +57,7 @@ class ServerRepository extends Repository<Server> {
     try {
       const server = await this.findOne({ id: serverId })
       const user = await User.findOne({ id: userId })
-      console.log(server, user)
       const findUser = findIndex(server.users, serverUser => serverUser.id === user.id)
-      console.log('[Found user index]: ', findUser)
       if (findUser > 0) {
         throw new Error("You're already joined into this server")
       }

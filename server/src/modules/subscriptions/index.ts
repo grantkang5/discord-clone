@@ -15,5 +15,8 @@ export const INVITATION_SENT = 'INVITATION_SENT'
 export const INVITATION_DELETED = 'INVITATION_DELETED'
 
 /** Channel Subscriptions */
+export const CHANNEL_CREATED = 'CHANNEL_CREATED'
+export const CHANNEL_DELETED = 'CHANNEL_DELETED'
+export const CHANNEL_CHANGED = 'CHANNEL_CHANGED'
 
 export const pubsub = new PubSub()

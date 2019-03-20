@@ -4,6 +4,9 @@
   height: 100%;
   position: relative;
   min-height: 0;
+  flex-direction: column;
+  flex: 1;
+  padding: 60px 6px 60px 20px;
 }
 
 .channelsScroller {

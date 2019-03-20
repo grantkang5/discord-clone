@@ -1,0 +1,64 @@
+.headerWrapepr {
+  flex: 0 0 auto;
+}
+
+.channelsBox {
+  background-color: #2f3136;
+  flex-shrink: 0;
+  width: 240px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.header {
+  cursor: pointer;
+  color: #fff;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 2px 0 rgba(0, 0, 0, 0.06);
+  height: 48px;
+  display: flex;
+  font-weight: 500;
+  padding: 0 12px 0 16px;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.header > span {
+  flex: 1;
+  line-height: 48px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* content */
+.homeNavigation {
+  opacity: 1;
+}
+
+.invitationItem {
+  color: #b9bbbe;
+  font-weight: 500;
+  line-height: 20px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: background 200ms ease, color 200ms ease;
+  padding: 6px 10px;
+  border-radius: 3px;
+  margin-bottom: 2px;
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.invitationItem:hover {
+  background: rgba(185, 187, 190, 0.1);
+  color: #f6f6f7;
+}
+
+.arrow {
+  width: 12px;
+}

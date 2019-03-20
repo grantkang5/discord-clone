@@ -11,6 +11,10 @@ import * as fragments from '../../graphql/fragments'
 import history from '../../config/history'
 import { CURRENT_USER } from '../../graphql/queries'
 import { find } from 'lodash'
+import {
+  CREATED_CHANNEL,
+  DELETED_CHANNEL
+} from '../../graphql/subscriptions/channel'
 
 /** TODO - Organize subscriptions by modules */
 export const useSubscriptions = () => {
@@ -65,7 +69,10 @@ export const useSubscriptions = () => {
             query: queries.GET_RECEIVED_INVITATIONS,
             variables: { userId: me.id },
             data: {
-              getReceivedInvitations: [...getReceivedInvitations, data.sentInvitation]
+              getReceivedInvitations: [
+                ...getReceivedInvitations,
+                data.sentInvitation
+              ]
             }
           })
         } catch (error) {
@@ -85,7 +92,10 @@ export const useSubscriptions = () => {
           query: queries.GET_USER_SERVERS,
           variables: { userId: me.id }
         })
-        const foundServer = find(userServers, server => server.id === data.userJoinedServer.id)
+        const foundServer = find(
+          userServers,
+          server => server.id === data.userJoinedServer.id
+        )
         if (foundServer) {
           console.log('[User joined server]: fOund SERVER!')
           client.writeQuery({
@@ -93,6 +103,68 @@ export const useSubscriptions = () => {
             variables: { serverId: data.userJoinedServer.id },
             data: {
               server: data.userJoinedServer
+            }
+          })
+        }
+      } catch (error) {
+        throw new Error(error)
+      }
+    }
+  })
+
+  /** Channel Subscriptions */
+  useSubscription(CREATED_CHANNEL, {
+    onSubscriptionData: async ({ client, subscriptionData: { data } }) => {
+      try {
+        const { me } = client.readQuery({
+          query: queries.CURRENT_USER
+        })
+
+        const foundUser = find(
+          data.createdChannel.server.users,
+          user => user.id === me.id
+        )
+        if (foundUser) {
+          const { getServerChannels } = client.readQuery({
+            query: queries.GET_SERVER_CHANNELS,
+            variables: { serverId: data.createdChannel.server.id }
+          })
+
+          client.writeQuery({
+            query: queries.GET_SERVER_CHANNELS,
+            variables: { serverId: data.createdChannel.server.id },
+            data: {
+              getServerChannels: [...getServerChannels, data.createdChannel]
+            }
+          })
+        }
+      } catch (error) {
+        throw new Error(error)
+      }
+    }
+  })
+
+  useSubscription(DELETED_CHANNEL, {
+    onSubscriptionData: async ({ client, subscriptionData: { data } }) => {
+      try {
+        const { me } = client.readQuery({ query: queries.CURRENT_USER })
+        const foundUser = find(
+          data.deletedChannel.server.users,
+          user => user.id === me.id
+        )
+        if (foundUser) {
+          const { getServerChannels } = client.readQuery({
+            query: queries.GET_SERVER_CHANNELS,
+            variables: { serverId: data.deletedChannel.server.id }
+          })
+
+          client.writeQuery({
+            query: queries.GET_SERVER_CHANNELS,
+            variables: { serverId: data.deletedChannel.server.id },
+            data: {
+              getServerChannels: getServerChannels.filter(
+                channel => channel.id !== data.deletedChannel.id
+              )
             }
           })
         }

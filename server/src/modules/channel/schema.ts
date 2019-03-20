@@ -9,8 +9,8 @@ export default gql`
   type Channel {
     id: ID
     name: String
-    type: ChannelType
-    server: [Server]
+    type(channelType: ChannelType): String
+    server: Server
   }
 
   extend type Query {
@@ -18,7 +18,14 @@ export default gql`
   }
 
   extend type Mutation {
-    createChannel(type: ChannelType!, name: String!, serverId: ID!): Channel
+    createChannel(type: String!, name: String!, serverId: ID!): Channel
+    changeChannel(channelId: ID!, name: String!): Channel
     deleteChannel(channelId: ID!): Channel
+  }
+
+  extend type Subscription {
+    deletedChannel: Channel
+    createdChannel: Channel
+    changedChannel: Channel
   }
 `

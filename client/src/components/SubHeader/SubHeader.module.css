@@ -1,0 +1,42 @@
+.subHeaderWrapper {
+  position: relative;
+}
+.subHeader {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 16px;
+  color: #72767d;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  flex-shrink: 0;
+  padding: 6px 10px;
+  transition: color .1s ease-out;
+  position: relative;
+  cursor: pointer;
+}
+
+.subHeader:hover {
+  color: #b9bbbe;
+}
+
+.arrow {
+  position: absolute;
+  left: -9px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 16px;
+  transition: transform 200ms ease;
+}
+.arrow.open {
+  transform: translateY(-50%) rotate(90deg);
+}
+
+.addIcon {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 20px;
+}

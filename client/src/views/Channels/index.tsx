@@ -7,12 +7,12 @@ import { GET_USER_SERVERS } from '../../graphql/queries'
 import { useMe } from '../../services/requireAuth'
 import { useQuery } from 'react-apollo-hooks'
 import pathToRegexp from 'path-to-regexp'
-import UserContent from './ServerContent/UserContent';
-import { Loading } from '../../components/Loaders';
-import ServerChat from './ServerContent/ServerChat';
+import UserContent from './UserContent'
+import { Loading } from '../../components/Loaders'
+import ServerChat from './ServerChat'
 
-const ServerContent = lazy(() => import('./ServerContent/ServerContent'))
-const HomeContent = lazy(() => import('./ServerContent/HomeContent'))
+const ServerContent = lazy(() => import('./ServerContent'))
+const HomeContent = lazy(() => import('./HomeContent'))
 
 const Channels = ({ location }) => {
   const me = useMe()
@@ -25,25 +25,16 @@ const Channels = ({ location }) => {
 
   return (
     <main className={style.mainApp}>
-      <ServerList
-        serverId={path ? path[1] : null}
-        servers={data.userServers}
-      />
+      <ServerList serverId={path ? path[1] : null} servers={data.userServers} />
 
       <div className={style.contentBox}>
-        <div className={style.channelsBox}>
-          <Suspense fallback={<Loading />}>
-            <Switch>
-              <Route path='/channels/@me' component={HomeContent} />
-              <Route path='/channels/:serverId' component={ServerContent} />
-              <Redirect to="/channels/@me" />
-            </Switch>
-          </Suspense>
-
-          <UserContent />
-        </div>
-
-        <ServerChat />
+        <Suspense fallback={<Loading />}>
+          <Switch>
+            <Route path="/channels/@me" component={HomeContent} />
+            <Route path="/channels/:serverId" component={ServerContent} />
+            <Redirect to="/channels/@me" />
+          </Switch>
+        </Suspense>
       </div>
     </main>
   )
