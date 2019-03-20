@@ -25,7 +25,6 @@ interface Props {
 }
 
 const ServerChannels = ({ server }: Props) => {
-  // TODO - Create & Add Channels Query
   const { data } = useQuery(GET_SERVER_CHANNELS, {
     variables: { serverId: server.id },
     suspend: true
