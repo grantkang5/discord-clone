@@ -44,7 +44,8 @@
     "yup": "^0.26.10",
     "classnames": "^2.2.6",
     "path-to-regexp": "3.0.0",
-    "hashids": "1.2.2"
+    "hashids": "1.2.2",
+    "moment": "2.24.0"
   },
   "scripts": {
     "dev": "concurrently \"nodemon ./server.ts\" \"react-scripts start\"",

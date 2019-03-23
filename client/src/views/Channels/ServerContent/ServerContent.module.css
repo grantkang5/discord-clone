@@ -88,18 +88,20 @@
 }
 
 .settingsIcon {
-  display: none;
+  pointer-events: none;
   position: absolute;
   right: 0;
-  opacity: 0.5;
+  opacity: 0;
   height: 17px;
   transform: display 200ms ease;
 }
 .settingsIcon.show {
-  display: inline;
+  opacity: 0.5;
+  pointer-events: auto;
 }
 .channel:hover > .settingsIcon {
-  display: inline;
+  opacity: 0.5;
+  pointer-events: auto;
 }
 
 .subHeaderWrapper {

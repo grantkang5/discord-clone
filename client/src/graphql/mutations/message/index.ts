@@ -1,0 +1,1 @@
+export { default as POST_MESSAGE } from './PostMessage'

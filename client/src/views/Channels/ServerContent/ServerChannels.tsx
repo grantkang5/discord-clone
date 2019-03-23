@@ -36,12 +36,17 @@ const ServerChannels = ({ server }: Props) => {
   const [textChannelOpen, handleTextChannel] = useState(true)
   const [voiceChannelOpen, handleVoiceChannel] = useState(true)
   const channels = groupBy(data.getServerChannels, channels => channels.type)
+  console.log('[ACTIVECHANNEL]: ', activeChannel)
 
   useEffect(() => {
     if (!activeChannel) {
       handleActiveChannel(channels.text[0])
     }
   }, [])
+
+  if (!activeChannel) {
+    return null
+  }
 
   return (
     <ChannelWrapper>
@@ -68,7 +73,7 @@ const ServerChannels = ({ server }: Props) => {
                 <SettingsIcon
                   className={settingsIconStyle}
                   aria-haspopup="true"
-                  aria-owns={anchorEl ? `channel${channel.id}` : undefined}
+                  aria-owns={anchorEl ? `channel` : undefined}
                   onClick={e => {
                     e.stopPropagation()
                     handleMenu(e.currentTarget)
@@ -97,8 +102,8 @@ const ServerChannels = ({ server }: Props) => {
                   }}>Change name</StyledMenuItem>
                   <StyledMenuItem
                     onClick={() => {
+                      handleMenu(null)
                       deleteChannel({ variables: { channelId: channel.id } })
-                        .then(() => handleMenu(null))
                     }}
                   >
                     Delete channel

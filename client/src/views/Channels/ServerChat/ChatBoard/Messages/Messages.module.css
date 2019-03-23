@@ -1,0 +1,125 @@
+.divider {
+  margin: 20px 20px -20px;
+  border: none;
+  border-bottom: 1px solid transparent;
+}
+.divider.enabled {
+  border-bottom-color: hsla(0, 0%, 100%, .04);
+}
+
+.dateDivider {
+  cursor: default;
+  margin-left: 20px;
+  margin-right: 20px;
+  text-align: center; 
+}
+.dividerContent {
+  color: rgba(153, 179, 181, .5);
+  display: flex;
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 19px;
+  align-items: center;
+}
+.dividerContent:before {
+  border-color: #474a4f;
+  margin-right: 8px;
+  right: 100%;
+  content: '';
+  border-bottom: 1px solid;
+  height: 1px;
+  flex: 1 1 auto;
+}
+.dividerContent:after {
+  border-color: #474a4f;
+  left: 100%;
+  margin-left: 8px;
+  border-bottom: 1px solid;
+  content: '';
+  flex: 1 1 auto;
+  height: 1px;
+}
+
+.messageWrapper {
+  overflow: hidden;
+  padding: 20px 0;
+  user-select: text;
+  word-wrap: break-word;
+  box-sizing: border-box;
+  outline: 0;
+  border: 0;
+}
+.messageContainer {
+  margin-bottom: .2em;
+  outline: 0;
+  border: 0;
+}
+.messageHeaderWrapper {
+  display: flex;
+  align-content: normal;
+  align-items: flex-start;
+  height: 1.3em;
+  box-align: start;
+}
+.userAvatarContainer {
+  cursor: pointer;
+  margin: -2px 20px 20px;
+  opacity: 1;
+  transition: opacity .2 ease;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  position: relative;
+}
+.messageHeader {
+  color: hsla(0, 0%, 100%, .2);
+  white-space: nowrap;
+}
+.name {
+  color: #FFF;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+.time {
+  color: hsla(0, 0%, 100%, .2);
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  margin-left: .3rem;
+  white-space: nowrap;
+}
+
+.message {
+  margin-left: 80px;
+  padding-right: 10px;
+  color: #FFF;
+  font-size: 0.9rem;
+  letter-spacing: 0;
+  font-weight: 400;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
+
+.messageText {
+  flex: 1 1 auto;
+}
+
+.options {
+  display: none;
+}
+.message:hover > .options {
+  display: inline;
+}
+.verticalIcon {
+  height: 0.9rem;
+  max-height: 100%;
+  color: hsla(0, 0%, 100%, .6);
+  cursor: pointer;
+}
+.verticalIcon:hover {
+  color: hsla(0, 0%, 100%, .9);
+}

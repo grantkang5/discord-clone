@@ -9,6 +9,7 @@ import {
 } from 'typeorm'
 import { Server } from './Server'
 import { Invitation } from './Invitation'
+import { Message } from './Message'
 
 @Unique(['email'])
 @Entity()
@@ -36,4 +37,10 @@ export class User extends BaseEntity {
 
   @OneToMany(() => Invitation, invitation => invitation.receiver)
   receivedInvitations: Invitation[]
+
+  @OneToMany(() => Message, message => message.sender, {
+    cascade: ['insert', 'update'],
+    eager: false
+  })
+  senderMessages: Message[]
 }

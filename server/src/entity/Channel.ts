@@ -3,9 +3,11 @@ import {
   PrimaryGeneratedColumn,
   Column,
   BaseEntity,
-  ManyToOne
+  ManyToOne,
+  OneToMany
 } from 'typeorm'
 import { Server } from './Server'
+import { Message } from './Message'
 
 export type ChannelType = 'text' | 'voice'
 
@@ -14,14 +16,20 @@ export class Channel extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number
 
-  @Column()
+  @Column({ nullable: true })
   name: string
 
-  @Column({ type: 'enum', enum: ['text', 'voice'] })
+  @Column({ nullable: true, type: 'enum', enum: ['text', 'voice'] })
   type: ChannelType
 
   @ManyToOne(() => Server, server => server.channels, {
-    onDelete: "CASCADE"
+    onDelete: 'CASCADE'
   })
   server: Server
+
+  @OneToMany(() => Message, message => message.channel, {
+    cascade: ['insert', 'update'],
+    eager: false
+  })
+  messages: Message[]
 }
