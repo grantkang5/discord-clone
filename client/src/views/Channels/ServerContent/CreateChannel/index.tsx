@@ -90,6 +90,7 @@ const CreateChannel = ({ open, handleDialog, server }: Props) => {
                 </div>
                 <div className={style.inputWrapper}>
                   <FormInput
+                    autoComplete="off"
                     formikProps={props}
                     label="channel name"
                     type="text"

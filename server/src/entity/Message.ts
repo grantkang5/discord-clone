@@ -4,7 +4,10 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
+  ManyToOne
 } from 'typeorm'
+import { Channel } from './Channel'
+import { User } from './User'
 
 @Entity()
 export class Message extends BaseEntity {
@@ -16,4 +19,16 @@ export class Message extends BaseEntity {
 
   @Column()
   message: string
+
+  @ManyToOne(() => User, user => user.senderMessages, {
+    cascade: ['insert', 'update'],
+    eager: true
+  })
+  sender: User
+
+  @ManyToOne(() => Channel, channel => channel.messages, {
+    cascade: ['insert', 'update'],
+    eager: true
+  })
+  channel: Channel
 }

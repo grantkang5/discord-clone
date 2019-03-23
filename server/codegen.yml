@@ -13,5 +13,6 @@ generates:
         Server: ./src/entity/Server#Server
         Channel: ./src/entity/Channel#Channel
         Invitation: ./src/entity/Invitation#Invitation
+        Message: ./src/entity/Message#Message
       scalars:
         Date: Date

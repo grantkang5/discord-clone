@@ -22,11 +22,19 @@ export const onConnect = (_, webSocket) => {
       authToken,
       jwtConfig.jwt.secret,
       jwtConfig.cookie,
-      async (err, { user }) => {
-        if (err) throw new Error(err)
-        redisClient.hset('users', authToken, user)
-        const verifiedUser = await User.findOne({ id: user })
-        redisPubSub.publish(USER_LOGGED_IN, { userLoggedIn: verifiedUser })
+      async (err, decoded) => {
+        if (err && err.name === 'TokenExpiredError') {
+          redisClient.hdel('users', authToken)
+          const userId = redisClient.hget('users', authToken)
+          const verifiedUser = await User.findOne({ id: userId })
+          redisPubSub.publish(USER_LOGGED_OUT, {
+            userLoggedOut: verifiedUser
+          })
+        } else if (decoded) {
+          redisClient.hset('users', authToken, decoded.user)
+          const verifiedUser = await User.findOne({ id: decoded.user })
+          redisPubSub.publish(USER_LOGGED_IN, { userLoggedIn: verifiedUser })
+        }
       }
     )
   }
@@ -55,7 +63,7 @@ export const onDisconnect = webSocket => {
               const userId = redisClient.hget('users', authToken)
               const verifiedUser = await User.findOne({ id: userId })
               redisPubSub.publish(USER_LOGGED_OUT, {
-                uesrLoggedOut: verifiedUser
+                userLoggedOut: verifiedUser
               })
             }
           } else if (decoded) {

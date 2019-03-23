@@ -19,6 +19,8 @@ import { Channel } from "./src/entity/Channel";
 
 import { Invitation } from "./src/entity/Invitation";
 
+import { Message } from "./src/entity/Message";
+
 export type Resolver<Result, Parent = {}, Context = {}, Args = {}> = (
   parent: Parent,
   args: Args,
@@ -72,6 +74,12 @@ export namespace QueryResolvers {
   export interface Resolvers<Context = {}, TypeParent = {}> {
     users?: UsersResolver<Maybe<User[]>, TypeParent, Context>;
 
+    onlineUsers?: OnlineUsersResolver<
+      Maybe<(Maybe<User>)[]>,
+      TypeParent,
+      Context
+    >;
+
     user?: UserResolver<Maybe<User>, TypeParent, Context>;
 
     me?: MeResolver<Maybe<User>, TypeParent, Context>;
@@ -109,6 +117,18 @@ export namespace QueryResolvers {
       TypeParent,
       Context
     >;
+
+    getMessages?: GetMessagesResolver<
+      Maybe<(Maybe<Message>)[]>,
+      TypeParent,
+      Context
+    >;
+
+    getUserMessages?: GetUserMessagesResolver<
+      Maybe<(Maybe<Message>)[]>,
+      TypeParent,
+      Context
+    >;
   }
 
   export type UsersResolver<
@@ -116,6 +136,15 @@ export namespace QueryResolvers {
     Parent = {},
     Context = {}
   > = Resolver<R, Parent, Context>;
+  export type OnlineUsersResolver<
+    R = Maybe<(Maybe<User>)[]>,
+    Parent = {},
+    Context = {}
+  > = Resolver<R, Parent, Context, OnlineUsersArgs>;
+  export interface OnlineUsersArgs {
+    serverId: string;
+  }
+
   export type UserResolver<
     R = Maybe<User>,
     Parent = {},
@@ -186,6 +215,24 @@ export namespace QueryResolvers {
     Context = {}
   > = Resolver<R, Parent, Context, GetReceivedInvitationsArgs>;
   export interface GetReceivedInvitationsArgs {
+    userId: string;
+  }
+
+  export type GetMessagesResolver<
+    R = Maybe<(Maybe<Message>)[]>,
+    Parent = {},
+    Context = {}
+  > = Resolver<R, Parent, Context, GetMessagesArgs>;
+  export interface GetMessagesArgs {
+    channelId: string;
+  }
+
+  export type GetUserMessagesResolver<
+    R = Maybe<(Maybe<Message>)[]>,
+    Parent = {},
+    Context = {}
+  > = Resolver<R, Parent, Context, GetUserMessagesArgs>;
+  export interface GetUserMessagesArgs {
     userId: string;
   }
 }
@@ -355,6 +402,46 @@ export namespace InvitationResolvers {
   > = Resolver<R, Parent, Context>;
 }
 
+export namespace MessageResolvers {
+  export interface Resolvers<Context = {}, TypeParent = Message> {
+    id?: IdResolver<Maybe<string>, TypeParent, Context>;
+
+    createdAt?: CreatedAtResolver<Maybe<Date>, TypeParent, Context>;
+
+    message?: MessageResolver<Maybe<string>, TypeParent, Context>;
+
+    sender?: SenderResolver<Maybe<User>, TypeParent, Context>;
+
+    channel?: ChannelResolver<Maybe<Channel>, TypeParent, Context>;
+  }
+
+  export type IdResolver<
+    R = Maybe<string>,
+    Parent = Message,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type CreatedAtResolver<
+    R = Maybe<Date>,
+    Parent = Message,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type MessageResolver<
+    R = Maybe<string>,
+    Parent = Message,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type SenderResolver<
+    R = Maybe<User>,
+    Parent = Message,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type ChannelResolver<
+    R = Maybe<Channel>,
+    Parent = Message,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+}
+
 export namespace MutationResolvers {
   export interface Resolvers<Context = {}, TypeParent = {}> {
     editName?: EditNameResolver<User, TypeParent, Context>;
@@ -400,6 +487,12 @@ export namespace MutationResolvers {
       TypeParent,
       Context
     >;
+
+    postMessage?: PostMessageResolver<Maybe<Message>, TypeParent, Context>;
+
+    editMessage?: EditMessageResolver<Maybe<Message>, TypeParent, Context>;
+
+    deleteMessage?: DeleteMessageResolver<Maybe<Message>, TypeParent, Context>;
   }
 
   export type EditNameResolver<R = User, Parent = {}, Context = {}> = Resolver<
@@ -538,21 +631,42 @@ export namespace MutationResolvers {
   export interface DeleteInvitationArgs {
     invitationId: string;
   }
+
+  export type PostMessageResolver<
+    R = Maybe<Message>,
+    Parent = {},
+    Context = {}
+  > = Resolver<R, Parent, Context, PostMessageArgs>;
+  export interface PostMessageArgs {
+    channelId: string;
+
+    message: string;
+  }
+
+  export type EditMessageResolver<
+    R = Maybe<Message>,
+    Parent = {},
+    Context = {}
+  > = Resolver<R, Parent, Context, EditMessageArgs>;
+  export interface EditMessageArgs {
+    messageId: string;
+  }
+
+  export type DeleteMessageResolver<
+    R = Maybe<Message>,
+    Parent = {},
+    Context = {}
+  > = Resolver<R, Parent, Context, DeleteMessageArgs>;
+  export interface DeleteMessageArgs {
+    messageId: string;
+  }
 }
 
 export namespace SubscriptionResolvers {
   export interface Resolvers<Context = {}, TypeParent = {}> {
-    userLoggedIn?: UserLoggedInResolver<
-      Maybe<(Maybe<User>)[]>,
-      TypeParent,
-      Context
-    >;
+    userLoggedIn?: UserLoggedInResolver<Maybe<User>, TypeParent, Context>;
 
-    userLoggedOut?: UserLoggedOutResolver<
-      Maybe<(Maybe<User>)[]>,
-      TypeParent,
-      Context
-    >;
+    userLoggedOut?: UserLoggedOutResolver<Maybe<User>, TypeParent, Context>;
 
     deletedServer?: DeletedServerResolver<Maybe<Server>, TypeParent, Context>;
 
@@ -587,15 +701,25 @@ export namespace SubscriptionResolvers {
       TypeParent,
       Context
     >;
+
+    sentMessage?: SentMessageResolver<Maybe<Message>, TypeParent, Context>;
+
+    deletedMessage?: DeletedMessageResolver<
+      Maybe<Message>,
+      TypeParent,
+      Context
+    >;
+
+    editedMessage?: EditedMessageResolver<Maybe<Message>, TypeParent, Context>;
   }
 
   export type UserLoggedInResolver<
-    R = Maybe<(Maybe<User>)[]>,
+    R = Maybe<User>,
     Parent = {},
     Context = {}
   > = SubscriptionResolver<R, Parent, Context>;
   export type UserLoggedOutResolver<
-    R = Maybe<(Maybe<User>)[]>,
+    R = Maybe<User>,
     Parent = {},
     Context = {}
   > = SubscriptionResolver<R, Parent, Context>;
@@ -631,6 +755,21 @@ export namespace SubscriptionResolvers {
   > = SubscriptionResolver<R, Parent, Context>;
   export type SentInvitationResolver<
     R = Maybe<Invitation>,
+    Parent = {},
+    Context = {}
+  > = SubscriptionResolver<R, Parent, Context>;
+  export type SentMessageResolver<
+    R = Maybe<Message>,
+    Parent = {},
+    Context = {}
+  > = SubscriptionResolver<R, Parent, Context>;
+  export type DeletedMessageResolver<
+    R = Maybe<Message>,
+    Parent = {},
+    Context = {}
+  > = SubscriptionResolver<R, Parent, Context>;
+  export type EditedMessageResolver<
+    R = Maybe<Message>,
     Parent = {},
     Context = {}
   > = SubscriptionResolver<R, Parent, Context>;
@@ -679,6 +818,7 @@ export interface IResolvers<Context = {}> {
   Server?: ServerResolvers.Resolvers<Context>;
   Channel?: ChannelResolvers.Resolvers<Context>;
   Invitation?: InvitationResolvers.Resolvers<Context>;
+  Message?: MessageResolvers.Resolvers<Context>;
   Mutation?: MutationResolvers.Resolvers<Context>;
   Subscription?: SubscriptionResolvers.Resolvers<Context>;
   Date?: GraphQLScalarType;

@@ -88,3 +88,12 @@ h5 {
 .inputWrapper {
   margin-bottom: 20px;
 }
+
+.flexContainer {
+  flex: 1 1 auto;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  display: flex;
+}

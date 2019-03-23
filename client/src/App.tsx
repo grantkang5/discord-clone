@@ -29,4 +29,5 @@ export default App
 /*
  * TODO: Create graphql-code-generator types for client side
  * TODO: Optimize performance for queries using `client.query()` on hover links
+ * TODO: Create better suspense components to load channel and servers
  */
