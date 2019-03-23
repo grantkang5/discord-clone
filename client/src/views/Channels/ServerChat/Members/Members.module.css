@@ -17,3 +17,43 @@
   flex: 1;
   min-height: 0;
 }
+
+.membersGroup {
+  color: hsla(0, 0%, 100%, .4);
+  font-weight: 500;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  line-height: 20px;
+  overflow: hidden;
+  padding-left: 16px;
+  padding-right: 8px;
+  padding-top: 20px;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.member {
+  color: #b9bbbe;
+  display: flex;
+  height: 40px;
+  margin: 1px 0 1px 8px;
+  overflow: hidden;
+  border-radius: 3px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.member.offline {
+  color: rgba(185, 187, 190, .9);
+}
+
+.memberContent {
+  display: flex;
+  padding: 8px;
+  align-items: center;
+  box-sizing: border-box;
+  flex-grow: 1;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+}

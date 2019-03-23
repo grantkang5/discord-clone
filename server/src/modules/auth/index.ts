@@ -5,6 +5,7 @@ import * as jwt from 'jsonwebtoken'
 import { jwtConfig } from '../../config/passport'
 import { getRepository } from 'typeorm'
 import { User } from '../../entity/User'
+// import { pubsub, USER_LOGGED_IN } from '../subscriptions'
 const router = express.Router()
 
 router.post(
@@ -22,7 +23,7 @@ router.post(
       jwtConfig.jwt.secret,
       jwtConfig.jwt.options
     )
-    
+
     try {
       await res.cookie('jwt', token, jwtConfig.cookie)
       return res.status(200).json({ token })

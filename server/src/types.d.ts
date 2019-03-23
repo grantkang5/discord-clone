@@ -542,11 +542,17 @@ export namespace MutationResolvers {
 
 export namespace SubscriptionResolvers {
   export interface Resolvers<Context = {}, TypeParent = {}> {
-    userCreated?: UserCreatedResolver<Maybe<User>, TypeParent, Context>;
+    userLoggedIn?: UserLoggedInResolver<
+      Maybe<(Maybe<User>)[]>,
+      TypeParent,
+      Context
+    >;
 
-    userLoggedIn?: UserLoggedInResolver<Maybe<User>, TypeParent, Context>;
-
-    userLoggedOut?: UserLoggedOutResolver<Maybe<User>, TypeParent, Context>;
+    userLoggedOut?: UserLoggedOutResolver<
+      Maybe<(Maybe<User>)[]>,
+      TypeParent,
+      Context
+    >;
 
     deletedServer?: DeletedServerResolver<Maybe<Server>, TypeParent, Context>;
 
@@ -558,6 +564,24 @@ export namespace SubscriptionResolvers {
       Context
     >;
 
+    deletedChannel?: DeletedChannelResolver<
+      Maybe<Channel>,
+      TypeParent,
+      Context
+    >;
+
+    createdChannel?: CreatedChannelResolver<
+      Maybe<Channel>,
+      TypeParent,
+      Context
+    >;
+
+    changedChannel?: ChangedChannelResolver<
+      Maybe<Channel>,
+      TypeParent,
+      Context
+    >;
+
     sentInvitation?: SentInvitationResolver<
       Maybe<Invitation>,
       TypeParent,
@@ -565,18 +589,13 @@ export namespace SubscriptionResolvers {
     >;
   }
 
-  export type UserCreatedResolver<
-    R = Maybe<User>,
-    Parent = {},
-    Context = {}
-  > = SubscriptionResolver<R, Parent, Context>;
   export type UserLoggedInResolver<
-    R = Maybe<User>,
+    R = Maybe<(Maybe<User>)[]>,
     Parent = {},
     Context = {}
   > = SubscriptionResolver<R, Parent, Context>;
   export type UserLoggedOutResolver<
-    R = Maybe<User>,
+    R = Maybe<(Maybe<User>)[]>,
     Parent = {},
     Context = {}
   > = SubscriptionResolver<R, Parent, Context>;
@@ -592,6 +611,21 @@ export namespace SubscriptionResolvers {
   > = SubscriptionResolver<R, Parent, Context>;
   export type UserJoinedServerResolver<
     R = Maybe<Server>,
+    Parent = {},
+    Context = {}
+  > = SubscriptionResolver<R, Parent, Context>;
+  export type DeletedChannelResolver<
+    R = Maybe<Channel>,
+    Parent = {},
+    Context = {}
+  > = SubscriptionResolver<R, Parent, Context>;
+  export type CreatedChannelResolver<
+    R = Maybe<Channel>,
+    Parent = {},
+    Context = {}
+  > = SubscriptionResolver<R, Parent, Context>;
+  export type ChangedChannelResolver<
+    R = Maybe<Channel>,
     Parent = {},
     Context = {}
   > = SubscriptionResolver<R, Parent, Context>;

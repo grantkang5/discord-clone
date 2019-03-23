@@ -1,4 +1,8 @@
 import { PubSub } from 'apollo-server-express'
+import { RedisPubSub } from 'graphql-redis-subscriptions'
+import * as Redis from 'ioredis'
+import redisConf from '../../config/redisConf';
+
 
 /** User Subsriptions */
 export const USER_CREATED = 'USER_CREATED'
@@ -20,3 +24,8 @@ export const CHANNEL_DELETED = 'CHANNEL_DELETED'
 export const CHANNEL_CHANGED = 'CHANNEL_CHANGED'
 
 export const pubsub = new PubSub()
+
+export const redisPubSub = new RedisPubSub({
+  publisher: new Redis(redisConf),
+  subscriber: new Redis(redisConf)
+}) 

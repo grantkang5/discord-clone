@@ -8,7 +8,7 @@ export const jwtConfig = {
   jwt: {
     secret: process.env.JWT_SECRET ? process.env.JWT_SECRET : 'secret',
     options: {
-      expiresIn: '12h',
+      expiresIn: '6h',
       audience: 'https://scuffed-discord.com',
       issuer: 'accounts.scuffed-discord.com'
     }
@@ -17,7 +17,7 @@ export const jwtConfig = {
     httpOnly: true,
     sameSite: false,
     signed: true,
-    secure: false,
+    secure: process.env.NODE_ENV === 'production' ? true : false,
     path: '/'
   }
 }

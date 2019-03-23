@@ -2,19 +2,19 @@ import { defaultDataIdFromObject } from 'apollo-cache-inmemory'
 import { useSubscription } from 'react-apollo-hooks'
 import {
   DELETED_SERVER,
-  USER_LOGGED_OUT,
   SENT_INVITATION,
-  USER_JOINED_SERVER
+  USER_JOINED_SERVER,
+  CREATED_CHANNEL,
+  DELETED_CHANNEL,
+  SUBSCRIBED_USERS,
+  USER_LOGGED_IN,
+  USER_LOGGED_OUT
 } from '../../graphql/subscriptions'
 import * as queries from '../../graphql/queries'
 import * as fragments from '../../graphql/fragments'
 import history from '../../config/history'
 import { CURRENT_USER } from '../../graphql/queries'
-import { find } from 'lodash'
-import {
-  CREATED_CHANNEL,
-  DELETED_CHANNEL
-} from '../../graphql/subscriptions/channel'
+import { find, unionBy } from 'lodash'
 
 /** TODO - Organize subscriptions by modules */
 export const useSubscriptions = () => {
@@ -44,7 +44,6 @@ export const useSubscriptions = () => {
           throw new Error("Can't find servers")
         }
       } catch (e) {
-        console.log(e)
         return history.push('/')
       }
     }
@@ -64,7 +63,6 @@ export const useSubscriptions = () => {
             query: queries.GET_RECEIVED_INVITATIONS,
             variables: { userId: me.id }
           })
-          console.log('[GetReceivedInvitations]: ', getReceivedInvitations)
           client.writeQuery({
             query: queries.GET_RECEIVED_INVITATIONS,
             variables: { userId: me.id },
@@ -97,7 +95,6 @@ export const useSubscriptions = () => {
           server => server.id === data.userJoinedServer.id
         )
         if (foundServer) {
-          console.log('[User joined server]: fOund SERVER!')
           client.writeQuery({
             query: queries.GET_SERVER,
             variables: { serverId: data.userJoinedServer.id },
@@ -174,19 +171,81 @@ export const useSubscriptions = () => {
     }
   })
 
-  /** User logged out */
+  useSubscription(USER_LOGGED_IN, {
+    onSubscriptionData: async ({ client, subscriptionData: { data } }) => {
+      try {
+        const { me } = await client.readQuery({ query: queries.CURRENT_USER })
+        if (data.userLoggedIn.id === me.id) {
+          return null
+        } else {
+          const { userServers } = await client.readQuery({
+            query: queries.GET_USER_SERVERS,
+            variables: { userId: me.id }
+          })
+          const serversWithUser = userServers.filter(server => {
+            return find(server.users, user => user.id === data.userLoggedIn.id)
+          })
+          console.log('servers with users: ', serversWithUser)
+          if (serversWithUser) {
+            serversWithUser.map(async server => {
+              const { onlineUsers } = await client.readQuery({
+                query: queries.ONLINE_USERS,
+                variables: { serverId: server.id }
+              })
+              console.log(onlineUsers, data.userLoggedIn)
+              console.log(unionBy(onlineUsers, [data.userLoggedIn], 'id'))
+              client.writeQuery({
+                query: queries.ONLINE_USERS,
+                variables: { serverId: server.id },
+                data: {
+                  onlineUsers: unionBy(onlineUsers, [data.userLoggedIn], 'id')
+                }
+              })
+            })
+          }
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    }
+  })
+
   useSubscription(USER_LOGGED_OUT, {
     onSubscriptionData: async ({ client, subscriptionData: { data } }) => {
-      let user
       try {
-        user = await client.readQuery({
-          query: queries.CURRENT_USER
-        })
-      } catch (e) {
-        console.log('[User Logged out Error]: ', e)
-      }
-      if (user.me) {
-        client.clearStore().then(() => history.push('/'))
+        const { me } = await client.readQuery({ query: queries.CURRENT_USER })
+        if (data.userLoggedOut.id === me.id) {
+          return null
+        } else {
+          const { userServers } = await client.readQuery({
+            query: queries.GET_USER_SERVERS,
+            variables: { userId: me.id }
+          })
+          const serversWithUser = userServers.filter(server => {
+            return find(server.users, user => user.id === data.userLoggedOut.id)
+          })
+          console.log('LOGOUTservers with users: ', serversWithUser)
+          if (serversWithUser) {
+            serversWithUser.map(async server => {
+              const { onlineUsers } = await client.readQuery({
+                query: queries.ONLINE_USERS,
+                variables: { serverId: server.id }
+              })
+
+              client.writeQuery({
+                query: queries.ONLINE_USERS,
+                variables: { serverId: server.id },
+                data: {
+                  onlineUsers: onlineUsers.filter(
+                    user => user.id !== data.userLoggedOut.id
+                  )
+                }
+              })
+            })
+          }
+        }
+      } catch (err) {
+        console.log(err)
       }
     }
   })

@@ -3,7 +3,8 @@ import style from './SettingsContent.module.css'
 import Button from '../../../../../components/Button'
 import { useMe } from '../../../../../services/requireAuth';
 import { useMutation } from 'react-apollo-hooks';
-import { EDIT_NAME, CURRENT_USER } from '../../../../../graphql/queries';
+import { CURRENT_USER } from '../../../../../graphql/queries';
+import { EDIT_NAME } from '../../../../../graphql/mutations';
 
 const MyAccount = () => {
   const me = useMe()

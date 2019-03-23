@@ -42,9 +42,9 @@ p {
   display: flex;
   align-items: center;
   max-height: 660px;
-  min-height: 200px;
 }
 .modal.dark {
+  min-height: 200px;
   padding: 0;
   display: flex;
   color: #b9bbbe;

@@ -1,24 +1,27 @@
 import React, { useEffect } from 'react'
-import { useApolloClient, useQuery, useMutation } from 'react-apollo-hooks';
-import { LOG_OUT } from '../../graphql/mutations';
-import { useMe } from '../../services/requireAuth';
-import history from '../../config/history';
-import { CURRENT_USER } from '../../graphql/queries';
+import { Redirect } from 'react-router-dom'
+import { useApolloClient, useQuery, useMutation } from 'react-apollo-hooks'
+import { useMe } from '../../services/requireAuth'
+import history from '../../config/history'
+import { CURRENT_USER } from '../../graphql/queries'
 import axios from 'axios'
+import { LOG_OUT } from '../../graphql/mutations';
 
 const Logout = () => {
   const me = useMe()
-  const logout = useMutation(LOG_OUT)
+  const client = useApolloClient()
+  const logOut = useMutation(LOG_OUT)
 
   useEffect(() => {
     if (me) {
-      logout()
+      logOut().then(async () => {
+        await client.clearStore()
+        history.push('/login')
+      })
     }
   }, [])
 
-  return (
-    <div>Logging out...</div>
-  )
+  return <div>Logging out...</div>
 }
 
 export default Logout

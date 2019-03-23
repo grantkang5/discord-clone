@@ -10,6 +10,7 @@ export const MyContext = React.createContext(null)
 export const useMe = () => useContext(MyContext)
 export const logIn = ({ email, password }) => axios.post('/api/auth/login', { email, password })
 export const signUp = ({ email, password }) => axios.post('/api/auth/signup', { email, password })
+export const logOut = () => axios.post('/api/auth/logout')
 
 const requireAuth = (Component: React.ComponentType) => {
   return props => {

@@ -12,6 +12,7 @@ export default gql`
 
   type Query {
     users: [User!]
+    onlineUsers(serverId: ID!): [User]
     user(id: ID!): User
     me: User
     usersByName(name: String!): [User]
@@ -24,7 +25,6 @@ export default gql`
   }
 
   type Subscription {
-    userCreated: User
     userLoggedIn: User
     userLoggedOut: User
   }

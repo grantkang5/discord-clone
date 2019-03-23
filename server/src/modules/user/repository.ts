@@ -1,5 +1,8 @@
-import { EntityRepository, Repository, Like } from "typeorm";
+import { EntityRepository, Repository, Like, In } from "typeorm";
 import { User } from '../../entity/User';
+import { Server } from "../../entity/Server";
+import { redisClient } from "../..";
+import { intersectionBy } from 'lodash'
 
 @EntityRepository(User)
 class UserRepository extends Repository<User> {
@@ -11,6 +14,17 @@ class UserRepository extends Repository<User> {
     const user = await this.findOne({ id: userId })
     user.name = name
     return await user.save()
+  }
+
+  async onlineUsers({ serverId }) {
+    const server = await Server.findOne({ id: serverId })
+    const hashUsers = await redisClient.hgetall('users', (err) => {
+      if (err) throw new Error(err)
+    })
+    const userIds = (Object as any).values(hashUsers)
+    const onlineUsers = await this.find({ id: In(userIds) })
+    const users = intersectionBy(server.users, onlineUsers, 'id')
+    return users
   }
 
   async getUsersByName({ name }) {

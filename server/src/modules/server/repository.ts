@@ -10,10 +10,11 @@ class ServerRepository extends Repository<Server> {
   async getUserServers(userId: number) {
     try {
       const userServers = await this.createQueryBuilder('server')
-        .leftJoinAndSelect('server.users', 'user')
-        .leftJoinAndSelect('server.host', 'host')
-        .where('user.id = :id', { id: userId })
-        .getMany()
+      .leftJoinAndSelect('server.host', 'host')
+      .innerJoin('server.users', 'user')
+      .where('user.id = :id', { id: userId })
+      .leftJoinAndSelect('server.users', 'users')
+      .getMany()
  
       return userServers
     } catch (error) {

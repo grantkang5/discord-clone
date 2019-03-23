@@ -30,7 +30,7 @@
       "bcryptjs": "^2.4.3",
       "body-parser": "^1.18.3",
       "cookie-parser": "1.4.4",
-      "redis": "2.8.0",
+      "ioredis": "4.6.2",
       "cors": "^2.8.5",
       "express": "^4.16.4",
       "graphql": "^14.1.1",
@@ -43,7 +43,8 @@
       "typeorm": "0.2.14",
       "hashids": "1.2.2",
       "passport-jwt": "4.0.0",
-      "jsonwebtoken": "8.5.0"
+      "jsonwebtoken": "8.5.0",
+      "graphql-redis-subscriptions": "2.1.0"
    },
    "scripts": {
       "generate": "gql-gen",

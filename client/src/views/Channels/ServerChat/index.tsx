@@ -13,12 +13,13 @@ interface Props {
 
 const ServerChat = ({ server }: Props) => {
   const { activeChannel } = useChannelState()
+
   return (
     <div className={style.chatContainer}>
       <Title/>
       <div className={style.chatContent}>
         <ChatBoard />
-        <Members users={server.users} />
+        <Members server={server} />
       </div>
     </div>
   )

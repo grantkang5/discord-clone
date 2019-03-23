@@ -8,7 +8,8 @@ const redisClient = redis.createClient({
 
 const sub = redisClient.duplicate()
 sub.on('message', (channel, message) => {
-  redisClient.hset('users', message, message)
+  console.log(channel, message)
+  // redisClient.hset('users', message, message)
 })
 
 sub.subscribe('insert')

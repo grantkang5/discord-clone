@@ -3,7 +3,6 @@ import { useMe } from '../../../../../services/requireAuth'
 import MyAccount from './MyAccount'
 import style from './SettingsContent.module.css'
 import { useMutation } from 'react-apollo-hooks';
-import { LOG_OUT } from '../../../../../graphql/mutations';
 import { CURRENT_USER } from '../../../../../graphql/queries';
 
 const SettingsContent = ({ activeSetting }) => {

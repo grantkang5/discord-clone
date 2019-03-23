@@ -23,9 +23,9 @@ interface Props {
 }
 
 const AuthForm = ({ onSubmit, buttonLabel }: Props) => {
-  const { data } = useQuery(CURRENT_USER)
+  const { data, loading } = useQuery(CURRENT_USER)
 
-  if (data.me) {
+  if (!loading && data.me) {
     return <Redirect push to="/" />
   }
 
