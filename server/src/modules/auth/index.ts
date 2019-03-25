@@ -5,6 +5,8 @@ import * as jwt from 'jsonwebtoken'
 import { jwtConfig } from '../../config/passport'
 import { getRepository } from 'typeorm'
 import { User } from '../../entity/User'
+import { redisClient } from '../..';
+import { redisPubSub, USER_LOGGED_IN } from '../subscriptions';
 // import { pubsub, USER_LOGGED_IN } from '../subscriptions'
 const router = express.Router()
 
@@ -23,6 +25,10 @@ router.post(
       jwtConfig.jwt.secret,
       jwtConfig.jwt.options
     )
+
+    redisClient.hset('users', token, req.user.id)
+    const verifiedUser = await User.findOne({ id: req.user.id })
+    redisPubSub.publish(USER_LOGGED_IN, { userLoggedIn: verifiedUser })
 
     try {
       await res.cookie('jwt', token, jwtConfig.cookie)
@@ -65,6 +71,10 @@ router.post(
       jwtConfig.jwt.secret,
       jwtConfig.jwt.options
     )
+
+    redisClient.hset('users', token, req.user.id)
+    const verifiedUser = await User.findOne({ id: req.user.id })
+    redisPubSub.publish(USER_LOGGED_IN, { userLoggedIn: verifiedUser })
 
     try {
       await res.cookie('jwt', token, jwtConfig.cookie)
