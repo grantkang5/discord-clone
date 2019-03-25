@@ -13,4 +13,11 @@ export interface Server {
   name: string
   host: { id: string | number; email: string }
   users?: [User]
+  channels: [Channel]
+}
+
+export interface Channel {
+  id: string | number
+  name: string
+  type: 'text' | 'voice'
 }
