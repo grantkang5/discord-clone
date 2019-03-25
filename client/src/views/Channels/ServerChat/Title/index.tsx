@@ -1,14 +1,12 @@
 import React from 'react'
 import style from './Title.module.css'
-import { useChannelState } from '../../../../services/ChannelsProvider';
 
-const Title = () => {
-  const { activeChannel } = useChannelState()
+const Title = ({ channel }) => {
   return (
     <div className={style.titleWrapper}>
       <div className={style.titleContainer}>
         <div className={style.title}>
-          # {activeChannel ? activeChannel.name : null}
+          # {channel.name}
         </div>
 
         <div className={style.options}>

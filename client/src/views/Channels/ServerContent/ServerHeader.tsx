@@ -53,6 +53,7 @@ const ServerHeader = ({ server }: Props) => {
         id="server-menu"
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
+        onClose={handleClose}
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'center'
@@ -61,7 +62,6 @@ const ServerHeader = ({ server }: Props) => {
           vertical: 'top',
           horizontal: 'center'
         }}
-        onClose={handleClose}
         className={style.popover}
       >
         <StyledMenuItem onClick={() => handleInviteDialog(true)}>
@@ -87,7 +87,7 @@ const ServerHeader = ({ server }: Props) => {
               leaveServer().then(() => history.push('/channels/@me'))
             }
           >
-          {/* Add Subscriptions for users leaving server or being kicked */}
+          {/* TODO - Add Subscriptions for users leaving server or being kicked */}
             <span className={style.delete}>Leave Server</span>
           </StyledMenuItem>
         )}

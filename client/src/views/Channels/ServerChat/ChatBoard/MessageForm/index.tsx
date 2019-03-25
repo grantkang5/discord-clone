@@ -1,21 +1,19 @@
 import React from 'react'
 import { Formik, FormikActions, FormikProps } from 'formik'
 import style from './MessageForm.module.css'
-import { useChannelState } from '../../../../../services/ChannelsProvider';
 import AddCircle from '@material-ui/icons/AddCircle'
-import { useMutation } from 'react-apollo-hooks';
-import { POST_MESSAGE } from '../../../../../graphql/mutations';
-import validationSchema from './validationSchema';
-import { useMe } from '../../../../../services/requireAuth';
+import { useMutation } from 'react-apollo-hooks'
+import { POST_MESSAGE } from '../../../../../graphql/mutations'
+import validationSchema from './validationSchema'
+import { useMe } from '../../../../../services/requireAuth'
 import moment from 'moment'
 
 interface FormValues {
   message: string
 }
 
-const MessageForm = () => {
+const MessageForm = ({ channel }) => {
   const me = useMe()
-  const { activeChannel } = useChannelState()
   const postMessage = useMutation(POST_MESSAGE)
 
   return (
@@ -24,15 +22,15 @@ const MessageForm = () => {
       onSubmit={({ message }, { setSubmitting, setFieldError }) => {
         postMessage({
           variables: {
-            channelId: activeChannel.id,
+            channelId: channel.id,
             message
           },
           optimisticResponse: {
             postMessage: {
               channel: {
-                id: activeChannel.id,
-                name: activeChannel.name,
-                __typename: "Channel"
+                id: channel.id,
+                name: channel.name,
+                __typename: 'Channel'
               },
               createdAt: moment().toISOString(),
               id: -1,
@@ -40,9 +38,9 @@ const MessageForm = () => {
               sender: {
                 id: me.id,
                 name: me.name,
-                __typename: "User"
+                __typename: 'User'
               },
-              __typename: "Message"
+              __typename: 'Message'
             }
           }
         }).then(() => {
@@ -65,14 +63,14 @@ const MessageForm = () => {
                   </div>
 
                   <input
-                    id='message'
-                    name='message'
+                    id="message"
+                    name="message"
                     onChange={props.handleChange}
                     onBlur={props.handleBlur}
                     className={style.messageWrapper}
                     value={props.values.message}
                     autoComplete="off"
-                    placeholder={`Message #${activeChannel.name}`}
+                    placeholder={`Message #${channel.name}`}
                   />
                 </div>
               </div>
