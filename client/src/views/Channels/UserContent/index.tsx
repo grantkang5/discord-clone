@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import style from './UserContent.module.css'
 import { useMe } from '../../../services/requireAuth'
-import Settings from '@material-ui/icons/Settings'
-import Tooltip from '@material-ui/core/Tooltip'
+import SettingsIcon from '@material-ui/icons/Settings'
 import UserSettings from './UserSettings'
+
+// TODO - Replace MUI tooltips
 
 const UserContent = () => {
   const [open, handleDialog] = useState(false)
@@ -17,11 +18,13 @@ const UserContent = () => {
         <div className={style.name}>{me.name}</div>
 
         <div className={style.buttonsWrapper}>
-          <Tooltip title="User Settings">
-            <div className={style.buttonContainer} onClick={handleOpen}>
-              <Settings className={style.button} />
-            </div>
-          </Tooltip>
+          <div
+            className={style.buttonContainer}
+            onClick={handleOpen}
+            aria-label="User Settings"
+          >
+            <SettingsIcon className={style.button} />
+          </div>
           <UserSettings open={open} handleClose={handleClose} />
         </div>
       </div>
@@ -30,5 +33,3 @@ const UserContent = () => {
 }
 
 export default UserContent
-
-// TODO - Style tooltip w/ arrow + #000
