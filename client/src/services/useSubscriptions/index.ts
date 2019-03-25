@@ -122,16 +122,19 @@ export const useSubscriptions = () => {
           user => user.id === me.id
         )
         if (foundUser) {
-          const { getServerChannels } = client.readQuery({
-            query: queries.GET_SERVER_CHANNELS,
+          const { server } = client.readQuery({
+            query: queries.GET_SERVER,
             variables: { serverId: data.createdChannel.server.id }
           })
 
           client.writeQuery({
-            query: queries.GET_SERVER_CHANNELS,
+            query: queries.GET_SERVER,
             variables: { serverId: data.createdChannel.server.id },
             data: {
-              getServerChannels: [...getServerChannels, data.createdChannel]
+              server: {
+                ...server,
+                channels: [...server.channels, data.createdChannel]
+              }
             }
           })
         }
@@ -150,18 +153,21 @@ export const useSubscriptions = () => {
           user => user.id === me.id
         )
         if (foundUser) {
-          const { getServerChannels } = client.readQuery({
-            query: queries.GET_SERVER_CHANNELS,
+          const { server } = client.readQuery({
+            query: queries.GET_SERVER,
             variables: { serverId: data.deletedChannel.server.id }
           })
 
           client.writeQuery({
-            query: queries.GET_SERVER_CHANNELS,
+            query: queries.GET_SERVER,
             variables: { serverId: data.deletedChannel.server.id },
             data: {
-              getServerChannels: getServerChannels.filter(
-                channel => channel.id !== data.deletedChannel.id
-              )
+              server: {
+                ...server,
+                channels: server.channels.filter(
+                  channel => channel.id !== data.deletedChannel.id
+                )
+              }
             }
           })
         }
@@ -185,15 +191,14 @@ export const useSubscriptions = () => {
           const serversWithUser = userServers.filter(server => {
             return find(server.users, user => user.id === data.userLoggedIn.id)
           })
-          console.log('servers with users: ', serversWithUser)
+
           if (serversWithUser) {
             serversWithUser.map(async server => {
               const { onlineUsers } = await client.readQuery({
                 query: queries.ONLINE_USERS,
                 variables: { serverId: server.id }
               })
-              console.log(onlineUsers, data.userLoggedIn)
-              console.log(unionBy(onlineUsers, [data.userLoggedIn], 'id'))
+
               client.writeQuery({
                 query: queries.ONLINE_USERS,
                 variables: { serverId: server.id },
@@ -224,7 +229,7 @@ export const useSubscriptions = () => {
           const serversWithUser = userServers.filter(server => {
             return find(server.users, user => user.id === data.userLoggedOut.id)
           })
-          console.log('LOGOUTservers with users: ', serversWithUser)
+
           if (serversWithUser) {
             serversWithUser.map(async server => {
               const { onlineUsers } = await client.readQuery({

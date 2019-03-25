@@ -2,11 +2,10 @@ import React, { useState } from 'react'
 import style from './ServerContent.module.css'
 import RightArrow from '@material-ui/icons/ArrowRight'
 import classNames from 'classnames'
-import { useChannelState } from '../../../services/ChannelsProvider'
 import AddIcon from '@material-ui/icons/Add'
 import Tooltip from '@material-ui/core/Tooltip'
-import { useMe } from '../../../services/requireAuth';
-import { Server } from '../../../graphql/types';
+import { useMe } from '../../../services/requireAuth'
+import { Server, Channel } from '../../../graphql/types'
 import Dialog from '@material-ui/core/Dialog'
 import CreateChannel from './CreateChannel'
 
@@ -16,6 +15,7 @@ interface Props {
   handleClick: () => void
   label: string
   server: Server
+  channel: Channel
 }
 
 const ChannelSubHeader = ({
@@ -23,9 +23,9 @@ const ChannelSubHeader = ({
   open,
   handleClick,
   label,
-  server
+  server,
+  channel
 }: Props) => {
-  const { activeChannel } = useChannelState()
   const me = useMe()
   const [dialogOpen, handleDialog] = useState(false)
   const arrowClass = classNames(style.arrow, {
@@ -37,7 +37,7 @@ const ChannelSubHeader = ({
       return (
         <div className={style.content}>
           {React.Children.map(children, (child: any) => {
-            if (activeChannel && child.key === activeChannel.id) {
+            if (channel && child.key === channel.id) {
               return React.cloneElement(child as React.ReactElement<any>, {
                 style: {
                   background: 'rgba(185,187,190,.1)',
@@ -52,11 +52,11 @@ const ChannelSubHeader = ({
       )
     }
 
-    if (!open && activeChannel) {
+    if (!open && channel) {
       return (
         <div className={style.content}>
           {React.Children.map(children, (child: any) => {
-            if (child.key === activeChannel.id) {
+            if (child.key === channel.id) {
               return React.cloneElement(child as React.ReactElement<any>, {
                 style: {
                   background: 'rgba(185,187,190,.1)',
@@ -64,7 +64,7 @@ const ChannelSubHeader = ({
                 }
               })
             }
-            return null
+            return <div hidden />
           })}
         </div>
       )
@@ -76,14 +76,14 @@ const ChannelSubHeader = ({
   return (
     <React.Fragment>
       <div className={style.subHeader} onClick={handleClick}>
-        {open === undefined ? null : <RightArrow className={arrowClass} />}
+        <RightArrow className={arrowClass} />
         {label}
 
         {server.host.id === me.id ? (
           <Tooltip title="Create channel" placement="top">
             <AddIcon
               className={style.addIcon}
-              onClick={(e) => {
+              onClick={e => {
                 e.stopPropagation()
                 handleDialog(true)
               }}
@@ -92,12 +92,12 @@ const ChannelSubHeader = ({
         ) : null}
       </div>
 
-      {renderContent()}
       <CreateChannel
         server={server}
         open={dialogOpen}
         handleDialog={handleDialog}
       />
+      {renderContent()}
     </React.Fragment>
   )
 }

@@ -20,7 +20,7 @@ const Channels = ({ location }) => {
     variables: { userId: me.id },
     suspend: true
   })
-  const re = pathToRegexp('/channels/:serverId')
+  const re = pathToRegexp('/channels/:serverId/:channelId?')
   const path = re.exec(location.pathname)
 
   return (

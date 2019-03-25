@@ -5,10 +5,10 @@ import style from './Messages.module.css'
 import { useMe } from '../../../../../services/requireAuth';
 import MoreVert from '@material-ui/icons/MoreVert'
 
-const Messages = ({ activeChannel }) => {
+const Messages = ({ channel }) => {
   const me = useMe()
   const { data } = useQuery(GET_MESSAGES, {
-    variables: { channelId: activeChannel.id },
+    variables: { channelId: channel.id },
     suspend: true
   })
 

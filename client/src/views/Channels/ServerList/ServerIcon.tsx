@@ -10,7 +10,10 @@ interface Props {
 }
 
 const ServerIcon = ({ id, name, active }) => {
-  const handleServerChange = () => history.push(`/channels/${id}`)
+  const handleServerChange = () => {
+    if (active) return null
+    history.push(`/channels/${id}`)
+  }
   const serverIconWrapperStyle = classNames(style.serverIconWrapper, {
     [style.active]: active
   })
