@@ -7,6 +7,7 @@ import { POST_MESSAGE } from '../../../../../graphql/mutations'
 import validationSchema from './validationSchema'
 import { useMe } from '../../../../../services/requireAuth'
 import moment from 'moment'
+import { GET_MESSAGES } from '../../../../../graphql/queries/message'
 
 interface FormValues {
   message: string
@@ -19,7 +20,7 @@ const MessageForm = ({ channel }) => {
   return (
     <Formik
       initialValues={{ message: '' }}
-      onSubmit={({ message }, { setSubmitting, setFieldError }) => {
+      onSubmit={({ message }, { setSubmitting, setFieldValue }) => {
         postMessage({
           variables: {
             channelId: channel.id,
@@ -42,9 +43,13 @@ const MessageForm = ({ channel }) => {
               },
               __typename: 'Message'
             }
-          }
+          },
+          refetchQueries: [
+            { query: GET_MESSAGES, variables: { channelId: channel.id } }
+          ]
         }).then(() => {
           setSubmitting(false)
+          setFieldValue('message', '')
         })
       }}
       validationSchema={validationSchema}
