@@ -13,7 +13,7 @@ const ErrorScreen = ({ error }) => {
       <span>Something went wrong! :(</span>
       <img src={FeelsBadMan} className={style.errorPicture} />
       <div>
-        {error.graphQLErrors[0].message}
+        {error.graphQLErrors.length ? error.graphQLErrors[0].message : error.message}
       </div>
     </div>
   )
