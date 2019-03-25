@@ -5,6 +5,9 @@ import { CHANNEL_DELETED, CHANNEL_CHANGED, CHANNEL_CREATED, pubsub } from "../su
 
 const resolvers: IResolvers = {
   Query: {
+    channel: async(_, { channelId }) => {
+      return await getCustomRepository(ChannelRepository).channel({ channelId })
+    },
     getServerChannels: async (_, { serverId }) => {
       return await getCustomRepository(ChannelRepository).getServerChannels({ serverId })
     }

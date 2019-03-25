@@ -7,6 +7,18 @@ import { findIndex } from 'lodash'
 
 @EntityRepository(Server)
 class ServerRepository extends Repository<Server> {
+  async server({ serverId }) {
+    try {
+      const server = await this.findOne({
+        where: { id: serverId }
+      })
+
+      return server
+    } catch (error) {
+      throw new Error(error)
+    }
+  }
+
   async getUserServers(userId: number) {
     try {
       const userServers = await this.createQueryBuilder('server')

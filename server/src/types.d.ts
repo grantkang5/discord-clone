@@ -100,6 +100,8 @@ export namespace QueryResolvers {
       Context
     >;
 
+    channel?: ChannelResolver<Maybe<Channel>, TypeParent, Context>;
+
     getServerChannels?: GetServerChannelsResolver<
       Maybe<(Maybe<Channel>)[]>,
       TypeParent,
@@ -189,6 +191,15 @@ export namespace QueryResolvers {
   > = Resolver<R, Parent, Context, UserServersArgs>;
   export interface UserServersArgs {
     userId: string;
+  }
+
+  export type ChannelResolver<
+    R = Maybe<Channel>,
+    Parent = {},
+    Context = {}
+  > = Resolver<R, Parent, Context, ChannelArgs>;
+  export interface ChannelArgs {
+    channelId: string;
   }
 
   export type GetServerChannelsResolver<
@@ -301,6 +312,8 @@ export namespace ServerResolvers {
     host?: HostResolver<Maybe<User>, TypeParent, Context>;
 
     users?: UsersResolver<Maybe<(Maybe<User>)[]>, TypeParent, Context>;
+
+    channels?: ChannelsResolver<Maybe<(Maybe<Channel>)[]>, TypeParent, Context>;
   }
 
   export type IdResolver<
@@ -320,6 +333,11 @@ export namespace ServerResolvers {
   > = Resolver<R, Parent, Context>;
   export type UsersResolver<
     R = Maybe<(Maybe<User>)[]>,
+    Parent = Server,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type ChannelsResolver<
+    R = Maybe<(Maybe<Channel>)[]>,
     Parent = Server,
     Context = {}
   > = Resolver<R, Parent, Context>;

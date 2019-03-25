@@ -18,7 +18,6 @@ import redisConf from './config/redisConf';
 const PORT = 5000
 const path = '/graphql'
 // Setup redis
-
 export const redisClient = new Redis(redisConf)
 
 createConnection().then(async () => {
@@ -52,7 +51,7 @@ createConnection().then(async () => {
   apolloServer.installSubscriptionHandlers(ws)
 
   ws.listen(PORT, () => {
-    console.log(`--------------- Listening on port ${PORT} -----------------`)
+    console.log(`--------------- Listening on PORT ${PORT} -----------------`)
   })
 })
 

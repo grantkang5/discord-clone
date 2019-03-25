@@ -4,6 +4,11 @@ import { Server } from '../../entity/Server'
 
 @EntityRepository(Channel)
 class ChannelRepository extends Repository<Channel> {
+  async channel({ channelId }) {
+    const channel = await this.findOne({ id: channelId })
+    return channel
+  }
+
   async getServerChannels({ serverId }) {
     const server = await Server.findOne({ id: serverId })
     return server.channels

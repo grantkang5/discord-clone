@@ -14,6 +14,7 @@ export default gql`
   }
 
   extend type Query {
+    channel(channelId: ID!): Channel
     getServerChannels(serverId: ID!): [Channel]
   }
 
