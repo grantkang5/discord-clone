@@ -6,6 +6,7 @@ export default gql`
     name: String
     host: User
     users: [User]
+    channels: [Channel]
   }
 
   extend type Query {

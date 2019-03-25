@@ -8,9 +8,7 @@ const resolvers: IResolvers = {
   Query: {
     server: async (_, { serverId }) => {
       try {
-        const server = await Server.findOne({ id: serverId })
-        if (!server) throw new Error('This server is no longer available')
-        return server
+        return await getCustomRepository(ServerRepository).server({ serverId })
       } catch (error) {
         throw new Error(error)
       }
