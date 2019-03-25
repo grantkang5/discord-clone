@@ -6,11 +6,14 @@ export default gql`
     server(serverId: $serverId) {
       ...Server
       users {
-        id
-        email
-        name
+        ...User
+      }
+      channels {
+        ...Channel
       }
     }
   }
   ${fragments.server}
+  ${fragments.user}
+  ${fragments.channel}
 `
