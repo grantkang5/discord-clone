@@ -21,8 +21,8 @@ export default gql`
   }
 
   extend type Subscription {
-    sentMessage: Message,
+    postedMessage: Message,
     deletedMessage: Message,
-    editedMessage: Message
+    changedMessage: Message
   }
 `

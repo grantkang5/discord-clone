@@ -9,7 +9,7 @@ import classNames from 'classnames'
 import pathToRegexp from 'path-to-regexp'
 import style from './ServerContent.module.css'
 import ChannelWrapper from '../../../components/ChannelWrapper'
-import { useQuery, useMutation } from 'react-apollo-hooks'
+import { useQuery, useMutation, useApolloClient } from 'react-apollo-hooks'
 import { GET_CHANNEL } from '../../../graphql/queries'
 import { Server } from '../../../graphql/types'
 import { groupBy } from 'lodash'
@@ -35,6 +35,7 @@ type Props = RouteComponentProps<Params> & {
 }
 
 const ServerChannels = ({ server, location }: Props) => {
+  const client = useApolloClient()
   const { channelPath } = getPaths(location)
   const { data } = useQuery(GET_CHANNEL, {
     variables: { channelId: channelPath },
@@ -66,6 +67,12 @@ const ServerChannels = ({ server, location }: Props) => {
               <div
                 key={channel.id}
                 className={style.channel}
+                onMouseOver={() => {
+                  client.query({
+                    query: GET_CHANNEL,
+                    variables: { channelId: channel.id }
+                  })
+                }}
                 onClick={() => {
                   history.push(`/channels/${server.id}/${channel.id}`)
                 }}

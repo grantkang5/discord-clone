@@ -7,7 +7,7 @@ import { POST_MESSAGE } from '../../../../../graphql/mutations'
 import validationSchema from './validationSchema'
 import { useMe } from '../../../../../services/requireAuth'
 import moment from 'moment'
-import { GET_MESSAGES } from '../../../../../graphql/queries/message'
+import { GET_MESSAGES } from '../../../../../graphql/queries'
 
 interface FormValues {
   message: string
@@ -43,10 +43,7 @@ const MessageForm = ({ channel }) => {
               },
               __typename: 'Message'
             }
-          },
-          refetchQueries: [
-            { query: GET_MESSAGES, variables: { channelId: channel.id } }
-          ]
+          }
         }).then(() => {
           setSubmitting(false)
           setFieldValue('message', '')

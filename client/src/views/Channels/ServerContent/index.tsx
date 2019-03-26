@@ -12,7 +12,6 @@ import getPaths from '../../../services/getPaths'
 import history from '../../../config/history';
 import { groupBy } from 'lodash'
 
-// TODO - Add prefetching on server lists to avoid flashing on joining uncached servers
 const ServerContent = ({ match, location }) => {
   const { channelPath } = getPaths(location)
   const { data, error } = useQuery(GET_SERVER, {
