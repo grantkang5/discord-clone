@@ -68,6 +68,7 @@
   align-items: flex-start;
   height: 1.3em;
   box-align: start;
+  margin-bottom: 2px;
 }
 .userAvatarContainer {
   cursor: pointer;
