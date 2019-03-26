@@ -23,6 +23,11 @@ export const CHANNEL_CREATED = 'CHANNEL_CREATED'
 export const CHANNEL_DELETED = 'CHANNEL_DELETED'
 export const CHANNEL_CHANGED = 'CHANNEL_CHANGED'
 
+/** Message Susbcription */
+export const MESSAGE_POSTED = 'MESSAGE_POSTED'
+export const MESSAGE_DELETED = 'MESSAGE_DELETED'
+export const MESSAGE_CHANGED = 'MESSAGE_CHANGED'
+
 export const pubsub = new PubSub()
 
 export const redisPubSub = new RedisPubSub({

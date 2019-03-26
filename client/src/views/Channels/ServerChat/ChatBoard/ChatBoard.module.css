@@ -11,19 +11,10 @@
   flex: 1;
   display: flex;
   overflow: hidden;
-  position: relative;
 }
 .scrollerWrapper {
   height: auto;
   overflow: hidden;
   display: flex;
   flex: 1 1 auto;
-  position: relative;
-}
-.scroller {
-  margin: 0;
-  overflow-x: hidden;
-  flex: 1 1 auto;
-  overflow-y: scroll;
-  min-height: 0;
 }

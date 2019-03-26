@@ -80,15 +80,13 @@ const ChannelSubHeader = ({
         {label}
 
         {server.host.id === me.id ? (
-          <Tooltip title="Create channel" placement="top">
-            <AddIcon
-              className={style.addIcon}
-              onClick={e => {
-                e.stopPropagation()
-                handleDialog(true)
-              }}
-            />
-          </Tooltip>
+          <AddIcon
+            className={style.addIcon}
+            onClick={e => {
+              e.stopPropagation()
+              handleDialog(true)
+            }}
+          />
         ) : null}
       </div>
 
