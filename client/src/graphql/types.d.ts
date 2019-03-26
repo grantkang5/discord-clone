@@ -2,8 +2,9 @@ export type Maybe<T> = T | undefined | null;
 
 export interface User {
   id: string | number
-  email: string
-  password: string
+  name?: string
+  email?: string
+  password?: string
   hostedServers?: [Server]
   joinedServers?: [Server]
 }
@@ -20,4 +21,12 @@ export interface Channel {
   id: string | number
   name: string
   type: 'text' | 'voice'
+}
+
+export interface Message {
+  id: string | number
+  createdAt: Date
+  message: string
+  sender?: User
+  channel?: Channel
 }
