@@ -1,15 +1,23 @@
-import { EntityRepository, Repository } from 'typeorm'
+import { EntityRepository, Repository, LessThan } from 'typeorm'
 import { Message } from '../../entity/Message'
-import { Channel } from '../../entity/Channel';
-import { User } from '../../entity/User';
+import { Channel } from '../../entity/Channel'
+import { User } from '../../entity/User'
 
 @EntityRepository(Message)
 class MessageRepository extends Repository<Message> {
-  async getMessages({ channelId }) {
-    const messages = await this.find({
-      where: { channel: { id: channelId }},
-      relations: ['sender', 'channel']
-    })
+  async getMessages({ channelId, cursor }) {
+    const options = {
+      where: cursor
+        ? { channel: { id: channelId }, createdAt: LessThan(cursor) }
+        : { channel: { id: channelId } },
+      relations: ['sender', 'channel'],
+      order: {
+        createdAt: 'DESC'
+      },
+      take: 35
+    }
+
+    const messages = await this.find(options)
     return messages
   }
 

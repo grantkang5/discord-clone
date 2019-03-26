@@ -6,14 +6,14 @@ export default gql`
     postMessage(channelId: $channelId, message:$message) {
       ...Message
       channel {
-        id
-        name
+        ...Channel
       }
       sender {
-        id
-        name
+        ...User
       }
     }
   }
   ${fragments.message}
+  ${fragments.channel}
+  ${fragments.user}
 `

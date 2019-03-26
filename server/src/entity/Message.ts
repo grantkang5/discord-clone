@@ -4,7 +4,8 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  ManyToOne
+  ManyToOne,
+  Index
 } from 'typeorm'
 import { Channel } from './Channel'
 import { User } from './User'
@@ -14,6 +15,7 @@ export class Message extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number
 
+  @Index()
   @CreateDateColumn()
   createdAt: Date
 

@@ -6,6 +6,12 @@
   overflow-y: auto;
   min-height: 0;
 }
+.spinnerWrapper {
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+}
+
 .divider {
   margin: 20px 20px -20px;
   border: none;
@@ -13,6 +19,9 @@
 }
 .divider.enabled {
   border-bottom-color: hsla(0, 0%, 100%, 0.04);
+}
+.divider.second {
+  margin: 20px 20px 0;
 }
 
 .dateDivider {
@@ -57,10 +66,16 @@
   outline: 0;
   border: 0;
 }
+.messageWrapper.nextMessage {
+  padding-bottom: 0;
+}
 .messageContainer {
   margin-bottom: 0.2em;
   outline: 0;
   border: 0;
+}
+.messageContainer.lastMessage {
+  padding-bottom: 20px;
 }
 .messageHeaderWrapper {
   display: flex;
@@ -68,7 +83,7 @@
   align-items: flex-start;
   height: 1.3em;
   box-align: start;
-  margin-bottom: 2px;
+  margin-bottom: 3px;
 }
 .userAvatarContainer {
   cursor: pointer;
