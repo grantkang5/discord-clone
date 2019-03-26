@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './loaders.css';
 
-const Loader = () => (
+export const Loader = () => (
   <div className="loader-text">
     <h3>Loading</h3>
     <span className="loading" />

@@ -191,7 +191,7 @@ export const useSubscriptions = () => {
           query: queries.GET_MESSAGES,
           variables: { channelId: data.postedMessage.channel.id },
           data: {
-            getMessages: [...getMessages, data.postedMessage]
+            getMessages: [data.postedMessage, ...getMessages]
           }
         })
       } catch (error) {

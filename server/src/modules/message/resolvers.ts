@@ -5,8 +5,8 @@ import { pubsub, MESSAGE_POSTED } from "../subscriptions";
 
 const resolvers: IResolvers = {
   Query: {
-    getMessages: async (_, { channelId }) => {
-      return await getCustomRepository(MessageRepository).getMessages({ channelId })
+    getMessages: async (_, { channelId, cursor }) => {
+      return await getCustomRepository(MessageRepository).getMessages({ channelId, cursor })
     },
     // getUserMessages: async (_, { userId }) => {
     //   return await getCustomRepository(MessageRepository).getUserMessages({ userId })

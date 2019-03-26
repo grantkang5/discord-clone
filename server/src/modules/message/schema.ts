@@ -10,7 +10,7 @@ export default gql`
   }
 
   extend type Query {
-    getMessages(channelId: ID!): [Message]
+    getMessages(channelId: ID!, cursor: String): [Message]
     getUserMessages(userId: ID!): [Message]
   }
 
