@@ -4,7 +4,6 @@ import Button from '../../../../../components/Button'
 import style from './Messages.module.css'
 
 const MessageSnackbar = ({ open, handleOpen, channel, messagesEnd }) => {
-  console.log('SNACKBAR OPEN: ', open)
   const handleClose = (e) => {
     e.stopPropagation()
     handleOpen(false)
