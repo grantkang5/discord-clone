@@ -8,6 +8,7 @@ import { message } from '../../../../../graphql/fragments'
 import { GET_MESSAGES } from '../../../../../graphql/queries'
 import { Message, Channel } from '../../../../../graphql/types'
 import MessageSnackbar from './MessageSnackbar'
+import moment from 'moment'
 
 type Params = {
   channelId: string
@@ -81,7 +82,7 @@ const Messages = ({ channel, messages, location }: Props) => {
                   <div className={style.userAvatarContainer} />
                   <div className={style.messageHeader}>
                     <span className={style.name}>{message.sender.name}</span>
-                    <time className={style.time}>{message.createdAt}</time>
+                    <time className={style.time}>{moment(message.createdAt).calendar()}</time>
                   </div>
                 </div>
 
