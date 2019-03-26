@@ -15,8 +15,6 @@ export const logOut = () => axios.post('/api/auth/logout')
 const requireAuth = (Component: React.ComponentType) => {
   return props => {
     const { data } = useQuery(CURRENT_USER, { suspend: true })
-    console.log('[REQUIRE AUTH]: ', data.me)
-
     if (!data.me) {
       return <Redirect to="/login" />
     }
