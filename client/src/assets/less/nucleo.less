@@ -1,0 +1,155 @@
+/* --------------------------------
+
+Nucleo Web Font
+Generated using nucleoapp.com
+
+-------------------------------- */
+@import "variables.less";
+@import "mixins.less";
+
+@font-face {
+  font-family: 'Nucleo';
+  src: url('@{icon-font-path}/Nucleo.eot');
+  src: url('@{icon-font-path}/Nucleo.eot') format('embedded-opentype'),
+    url('@{icon-font-path}/Nucleo.woff2') format('woff2'),
+    url('@{icon-font-path}/Nucleo.woff') format('woff'),
+    url('@{icon-font-path}/Nucleo.ttf') format('truetype'),
+    url('@{icon-font-path}/Nucleo.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/*------------------------
+	base class definition
+-------------------------*/
+
+.icon {
+  display: inline-block;
+  font: normal normal normal 1em/1 'Nucleo';
+  speak: none;
+  text-transform: none;
+  /* Better Font Rendering */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/*------------------------
+  change icon size
+-------------------------*/
+
+/* relative units */
+.icon-sm {
+  font-size: 0.8em;
+}
+.icon-lg {
+  font-size: 1.2em;
+}
+/* absolute units */
+.icon-16 {
+  font-size: 16px;
+}
+.icon-32 {
+  font-size: 32px;
+}
+
+/*----------------------------------
+  add a square/circle background
+-----------------------------------*/
+
+.icon-bg-square,
+.icon-bg-circle {
+  padding: 0.35em;
+  background-color: @icon-background-color;
+}
+
+.icon-bg-circle {
+  border-radius: 50%;
+}
+
+/*------------------------------------
+  use icons as list item markers
+-------------------------------------*/
+
+.icon-ul {
+  padding-left: 0;
+  list-style-type: none;
+
+  > li {
+    display: flex;
+    align-items: flex-start;
+    line-height: 1.4;
+  }
+
+  > li > .icon {
+    margin-right: @icon-li-margin-right;
+    line-height: inherit;
+  }
+}
+
+/*------------------------
+  spinning icons
+-------------------------*/
+
+.icon-is-spinning {
+  -webkit-animation: icon-spin 2s infinite linear;
+  -moz-animation: icon-spin 2s infinite linear;
+  animation: icon-spin 2s infinite linear;
+}
+
+@-webkit-keyframes icon-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@-moz-keyframes icon-spin {
+  0% {
+    -moz-transform: rotate(0deg);
+  }
+  100% {
+    -moz-transform: rotate(360deg);
+  }
+}
+@keyframes icon-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+/*------------------------
+  rotated/flipped icons
+-------------------------*/
+
+.icon-rotate-90  {
+	.icon-rotate(90deg, 1);
+}
+
+.icon-rotate-180 {
+	.icon-rotate(180deg, 2);
+}
+
+.icon-rotate-270 {
+	.icon-rotate(270deg, 3);
+}
+
+.icon-flip-y {
+	.icon-flip(-1, 1, 0);
+}
+.icon-flip-x {
+	.icon-flip(1, -1, 2);
+}
+
+@import "icons";

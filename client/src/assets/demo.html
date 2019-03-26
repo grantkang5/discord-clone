@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="demo/css/reset.css"> <!-- CSS reset -->
+	<link rel="stylesheet" href="demo/css/style.css">
+	<link rel="shortcut icon" href="demo/favicon.ico">
+	<title>Nucleo Web Font</title>
+</head>
+<body>
+	<header>
+		<h1>Nucleo Web Font</h1>
+		<p>Built with <a href="https://nucleoapp.com">nucleoapp.com</a></p>
+	</header>
+
+	<div id="icons-wrapper">
+		<section>
+			<ul>
+                
+                    <li>
+                        <i class="icon icon-discord"></i>
+                        <p>icon-discord</p>
+                    </li>
+                
+				<!-- list of icons here with the proper class-->
+			</ul>
+		</section>
+	</div>
+<script>
+    function SelectText(element) {
+	    var doc = document
+	        , text = element
+	        , range, selection;
+	    if (doc.body.createTextRange) {
+	        range = document.body.createTextRange();
+	        range.moveToElementText(text);
+	        range.select();
+	    } else if (window.getSelection) {
+	        selection = window.getSelection();
+	        range = document.createRange();
+	        range.selectNodeContents(text);
+	        selection.removeAllRanges();
+	        selection.addRange(range);
+	    }
+	}
+    window.onload = function() {
+    	var iconsWrapper = document.getElementById('icons-wrapper'),
+    		listItems = iconsWrapper.getElementsByTagName('li');
+        for (var i = 0; i < listItems.length; i++) {
+		    listItems[i].onclick  = function fun(event) {
+		    	var selectedTagName = event.target.tagName.toLowerCase();
+		    	if( selectedTagName == 'p' || selectedTagName == 'em' ) {
+		    		SelectText(event.target);
+		    	} else if( selectedTagName == 'input' ) {
+		    		event.target.setSelectionRange(0, event.target.value.length);
+		    	}
+		    }
+
+		    var beforeContentChar = window.getComputedStyle(listItems[i].getElementsByTagName('i')[0], '::before').getPropertyValue('content').replace(/'/g, "").replace(/"/g, ""),
+		    	beforeContent = beforeContentChar.charCodeAt(0).toString(16);
+		    var beforeContentElement = document.createElement("em");
+		    beforeContentElement.textContent = "\\"+beforeContent;
+		    listItems[i].appendChild(beforeContentElement);
+
+		    //create input element to copy/paste chart
+		    var charCharac = document.createElement('input');
+		    charCharac.setAttribute('type', 'text');
+		    charCharac.setAttribute('maxlength', '1');
+		    charCharac.setAttribute('readonly', 'true');
+		    charCharac.setAttribute('value', beforeContentChar);
+		    listItems[i].appendChild(charCharac);
+		}
+    }
+</script>
+</body>
+</html>

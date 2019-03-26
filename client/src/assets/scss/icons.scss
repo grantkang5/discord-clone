@@ -1,0 +1,13 @@
+/*------------------------
+	icons
+-------------------------*/
+@function unicode($str) {
+  @return unquote("\"\\#{$str}\"");
+}
+
+$icon-discord: unicode(ea02);
+
+.icon-discord::before {
+  content: $icon-discord;
+}
+

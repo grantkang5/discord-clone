@@ -6,6 +6,7 @@ import client from './config/apollo-client'
 import App from './App'
 import history from './config/history'
 import './index.css'
+import './assets/css/style.css'
 import * as serviceWorker from './serviceWorker'
 import theme from './config/theme'
 
