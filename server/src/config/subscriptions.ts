@@ -25,7 +25,7 @@ export const onConnect = (_, webSocket) => {
       async (err, decoded) => {
         if (err && err.name === 'TokenExpiredError') {
           redisClient.hdel('users', authToken)
-          const userId = redisClient.hget('users', authToken)
+          const userId = await redisClient.hget('users', authToken)
           const verifiedUser = await User.findOne({ id: userId })
           redisPubSub.publish(USER_LOGGED_OUT, {
             userLoggedOut: verifiedUser
@@ -60,7 +60,7 @@ export const onDisconnect = webSocket => {
           if (err) {
             if (err.name === 'TokenExpiredError') {
               redisClient.hdel('users', authToken)
-              const userId = redisClient.hget('users', authToken)
+              const userId = await redisClient.hget('users', authToken)
               const verifiedUser = await User.findOne({ id: userId })
               redisPubSub.publish(USER_LOGGED_OUT, {
                 userLoggedOut: verifiedUser
