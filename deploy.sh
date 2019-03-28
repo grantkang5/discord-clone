@@ -1,6 +1,6 @@
 docker build -t grant05/discord-clone-client:latest -t grant05/discord-clone-client:$SHA -f ./client/Dockerfile ./client
 docker build -t grant05/discord-clone-server:latest -t grant05/discord-clone-server:$SHA -f ./server/Dockerfile ./server
-docker build -t grant05/discord-clone-worker:latest -t grant05/discord-clone-worker:$SHA -f ./worker/Dockerfile ./worker
+docker build -t grant05/discord-clone-worker:latest -t grant05/discord-clone-worker:$SHA -f ./redis-server/Dockerfile ./redis-server
 docker push grant05/discord-clone-client:latest
 docker push grant05/discord-clone-server:latest
 docker push grant05/discord-clone-worker:latest
