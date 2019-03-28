@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router'
 import './App.css'
 import { Loading } from './components/Loaders'
 import requireAuth from './services/requireAuth'
