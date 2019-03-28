@@ -41,6 +41,14 @@ createConnection().then(async () => {
     subscriptions: {
       onConnect,
       onDisconnect
+    },
+    formatError: error => {
+      console.log('ERROR: ', error)
+      return error
+    },
+    formatResponse: response => {
+      console.log(response)
+      return response
     }
   })
 
