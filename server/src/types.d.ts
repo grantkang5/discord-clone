@@ -236,6 +236,8 @@ export namespace QueryResolvers {
   > = Resolver<R, Parent, Context, GetMessagesArgs>;
   export interface GetMessagesArgs {
     channelId: string;
+
+    cursor?: Maybe<string>;
   }
 
   export type GetUserMessagesResolver<
@@ -720,7 +722,7 @@ export namespace SubscriptionResolvers {
       Context
     >;
 
-    sentMessage?: SentMessageResolver<Maybe<Message>, TypeParent, Context>;
+    postedMessage?: PostedMessageResolver<Maybe<Message>, TypeParent, Context>;
 
     deletedMessage?: DeletedMessageResolver<
       Maybe<Message>,
@@ -728,7 +730,11 @@ export namespace SubscriptionResolvers {
       Context
     >;
 
-    editedMessage?: EditedMessageResolver<Maybe<Message>, TypeParent, Context>;
+    changedMessage?: ChangedMessageResolver<
+      Maybe<Message>,
+      TypeParent,
+      Context
+    >;
   }
 
   export type UserLoggedInResolver<
@@ -776,7 +782,7 @@ export namespace SubscriptionResolvers {
     Parent = {},
     Context = {}
   > = SubscriptionResolver<R, Parent, Context>;
-  export type SentMessageResolver<
+  export type PostedMessageResolver<
     R = Maybe<Message>,
     Parent = {},
     Context = {}
@@ -786,7 +792,7 @@ export namespace SubscriptionResolvers {
     Parent = {},
     Context = {}
   > = SubscriptionResolver<R, Parent, Context>;
-  export type EditedMessageResolver<
+  export type ChangedMessageResolver<
     R = Maybe<Message>,
     Parent = {},
     Context = {}
