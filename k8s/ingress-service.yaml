@@ -15,7 +15,7 @@ spec:
               servicePort: 3000
           - path: /api/?(.*)
             backend:
-              servic eName: server-cluster-ip-service
+              serviceName: server-cluster-ip-service
               servicePort: 5000
           - path: /graphql/
             backend:
