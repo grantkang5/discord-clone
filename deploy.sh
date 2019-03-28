@@ -1,0 +1,1 @@
+docker build -t grant05/discord-clone-client -f ./client/Dockerfile ./client
