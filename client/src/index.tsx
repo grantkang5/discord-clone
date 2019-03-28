@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react'
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks'
 import ReactDOM from 'react-dom'
-import { Router } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 import client from './config/apollo-client'
 import App from './App'
 import history from './config/history'
@@ -12,9 +12,9 @@ import theme from './config/theme'
 
 const Root = () => (
   <ApolloHooksProvider client={client}>
-    <Router history={history}>
+    <BrowserRouter history={history}>
       <App />
-    </Router>
+    </BrowserRouter>
   </ApolloHooksProvider>
 )
 
