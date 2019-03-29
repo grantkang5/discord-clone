@@ -6,15 +6,15 @@
    "password": "pgpassword",
    "database": "postgres",
    "synchronize": true,
-   "logging": ["error"],
+   "logging": false,
    "entities": [
-      "src/entity/**/*.ts"
+      "dist/entity/**/*.ts"
    ],
    "migrations": [
-      "src/migration/**/*.ts"
+      "dist/migration/**/*.ts"
    ],
    "subscribers": [
-      "src/subscriber/**/*.ts"
+      "dist/subscriber/**/*.ts"
    ],
    "cli": {
       "entitiesDir": "src/entity",
