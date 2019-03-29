@@ -11,48 +11,88 @@ import './config/passport'
 import auth from './modules/auth'
 import { jwtConfig } from './config/passport'
 import * as Redis from 'ioredis'
-import { onConnect, onDisconnect } from './config/subscriptions';
-import redisConf from './config/redisConf';
+import { onConnect, onDisconnect } from './config/subscriptions'
+import redisConf from './config/redisConf'
 
 const PORT = 5000
 const path = '/graphql'
 // Setup redis
 export const redisClient = new Redis(redisConf)
 
-createConnection().then(async () => {
-  const app = express()
-    .use(cookieParser(jwtConfig.jwt.secret, jwtConfig.cookie))
-    .use(cors())
-    .use(bodyParser.json())
+const startServer = async () => {
+  try {
+    await createConnection()
+    const app = express()
+      .use(cookieParser(jwtConfig.jwt.secret, jwtConfig.cookie))
+      .use(cors())
+      .use(bodyParser.json())
 
-  app.use(passport.initialize())
-  app.get('/check', (_, res) => res.status(200).send('hello'))
-  app.use('/auth', auth)
-  app.use((err, _, res, next) => {
-    console.log('ERROR: ', err)
-    res.status(500)
-    next(err)
-  })
+    app.use(passport.initialize())
+    app.get('/check', (_, res) => res.status(200).send('hello'))
+    app.use('/auth', auth)
+    app.use((err, _, res, next) => {
+      console.log('ERROR: ', err)
+      res.status(500)
+      next(err)
+    })
 
-  const apolloServer = new ApolloServer({
-    schema,
-    context: ({ req, res }) => ({ req, res }),
-    subscriptions: {
-      onConnect,
-      onDisconnect
-    }
-  })
+    const apolloServer = new ApolloServer({
+      schema,
+      context: ({ req, res }) => ({ req, res }),
+      subscriptions: {
+        onConnect,
+        onDisconnect
+      }
+    })
 
-  app.use(path, passport.authenticate('jwt', { session: false }))
-  apolloServer.applyMiddleware({ app, path })
+    app.use(path, passport.authenticate('jwt', { session: false }))
+    apolloServer.applyMiddleware({ app, path })
 
-  const ws = createServer(app)
-  apolloServer.installSubscriptionHandlers(ws)
+    const ws = createServer(app)
+    apolloServer.installSubscriptionHandlers(ws)
 
-  ws.listen(PORT, () => {
-    console.log(`--------------- Listening on PORT ${PORT} -----------------`)
-  })
-})
+    ws.listen(PORT, () => {
+      console.log(`--------------- Listening on PORT ${PORT} -----------------`)
+    })
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+startServer()
+// createConnection().then(async () => {
+//   const app = express()
+//     .use(cookieParser(jwtConfig.jwt.secret, jwtConfig.cookie))
+//     .use(cors())
+//     .use(bodyParser.json())
+
+//   app.use(passport.initialize())
+//   app.get('/check', (_, res) => res.status(200).send('hello'))
+//   app.use('/auth', auth)
+//   app.use((err, _, res, next) => {
+//     console.log('ERROR: ', err)
+//     res.status(500)
+//     next(err)
+//   })
+
+//   const apolloServer = new ApolloServer({
+//     schema,
+//     context: ({ req, res }) => ({ req, res }),
+//     subscriptions: {
+//       onConnect,
+//       onDisconnect
+//     }
+//   })
+
+//   app.use(path, passport.authenticate('jwt', { session: false }))
+//   apolloServer.applyMiddleware({ app, path })
+
+//   const ws = createServer(app)
+//   apolloServer.installSubscriptionHandlers(ws)
+
+//   ws.listen(PORT, () => {
+//     console.log(`--------------- Listening on PORT ${PORT} -----------------`)
+//   })
+// })
 
 /**
  * TODO - Create error handlers for repositories
