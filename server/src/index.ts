@@ -3,7 +3,6 @@ import * as bodyParser from 'body-parser'
 import * as cors from 'cors'
 import * as express from 'express'
 import * as cookieParser from 'cookie-parser'
-import * as helmet from 'helmet'
 import { createServer } from 'http'
 import * as passport from 'passport'
 import { createConnection } from 'typeorm'
@@ -25,11 +24,8 @@ createConnection().then(async () => {
     .use(cookieParser(jwtConfig.jwt.secret, jwtConfig.cookie))
     .use(cors())
     .use(bodyParser.json())
-    .use(helmet())
 
   app.use(passport.initialize())
-  app.use('/', (_, res) => res.status(200).send({ success: true }))
-  app.use('/healthz', (_, res) => res.status(200).send('ok')) 
   app.use('/auth', auth)
   app.use((err, _, res, next) => {
     console.log('ERROR: ', err)
