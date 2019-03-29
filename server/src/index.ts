@@ -26,6 +26,7 @@ createConnection().then(async () => {
     .use(bodyParser.json())
 
   app.use(passport.initialize())
+  app.get('/check', (_, res) => res.status(200).send('hello'))
   app.use('/auth', auth)
   app.use((err, _, res, next) => {
     console.log('ERROR: ', err)
