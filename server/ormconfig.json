@@ -1,24 +1,40 @@
-{
-   "type": "postgres",
-   "host": "postgres",
-   "port": 5432,
-   "username": "postgres",
-   "password": "pgpassword",
-   "database": "postgres",
-   "synchronize": true,
-   "logging": false,
-   "entities": [
-      "dist/entity/**/*.ts"
-   ],
-   "migrations": [
-      "dist/migration/**/*.ts"
-   ],
-   "subscribers": [
-      "dist/subscriber/**/*.ts"
-   ],
-   "cli": {
+[
+  {
+    "name": "development",
+    "type": "postgres",
+    "host": "postgres",
+    "port": 5432,
+    "username": "postgres",
+    "password": "pgpassword",
+    "database": "postgres",
+    "synchronize": true,
+    "logging": false,
+    "entities": ["src/entity/**/*.ts"],
+    "migrations": ["src/migration/**/*.ts"],
+    "subscribers": ["src/subscriber/**/*.ts"],
+    "cli": {
       "entitiesDir": "src/entity",
       "migrationsDir": "src/migration",
       "subscribersDir": "src/subscriber"
-   }
-}
+    }
+  },
+  {
+    "name": "production",
+    "type": "postgres",
+    "host": "postgres",
+    "port": 5432,
+    "username": "postgres",
+    "password": "pgpassword",
+    "database": "postgres",
+    "synchronize": false,
+    "logging": false,
+    "entities": ["src/entity/**/*.ts"],
+    "migrations": ["src/migration/**/*.ts"],
+    "subscribers": ["src/subscriber/**/*.ts"],
+    "cli": {
+      "entitiesDir": "src/entity",
+      "migrationsDir": "src/migration",
+      "subscribersDir": "src/subscriber"
+    }
+  }
+]
