@@ -10,14 +10,8 @@
     "resolveJsonModule": true,
     "target": "es5",
     "jsx": "preserve",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "es2017",
-      "dom",
-      "esnext.asynciterable"
-    ],
+    "typeRoots": ["node_modules/@types"],
+    "lib": ["es2017", "dom", "esnext.asynciterable"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": false,
@@ -29,7 +23,5 @@
     "strict": false,
     "module": "esnext"
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src"]
 }

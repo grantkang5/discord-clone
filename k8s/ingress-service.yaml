@@ -32,15 +32,15 @@ spec:
     - host: www.discordapp-clone.com
       http:
         paths:
-          - path: /
+          - path: /?(.*)
             backend:
               serviceName: client-cluster-ip-service
               servicePort: 3000
-          - path: /api/
+          - path: /api/?(.*)
             backend:
               serviceName: server-cluster-ip-service
               servicePort: 5000
-          - path: /graphql/
+          - path: /graphql/?(.*)
             backend:
               serviceName: server-cluster-ip-service
               servicePort: 5000
