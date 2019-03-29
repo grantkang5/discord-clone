@@ -28,6 +28,8 @@ createConnection().then(async () => {
     .use(helmet())
 
   app.use(passport.initialize())
+  app.use('/', (_, res) => res.status(200).send({ success: true }))
+  app.use('/healthz', (_, res) => res.status(200).send('ok')) 
   app.use('/auth', auth)
   app.use((err, _, res, next) => {
     console.log('ERROR: ', err)
