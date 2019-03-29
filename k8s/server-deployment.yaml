@@ -18,6 +18,8 @@ spec:
           ports:
             - containerPort: 5000
           env:
+            - name: NODE_ENV
+              value: production
             - name: REDIS_HOST
               value: redis-cluster-ip-service
             - name: REDIS_PORT
