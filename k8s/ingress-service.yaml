@@ -17,7 +17,3 @@ spec:
             backend:
               serviceName: server-cluster-ip-service
               servicePort: 5000
-          - path: /graphql/
-            backend:
-              serviceName: server-cluster-ip-service
-              servicePort: 5000
