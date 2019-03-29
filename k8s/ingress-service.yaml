@@ -25,7 +25,7 @@ spec:
             backend:
               serviceName: server-cluster-ip-service
               servicePort: 5000
-    - host: discordapp-clone.com
+    - host: www.discordapp-clone.com
       http:
         paths:
           - path: /?(.*)
