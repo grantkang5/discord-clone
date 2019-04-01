@@ -19,91 +19,40 @@ const path = '/graphql'
 // Setup redis
 export const redisClient = new Redis(redisConf)
 
-const startServer = async () => {
-  let retries = 10
-  while (retries) {
-    try {
-      await createConnection()
-      const app = express()
-        .use(cookieParser(jwtConfig.jwt.secret, jwtConfig.cookie))
-        .use(cors())
-        .use(bodyParser.json())
+createConnection().then(async () => {
+  const app = express()
+    .use(cookieParser(jwtConfig.jwt.secret, jwtConfig.cookie))
+    .use(cors())
+    .use(bodyParser.json())
 
-      app.use(passport.initialize())
-      app.get('/check', (_, res) => res.status(200).send('hello'))
-      app.use('/auth', auth)
-      app.use((err, _, res, next) => {
-        console.log('ERROR: ', err)
-        res.status(500)
-        next(err)
-      })
+  app.use(passport.initialize())
+  app.get('/check', (_, res) => res.status(200).send('hello'))
+  app.use('/auth', auth)
+  app.use((err, _, res, next) => {
+    console.log('ERROR: ', err)
+    res.status(500)
+    next(err)
+  })
 
-      const apolloServer = new ApolloServer({
-        schema,
-        context: ({ req, res }) => ({ req, res }),
-        subscriptions: {
-          onConnect,
-          onDisconnect
-        }
-      })
-
-      app.use(path, passport.authenticate('jwt', { session: false }))
-      apolloServer.applyMiddleware({ app, path })
-
-      const ws = createServer(app)
-      apolloServer.installSubscriptionHandlers(ws)
-
-      ws.listen(PORT, () => {
-        console.log(
-          `--------------- Listening on PORT ${PORT} -----------------`
-        )
-      })
-    } catch (error) {
-      retries -= 1
-      console.log(error)
-      console.log(`Failed to connect db...${retries} retries left`)
+  const apolloServer = new ApolloServer({
+    schema,
+    context: ({ req, res }) => ({ req, res }),
+    subscriptions: {
+      onConnect,
+      onDisconnect
     }
-  }
-}
-console.log('SECRET: ', process.env.PGPASSWORD)
-console.log('SECRET: ', process.env.JWT_SECRET)
-console.log('SECRET: ', process.env.NODE_ENV)
-console.log('SECRET: ', process.env.PGHOST)
-startServer()
-// createConnection().then(async () => {
-//   const app = express()
-//     .use(cookieParser(jwtConfig.jwt.secret, jwtConfig.cookie))
-//     .use(cors())
-//     .use(bodyParser.json())
+  })
 
-//   app.use(passport.initialize())
-//   app.get('/check', (_, res) => res.status(200).send('hello'))
-//   app.use('/auth', auth)
-//   app.use((err, _, res, next) => {
-//     console.log('ERROR: ', err)
-//     res.status(500)
-//     next(err)
-//   })
+  app.use(path, passport.authenticate('jwt', { session: false }))
+  apolloServer.applyMiddleware({ app, path })
 
-//   const apolloServer = new ApolloServer({
-//     schema,
-//     context: ({ req, res }) => ({ req, res }),
-//     subscriptions: {
-//       onConnect,
-//       onDisconnect
-//     }
-//   })
+  const ws = createServer(app)
+  apolloServer.installSubscriptionHandlers(ws)
 
-//   app.use(path, passport.authenticate('jwt', { session: false }))
-//   apolloServer.applyMiddleware({ app, path })
-
-//   const ws = createServer(app)
-//   apolloServer.installSubscriptionHandlers(ws)
-
-//   ws.listen(PORT, () => {
-//     console.log(`--------------- Listening on PORT ${PORT} -----------------`)
-//   })
-// })
+  ws.listen(PORT, () => {
+    console.log(`--------------- Listening on PORT ${PORT} -----------------`)
+  })
+}).catch(error => console.log(`Typeorm Connection error: `, error))
 
 /**
  * TODO - Create error handlers for repositories
