@@ -2,7 +2,6 @@ import { ApolloServer } from 'apollo-server-express'
 import * as bodyParser from 'body-parser'
 import * as cors from 'cors'
 import * as express from 'express'
-import * as cookieParser from 'cookie-parser'
 import { createServer } from 'http'
 import * as passport from 'passport'
 import { createConnection } from 'typeorm'
@@ -21,7 +20,6 @@ export const redisClient = new Redis(redisConf)
 
 createConnection().then(async () => {
   const app = express()
-    .use(cookieParser())
     .use(cors())
     .use(bodyParser.json())
 
