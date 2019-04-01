@@ -58,6 +58,9 @@ const startServer = async () => {
     throw new Error(error)
   }
 }
+console.log('SECRET: ', process.env.PGPASSWORD)
+console.log('SECRET: ', process.env.JWT_SECRET)
+console.log('SECRET: ', process.env.NODE_ENV)
 startServer()
 // createConnection().then(async () => {
 //   const app = express()
