@@ -40,7 +40,7 @@
       "passport-local": "^1.0.0",
       "pg": "^7.3.0",
       "reflect-metadata": "^0.1.10",
-      "typeorm": "0.2.14",
+      "typeorm": "0.2.16",
       "hashids": "1.2.2",
       "passport-jwt": "4.0.0",
       "jsonwebtoken": "8.5.0",
