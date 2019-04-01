@@ -5,7 +5,7 @@ module.exports = {
   "username": process.env.PGUSER,
   "password": process.env.PGPASSWORD,
   "database": process.env.PGDATABASE,
-  "synchronize": process.env.NODE_ENV === 'development' ? true : false,
+  "synchronize": true,
   "logging": false,
   "keepConnectionAlive": true,
   "entities": ["src/entity/**/*.ts"],
@@ -16,5 +16,4 @@ module.exports = {
     "migrationsDir": "src/migration",
     "subscribersDir": "src/subscriber"
   },
-  "autoSchemaSync": process.env.NODE_ENV === 'development' ? false : true
 }
