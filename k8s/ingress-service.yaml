@@ -36,7 +36,7 @@ spec:
             backend:
               serviceName: server-cluster-ip-service
               servicePort: 5000
-___
+---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
