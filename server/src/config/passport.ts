@@ -52,6 +52,8 @@ passport.use(new JwtStrategy({
   secretOrKey: jwtConfig.jwt.secret,
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
 }, (jwtPayload, done) => {
+  console.log(process.env.NODE_ENV, process.env.JWT_SECRET)
+  console.log('Authenticating headers ... ', jwtPayload)
   User.findOne({ id: jwtPayload.user.id })
     .then(user => {
       if (!user) throw new Error('Invalid credentials')
