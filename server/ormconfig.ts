@@ -8,9 +8,9 @@ module.exports = {
   "synchronize": process.env.NODE_ENV === 'development' ? true : false,
   "logging": false,
   "keepConnectionAlive": true,
-  "entities": ["dist/entity/**/*.*"],
-  "migrations": ["dist/migration/**/*.*"],
-  "subscribers": ["dist/subscriber/**/*.*"],
+  "entities": ["src/entity/**/*.ts"],
+  "migrations": ["src/migration/**/*.ts"],
+  "subscribers": ["src/subscriber/**/*.ts"],
   "cli": {
     "entitiesDir": "src/entity",
     "migrationsDir": "src/migration",
