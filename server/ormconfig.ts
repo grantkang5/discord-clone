@@ -15,5 +15,6 @@ module.exports = {
     "entitiesDir": "src/entity",
     "migrationsDir": "src/migration",
     "subscribersDir": "src/subscriber"
-  }
+  },
+  "autoSchemaSync": process.env.NODE_ENV === 'development' ? false : true
 }
