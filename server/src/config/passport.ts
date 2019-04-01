@@ -17,7 +17,7 @@ export const jwtConfig = {
     httpOnly: true,
     sameSite: false,
     signed: true,
-    secure: process.env.NODE_ENV === 'production' ? true : false,
+    secure: false,
     path: '/'
   }
 }
