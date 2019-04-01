@@ -50,7 +50,10 @@ passport.use(new LocalStrategy({ usernameField: 'email', session: false }, async
 
 passport.use(new JwtStrategy({
   secretOrKey: jwtConfig.jwt.secret,
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
+  jwtFromRequest: (req) => {
+    console.log('EXTRACTING JWT FROM REQ HEADERS: ', req.headers)
+    return ExtractJwt.fromAuthHeaderAsBearerToken()
+  }
 }, (jwtPayload, done) => {
   console.log(process.env.NODE_ENV, process.env.JWT_SECRET)
   console.log('Authenticating headers ... ', jwtPayload)
