@@ -2,11 +2,11 @@ import React, { Suspense, lazy } from 'react'
 import { Route, Switch } from 'react-router'
 import './App.css'
 import { Loading } from './components/Loaders'
-import requireAuth from './services/requireAuth'
+import { requireAuth } from './services/auth.service'
 
 const Main = lazy(() => import('./views/Main'))
 const Login = lazy(() => import('./views/Auth/Login'))
-const Logout = lazy(() => import ('./views/Auth/Logout'))
+const Logout = lazy(() => import('./views/Auth/Logout'))
 const Signup = lazy(() => import('./views/Auth/Signup'))
 const AuthLogout = requireAuth(Logout)
 const AuthMain = requireAuth(Main)

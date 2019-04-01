@@ -3,7 +3,7 @@ import moment from 'moment'
 import classNames from 'classnames'
 import style from './Messages.module.css'
 import MoreVert from '@material-ui/icons/MoreVert'
-import { useMe } from '../../../../../services/requireAuth'
+import { useMe } from '../../../../../services/auth.service'
 
 const MessageContent = ({ message, index, previousMessage, nextMessage }) => {
   const me = useMe()

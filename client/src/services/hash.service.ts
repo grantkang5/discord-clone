@@ -1,4 +1,20 @@
-export const arrowGenerator = (color) => {
+import HashIds from 'hashids'
+import pathToRegexp from 'path-to-regexp'
+
+export const getPaths = location => {
+  const re = pathToRegexp('/channels/:serverId/:channelId?')
+  const paths = re.exec(location.pathname)
+
+  return {
+    location: paths[0],
+    serverPath: paths[1],
+    channelPath: paths[2]
+  }
+}
+
+export const hashids = new HashIds('scuffed-discord')
+
+export const arrowGenerator = color => {
   return {
     '&[x-placement*="bottom"] $arrow': {
       top: 0,
@@ -8,8 +24,8 @@ export const arrowGenerator = (color) => {
       height: '1em',
       '&::before': {
         borderWidth: '0 1em 1em 1em',
-        borderColor: `transparent transparent ${color} transparent`,
-      },
+        borderColor: `transparent transparent ${color} transparent`
+      }
     },
     '&[x-placement*="top"] $arrow': {
       bottom: 0,
@@ -19,8 +35,8 @@ export const arrowGenerator = (color) => {
       height: '1em',
       '&::before': {
         borderWidth: '1em 1em 0 1em',
-        borderColor: `${color} transparent transparent transparent`,
-      },
+        borderColor: `${color} transparent transparent transparent`
+      }
     },
     '&[x-placement*="right"] $arrow': {
       left: 0,
@@ -29,8 +45,8 @@ export const arrowGenerator = (color) => {
       width: '1em',
       '&::before': {
         borderWidth: '1em 1em 1em 0',
-        borderColor: `transparent ${color} transparent transparent`,
-      },
+        borderColor: `transparent ${color} transparent transparent`
+      }
     },
     '&[x-placement*="left"] $arrow': {
       right: 0,
@@ -39,8 +55,8 @@ export const arrowGenerator = (color) => {
       width: '1em',
       '&::before': {
         borderWidth: '1em 0 1em 1em',
-        borderColor: `transparent transparent transparent ${color}`,
-      },
-    },
-  };
+        borderColor: `transparent transparent transparent ${color}`
+      }
+    }
+  }
 }

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Redirect } from 'react-router-dom'
 import { useApolloClient, useQuery, useMutation } from 'react-apollo-hooks'
-import { useMe } from '../../services/requireAuth'
+import { useMe } from '../../services/auth.service'
 import history from '../../config/history'
 import { CURRENT_USER } from '../../graphql/queries'
 import axios from 'axios'
@@ -15,6 +15,8 @@ const Logout = () => {
   useEffect(() => {
     if (me) {
       logOut().then(async () => {
+        await localStorage.removeItem('Authorization')
+        console.log(localStorage.getItem('Authorization'))
         await client.clearStore()
         history.push('/login')
       })

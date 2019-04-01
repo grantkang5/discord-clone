@@ -36,6 +36,7 @@ services:
       - PGPORT=5432
       - REDIS_HOST=redis
       - REDIS_PORT=6379
+      - JWT_SECRET='zawarudo'
   redis-server:
     build:
       dockerfile: Dockerfile.dev

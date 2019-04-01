@@ -6,10 +6,10 @@ import { useQuery, useMutation } from 'react-apollo-hooks'
 import { GET_USERS_BY_NAME } from '../../../graphql/queries'
 import Button from '../../../components/Button'
 import { SEND_INVITATION } from '../../../graphql/mutations'
-import { useMe } from '../../../services/requireAuth'
+import { useMe } from '../../../services/auth.service'
 import UserContent from '../UserContent'
 import { differenceBy } from 'lodash'
-import { hashids } from '../../../services/hashIds'
+import { hashids } from '../../../services/hash.service'
 
 const ServerInvite = ({ open, handleClose, server }) => {
   const me = useMe()

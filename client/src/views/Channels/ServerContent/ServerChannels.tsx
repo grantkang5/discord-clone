@@ -23,7 +23,7 @@ import { DELETE_CHANNEL, CHANGE_CHANNEL } from '../../../graphql/mutations'
 import MenuItem from '@material-ui/core/MenuItem'
 import Popover from '@material-ui/core/Popover'
 import { withStyles } from '@material-ui/core/styles'
-import getPaths from '../../../services/getPaths'
+import { getPaths } from '../../../services/hash.service'
 
 type Params = {
   channelId: string

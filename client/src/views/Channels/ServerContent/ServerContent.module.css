@@ -193,16 +193,15 @@
   flex: 1 1 auto;
   height: 100%;
   min-height: 0;
+  padding: 0 20px 20px 20px;
 }
 .inviteScroller {
   max-height: 200px;
-  padding-left: 12px;
   overflow-x: hidden;
-  padding: 0 20px 20px 20px;
   overflow-y: scroll;
-  display: flex;
+  padding-left: 6px;
+  display: block;
   flex: 1 1 auto;
-  flex-direction: column;
 }
 
 .inviteRow {

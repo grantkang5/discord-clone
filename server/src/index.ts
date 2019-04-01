@@ -9,10 +9,10 @@ import { createConnection } from 'typeorm'
 import schema from './modules/schema'
 import './config/passport'
 import auth from './modules/auth'
-import { jwtConfig } from './config/passport'
 import * as Redis from 'ioredis'
 import { onConnect, onDisconnect } from './config/subscriptions'
 import redisConf from './config/redisConf'
+import './config/passport'
 
 const PORT = 5000
 const path = '/graphql'
@@ -21,22 +21,17 @@ export const redisClient = new Redis(redisConf)
 
 createConnection().then(async () => {
   const app = express()
-    .use(cookieParser(jwtConfig.jwt.secret, jwtConfig.cookie))
+    .use(cookieParser())
     .use(cors())
     .use(bodyParser.json())
 
   app.use(passport.initialize())
   app.get('/check', (_, res) => res.status(200).send('hello'))
   app.use('/auth', auth)
-  app.use((err, _, res, next) => {
-    console.log('ERROR: ', err)
-    res.status(500)
-    next(err)
-  })
 
   const apolloServer = new ApolloServer({
     schema,
-    context: ({ req, res }) => ({ req, res }),
+    context: ({ req, res, connection }: any) => ({ req, res, connection }),
     subscriptions: {
       onConnect,
       onDisconnect

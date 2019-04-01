@@ -4,7 +4,7 @@ import AuthForm from './AuthForm'
 import { ReactComponent as Logo } from '../../assets/logo1.svg'
 
 import './Auth.css'
-import { signUp } from '../../services/requireAuth';
+import { signUp } from '../../services/auth.service';
 
 const Signup = () => (
   <div className='authBackground'>

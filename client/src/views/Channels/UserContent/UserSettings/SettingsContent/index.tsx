@@ -1,5 +1,5 @@
 import React from 'react'
-import { useMe } from '../../../../../services/requireAuth'
+import { useMe } from '../../../../../services/auth.service'
 import MyAccount from './MyAccount'
 import style from './SettingsContent.module.css'
 import { useMutation } from 'react-apollo-hooks';

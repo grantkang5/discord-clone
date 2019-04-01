@@ -36,9 +36,9 @@ const resolvers: IResolvers = {
       return deletedServer
     },
     joinServer: async (_, { serverId, userId }: { serverId: number, userId: number }) => {
-      const joinedServer = await getCustomRepository(ServerRepository).joinServer({ serverId, userId })
-      pubsub.publish(USER_JOINED_SERVER, { userJoinedServer: joinedServer })
-      return await joinedServer
+      const server = await getCustomRepository(ServerRepository).joinServer({ serverId, userId })
+      pubsub.publish(USER_JOINED_SERVER, { userJoinedServer: server })
+      return await server
     },
     acceptServerInvitation: async (_, { invitationId }) => {
       const server = await getCustomRepository(ServerRepository).acceptServerInvitation({ invitationId })

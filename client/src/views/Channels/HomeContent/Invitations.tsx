@@ -12,7 +12,7 @@ import {
   GET_USER_SERVERS,
   GET_RECEIVED_INVITATIONS
 } from '../../../graphql/queries'
-import { useMe } from '../../../services/requireAuth'
+import { useMe } from '../../../services/auth.service'
 import SubHeader from '../../../components/SubHeader'
 
 const Invitations = ({ invitations }) => {

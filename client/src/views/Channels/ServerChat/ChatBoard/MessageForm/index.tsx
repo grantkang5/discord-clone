@@ -5,7 +5,7 @@ import AddCircle from '@material-ui/icons/AddCircle'
 import { useMutation } from 'react-apollo-hooks'
 import { POST_MESSAGE } from '../../../../../graphql/mutations'
 import validationSchema from './validationSchema'
-import { useMe } from '../../../../../services/requireAuth'
+import { useMe } from '../../../../../services/auth.service'
 import moment from 'moment'
 import { GET_MESSAGES } from '../../../../../graphql/queries'
 

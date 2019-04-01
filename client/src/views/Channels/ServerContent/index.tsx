@@ -8,8 +8,8 @@ import ErrorScreen from '../../../components/ErrorScreen'
 import style from './ServerContent.module.css'
 import UserContent from '../UserContent'
 import ServerChat from '../ServerChat'
-import getPaths from '../../../services/getPaths'
-import history from '../../../config/history';
+import { getPaths } from '../../../services/hash.service'
+import history from '../../../config/history'
 import { groupBy } from 'lodash'
 
 const ServerContent = ({ match, location }) => {
@@ -19,13 +19,13 @@ const ServerContent = ({ match, location }) => {
     suspend: true
   })
   const channels = groupBy(data.server.channels, channels => channels.type)
-  
+
   useEffect(() => {
     if (!channelPath && data) {
       history.push(`/channels/${data.server.id}/${channels.text[0].id}`)
     }
   }, [data])
-  
+
   if (error) {
     return <ErrorScreen error={error} />
   }

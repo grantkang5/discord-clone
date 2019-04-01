@@ -19,7 +19,7 @@ router.post(
 
     const token = await jwt.sign(
       {
-        user: req.user.id
+        user: req.user
       },
       jwtConfig.jwt.secret,
       jwtConfig.jwt.options
@@ -30,8 +30,7 @@ router.post(
     redisPubSub.publish(USER_LOGGED_IN, { userLoggedIn: verifiedUser })
 
     try {
-      await res.cookie('jwt', token, jwtConfig.cookie)
-      return res.status(200).json({ token })
+      return res.json({ token })
     } catch (err) {
       throw new Error('Try again in a few minutes')
     }
@@ -65,7 +64,7 @@ router.post(
     })
     const token = await jwt.sign(
       {
-        user: req.user.id
+        user: req.user
       },
       jwtConfig.jwt.secret,
       jwtConfig.jwt.options
@@ -76,8 +75,7 @@ router.post(
     redisPubSub.publish(USER_LOGGED_IN, { userLoggedIn: verifiedUser })
 
     try {
-      await res.cookie('jwt', token, jwtConfig.cookie)
-      return res.status(200).json({ token })
+      return res.json({ token })
     } catch (err) {
       throw new Error('Try again in a few minutes')
     }

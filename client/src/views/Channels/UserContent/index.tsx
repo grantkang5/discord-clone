@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import style from './UserContent.module.css'
-import { useMe } from '../../../services/requireAuth'
+import { useMe } from '../../../services/auth.service'
 import SettingsIcon from '@material-ui/icons/Settings'
 import UserSettings from './UserSettings'
 

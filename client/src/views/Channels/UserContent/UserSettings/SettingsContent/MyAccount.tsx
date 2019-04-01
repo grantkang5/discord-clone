@@ -1,7 +1,7 @@
 import React from 'react'
 import style from './SettingsContent.module.css'
 import Button from '../../../../../components/Button'
-import { useMe } from '../../../../../services/requireAuth';
+import { useMe } from '../../../../../services/auth.service';
 import { useMutation } from 'react-apollo-hooks';
 import { CURRENT_USER } from '../../../../../graphql/queries';
 import { EDIT_NAME } from '../../../../../graphql/mutations';

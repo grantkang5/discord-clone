@@ -39,7 +39,7 @@ export const resolvers: IResolvers = {
     logOut: async (_, __, { req, res }) => {
       const { user } = req
       await req.logout()
-      await redisClient.hdel('users', req.signedCookies['jwt'])
+      await redisClient.hdel('users', req.headers.authorization.slice(7))
       const verifiedUser = await User.findOne({ id: user.id })
       redisPubSub.publish(USER_LOGGED_OUT, { userLoggedOut: verifiedUser })
       await res.clearCookie('jwt', { path: '/' })

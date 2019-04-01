@@ -6,7 +6,7 @@ import classNames from 'classnames'
 import discordLogo from '../../assets/discordLogo.png'
 
 import './Auth.css'
-import { logIn } from '../../services/requireAuth';
+import { logIn } from '../../services/auth.service';
 
 const Login = (props: any) => {
   return (

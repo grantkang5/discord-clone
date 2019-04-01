@@ -5,7 +5,7 @@ import Popover from '@material-ui/core/Popover'
 import MenuItem from '@material-ui/core/MenuItem'
 import { withStyles } from '@material-ui/core/styles'
 import { Server } from '../../../graphql/types'
-import { useMe } from '../../../services/requireAuth'
+import { useMe } from '../../../services/auth.service'
 import {
   DELETE_SERVER,
   REMOVE_USER_FROM_SERVER

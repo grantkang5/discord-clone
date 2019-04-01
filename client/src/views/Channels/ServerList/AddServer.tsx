@@ -3,11 +3,11 @@ import style from './ServerList.module.css'
 import Add from '@material-ui/icons/Add'
 import { useMutation } from 'react-apollo-hooks'
 import { CREATE_SERVER, JOIN_SERVER } from '../../../graphql/mutations'
-import { useMe } from '../../../services/requireAuth'
+import { useMe } from '../../../services/auth.service'
 import Dialog from '@material-ui/core/Dialog'
 import Button from '../../../components/Button'
 import { GET_USER_SERVERS, GET_RECEIVED_INVITATIONS } from '../../../graphql/queries'
-import { hashids } from '../../../services/hashIds'
+import { hashids } from '../../../services/hash.service'
 
 const AddServer = () => {
   const me = useMe()
