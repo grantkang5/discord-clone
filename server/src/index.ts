@@ -20,42 +20,49 @@ const path = '/graphql'
 export const redisClient = new Redis(redisConf)
 
 const startServer = async () => {
-  try {
-    await createConnection()
-    const app = express()
-      .use(cookieParser(jwtConfig.jwt.secret, jwtConfig.cookie))
-      .use(cors())
-      .use(bodyParser.json())
+  let retries = 10
+  while (retries) {
+    try {
+      await createConnection()
+      const app = express()
+        .use(cookieParser(jwtConfig.jwt.secret, jwtConfig.cookie))
+        .use(cors())
+        .use(bodyParser.json())
 
-    app.use(passport.initialize())
-    app.get('/check', (_, res) => res.status(200).send('hello'))
-    app.use('/auth', auth)
-    app.use((err, _, res, next) => {
-      console.log('ERROR: ', err)
-      res.status(500)
-      next(err)
-    })
+      app.use(passport.initialize())
+      app.get('/check', (_, res) => res.status(200).send('hello'))
+      app.use('/auth', auth)
+      app.use((err, _, res, next) => {
+        console.log('ERROR: ', err)
+        res.status(500)
+        next(err)
+      })
 
-    const apolloServer = new ApolloServer({
-      schema,
-      context: ({ req, res }) => ({ req, res }),
-      subscriptions: {
-        onConnect,
-        onDisconnect
-      }
-    })
+      const apolloServer = new ApolloServer({
+        schema,
+        context: ({ req, res }) => ({ req, res }),
+        subscriptions: {
+          onConnect,
+          onDisconnect
+        }
+      })
 
-    app.use(path, passport.authenticate('jwt', { session: false }))
-    apolloServer.applyMiddleware({ app, path })
+      app.use(path, passport.authenticate('jwt', { session: false }))
+      apolloServer.applyMiddleware({ app, path })
 
-    const ws = createServer(app)
-    apolloServer.installSubscriptionHandlers(ws)
+      const ws = createServer(app)
+      apolloServer.installSubscriptionHandlers(ws)
 
-    ws.listen(PORT, () => {
-      console.log(`--------------- Listening on PORT ${PORT} -----------------`)
-    })
-  } catch (error) {
-    throw new Error(error)
+      ws.listen(PORT, () => {
+        console.log(
+          `--------------- Listening on PORT ${PORT} -----------------`
+        )
+      })
+    } catch (error) {
+      retries -= 1
+      console.log(error)
+      console.log(`Failed to connect db...${retries} retries left`)
+    }
   }
 }
 console.log('SECRET: ', process.env.PGPASSWORD)
