@@ -7,7 +7,6 @@ import { getRepository } from 'typeorm'
 import { User } from '../../entity/User'
 import { redisClient } from '../..';
 import { redisPubSub, USER_LOGGED_IN } from '../subscriptions';
-// import { pubsub, USER_LOGGED_IN } from '../subscriptions'
 const router = express.Router()
 
 router.post(

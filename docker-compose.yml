@@ -29,11 +29,11 @@ services:
       - ./server:/usr/app
     environment:
       - NODE_ENV=development
-      - PG_USER=postgres
-      - PG_HOST=postgres
-      - PG_DATABASE=postgres
-      - PG_PASSWORD=pgpassword
-      - PG_PORT=5432
+      - PGUSER=postgres
+      - PGHOST=postgres
+      - PGDATABASE=postgres
+      - PGPASSWORD=pgpassword
+      - PGPORT=5432
       - REDIS_HOST=redis
       - REDIS_PORT=6379
   redis-server:
