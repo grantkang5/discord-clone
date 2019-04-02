@@ -5,7 +5,7 @@ import { useQuery } from 'react-apollo-hooks'
 import { differenceBy } from 'lodash'
 import { ReactComponent as Crown } from '../../../../assets/crown.svg'
 import MemberOption from './MemberOption'
-import { useMe } from '../../../../services/auth.service';
+import { useMe } from '../../../../services/auth.service'
 
 const Members = ({ server }) => {
   const me = useMe()
@@ -15,7 +15,7 @@ const Members = ({ server }) => {
   })
   const [anchorEl, handleMenu] = useState(null)
   const offlineUsers = differenceBy(server.users, data.onlineUsers, 'id')
-  
+
   return (
     <div className={style.membersWrap}>
       <div className={style.membersScrollWrapper}>
@@ -63,7 +63,28 @@ const Members = ({ server }) => {
                   key={user.id}
                   className={[style.member, style.offline].join(' ')}
                 >
-                  <div className={style.memberContent}>{user.name}</div>
+                  <div
+                    className={style.memberContent}
+                    aria-haspopup="true"
+                    aria-owns={anchorEl ? `member${user.id}` : undefined}
+                    onClick={e => {
+                      if (user.id !== me.id) {
+                        e.stopPropagation()
+                        handleMenu(e.currentTarget)
+                      }
+                    }}
+                  >
+                    {user.name}
+                    {user.id === server.host.id && (
+                      <Crown className={style.crown} />
+                    )}
+                  </div>
+                  <MemberOption
+                    user={user}
+                    server={server}
+                    handleMenu={handleMenu}
+                    anchorEl={anchorEl}
+                  />
                 </div>
               )
             })}
