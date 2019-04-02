@@ -4,8 +4,8 @@ import Popover from '@material-ui/core/Popover'
 import { withStyles } from '@material-ui/core/styles'
 import { REMOVE_USER_FROM_SERVER } from '../../../../graphql/mutations'
 import { useMe } from '../../../../services/auth.service'
-import { useMutation } from 'react-apollo-hooks';
-import { GET_USER_SERVERS } from '../../../../graphql/queries';
+import { useMutation } from 'react-apollo-hooks'
+import { GET_USER_SERVERS } from '../../../../graphql/queries'
 
 const MemberOption = ({ server, user, handleMenu, anchorEl }) => {
   const me = useMe()
@@ -25,25 +25,25 @@ const MemberOption = ({ server, user, handleMenu, anchorEl }) => {
         horizontal: 'right'
       }}
     >
-      {
-        server.host.id === me.id ? (
-          <StyledMenuItem
-            onClick={() => {
-              kickUser({
-                variables: { serverId: server.id, userId: user.id },
-                refetchQueries: [
-                  {
-                    query: GET_USER_SERVERS,
-                    variables: { userId: me.id }
-                  }
-                ]
-              })
-            }}
-          >
-            Kick from server
-          </StyledMenuItem>
-        ) : null
-      }
+      {server.host.id === me.id ? (
+        <StyledMenuItem
+          onClick={() => {
+            kickUser({
+              variables: { serverId: server.id, userId: user.id },
+              refetchQueries: [
+                {
+                  query: GET_USER_SERVERS,
+                  variables: { userId: me.id }
+                }
+              ]
+            }).then(() => {
+              handleMenu(null)
+            })
+          }}
+        >
+          Kick from server
+        </StyledMenuItem>
+      ) : null}
     </StyledPopover>
   )
 }
