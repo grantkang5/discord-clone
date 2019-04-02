@@ -12,6 +12,6 @@
 .channelsScroller {
   padding-bottom: 20px;
   flex: 1 1 auto;
-  overflow-y: scroll;
+  overflow-y: auto;
   min-height: 0;
 }
