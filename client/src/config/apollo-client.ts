@@ -6,9 +6,12 @@ import { HttpLink } from 'apollo-link-http'
 import { WebSocketLink } from 'apollo-link-ws'
 import { getMainDefinition } from 'apollo-utilities'
 import { OperationDefinitionNode } from 'graphql'
-import { getAuthHeader } from '../services/auth.service';
+import { getAuthHeader } from '../services/auth.service'
 
-const httpUri = `${process.env.REACT_APP_CLIENT_URL}/graphql`
+const httpUri =
+  process.env.NODE_ENV === 'production'
+    ? 'https://discordapp-clone.com/graphql'
+    : 'http://localhost:3050/graphql'
 const webSocketURI = httpUri.replace(/^https?/, 'ws')
 
 const httpLink = new HttpLink({
@@ -31,7 +34,7 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      Authorization: token ? `bearer ${token}` : ""
+      Authorization: token ? `bearer ${token}` : ''
     }
   }
 })
