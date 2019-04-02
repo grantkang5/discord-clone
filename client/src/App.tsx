@@ -27,20 +27,26 @@ const App = () => (
 export default App
 
 /*
+* FIXME: Fix scruffed scrollbars on windows (https://github.com/Grsmto/simplebar#3-demo)
+* TODO: Add dropzone to upload images, emotes, and avatars
+* TODO: Create better suspense components to load channel and servers
+* TODO: Populate Home Page with github api
+* TODO: markdown messages
+* TODO: Add email verification
+* TODO: ADD VOICE
   * TODO: Add migrations on production
-  * TODO: Add dropzone to upload images, emotes, and avatars
-  * FIXME: Fix subscriptions on online/offliner users when joining/accepting invitation to servers
-  * FIXME: Fix scruffed scrollbars on windows (https://github.com/Grsmto/simplebar#3-demo)
-  * TODO: Populate Home Page
-  * TODO: Create better suspense components to load channel and servers
   * TODO: Lower volume storage requests
   * TODO: Create graphql-code-generator types for client side
-  * TODO: Add email verification
   * TODO: Add notifications
   * FIXME: Fix general text and voice channels
   * TODO: ADD direct messaging
-  * TODO: ADD Leaving server
-  * TODO: ADD VOICE
-  * TODO: Fix virus on voice channels
+  * TODO: Create Errorboundary on Main view
   * TODO: Add refresh tokens & disable multiple sessions
- */
+  */
+ 
+ /**
+  * FINISHED
+  * FIXME: Fix subscriptions on online/offliner users when joining/accepting invitation to servers
+  * TODO: ADD Leaving server
+  * TODO: Fix virus on voice channels
+  */
