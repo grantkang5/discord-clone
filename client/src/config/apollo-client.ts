@@ -8,7 +8,7 @@ import { getMainDefinition } from 'apollo-utilities'
 import { OperationDefinitionNode } from 'graphql'
 import { getAuthHeader } from '../services/auth.service';
 
-const httpUri = 'http://localhost:3050/graphql'
+const httpUri = `${process.env.REACT_APP_CLIENT_URL}/graphql`
 const webSocketURI = httpUri.replace(/^https?/, 'ws')
 
 const httpLink = new HttpLink({

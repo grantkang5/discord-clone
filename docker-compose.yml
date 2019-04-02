@@ -19,6 +19,7 @@ services:
       - /usr/app/node_modules
       - ./client:/usr/app
     environment:
+      - REACT_APP_CLIENT_URL=http://localhost:3050
       - REACT_APP_SERVER_URL=http://localhost:5000/api
   api:
     build:

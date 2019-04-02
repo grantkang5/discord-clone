@@ -17,3 +17,6 @@ spec:
           image: grant05/discord-clone-client
           ports:
             - containerPort: 3000
+          env:
+            - name: REACT_APP_CLIENT_URL
+              value: https://discordapp-clone.com
