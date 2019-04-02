@@ -12,7 +12,10 @@ const httpUri =
   process.env.NODE_ENV === 'production'
     ? 'https://discordapp-clone.com/graphql'
     : 'http://localhost:3050/graphql'
-const webSocketURI = httpUri.replace(/^https?/, 'ws')
+const webSocketURI = httpUri.replace(
+  /^https?/,
+  process.env.NODE_ENV === 'production' ? 'wss' : 'ws'
+)
 
 const httpLink = new HttpLink({
   uri: httpUri
