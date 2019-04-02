@@ -14,18 +14,18 @@ const resolvers: IResolvers = {
   },
 
   Mutation: {
-    createChannel: async (_, { serverId, type, name }) => {
-      const channel = await getCustomRepository(ChannelRepository).createChannel({ serverId, type, name })
+    createChannel: async (_, { serverId, type, name }, { req }) => {
+      const channel = await getCustomRepository(ChannelRepository).createChannel({ serverId, type, name, req })
       pubsub.publish(CHANNEL_CREATED, { createdChannel: channel })
       return channel
     },
-    deleteChannel: async (_, { channelId }) => {
-      const channel = await getCustomRepository(ChannelRepository).deleteChannel({ channelId })
+    deleteChannel: async (_, { channelId }, { req }) => {
+      const channel = await getCustomRepository(ChannelRepository).deleteChannel({ channelId, req })
       pubsub.publish(CHANNEL_DELETED, { deletedChannel: channel })
       return channel
     },
-    changeChannel: async (_, { channelId, name }) => {
-      const channel = await getCustomRepository(ChannelRepository).changeChannel({ channelId, name })
+    changeChannel: async (_, { channelId, name }, { req }) => {
+      const channel = await getCustomRepository(ChannelRepository).changeChannel({ channelId, name, req })
       pubsub.publish(CHANNEL_CHANGED, { changedChannel: channel })
       return channel
     }

@@ -693,7 +693,7 @@ export namespace SubscriptionResolvers {
     removedUser?: RemovedUserResolver<Maybe<User>, TypeParent, Context>;
 
     userJoinedServer?: UserJoinedServerResolver<
-      Maybe<Server>,
+      Maybe<UserAndServer>,
       TypeParent,
       Context
     >;
@@ -758,7 +758,7 @@ export namespace SubscriptionResolvers {
     Context = {}
   > = SubscriptionResolver<R, Parent, Context>;
   export type UserJoinedServerResolver<
-    R = Maybe<Server>,
+    R = Maybe<UserAndServer>,
     Parent = {},
     Context = {}
   > = SubscriptionResolver<R, Parent, Context>;
@@ -797,6 +797,25 @@ export namespace SubscriptionResolvers {
     Parent = {},
     Context = {}
   > = SubscriptionResolver<R, Parent, Context>;
+}
+
+export namespace UserAndServerResolvers {
+  export interface Resolvers<Context = {}, TypeParent = UserAndServer> {
+    user?: UserResolver<Maybe<User>, TypeParent, Context>;
+
+    server?: ServerResolver<Maybe<Server>, TypeParent, Context>;
+  }
+
+  export type UserResolver<
+    R = Maybe<User>,
+    Parent = UserAndServer,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type ServerResolver<
+    R = Maybe<Server>,
+    Parent = UserAndServer,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
 }
 
 /** Directs the executor to skip this field or fragment when the `if` argument is true. */
@@ -845,6 +864,7 @@ export interface IResolvers<Context = {}> {
   Message?: MessageResolvers.Resolvers<Context>;
   Mutation?: MutationResolvers.Resolvers<Context>;
   Subscription?: SubscriptionResolvers.Resolvers<Context>;
+  UserAndServer?: UserAndServerResolvers.Resolvers<Context>;
   Date?: GraphQLScalarType;
 }
 

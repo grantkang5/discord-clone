@@ -2,6 +2,7 @@ import { EntityRepository, Repository, LessThan } from 'typeorm'
 import { Message } from '../../entity/Message'
 import { Channel } from '../../entity/Channel'
 import { User } from '../../entity/User'
+import { find } from 'lodash'
 
 @EntityRepository(Message)
 class MessageRepository extends Repository<Message> {
@@ -22,7 +23,13 @@ class MessageRepository extends Repository<Message> {
   }
 
   async postMessage({ channelId, message, req }) {
-    const channel = await Channel.findOne({ id: channelId })
+    const channel = await Channel.findOne({
+      where: { id: channelId },
+      relations: ['server']
+    })
+    if (!find(channel.server.users, user => user.id === req.user.id)) {
+      throw new Error("This server no longer exists or you've been kicked from the server")
+    }
     const sender = await User.findOne({ id: req.user.id })
     const newMessage = await this.create({
       message,

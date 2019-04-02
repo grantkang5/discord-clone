@@ -1,17 +1,23 @@
 import { EntityRepository, Repository } from 'typeorm'
 import { Server } from '../../entity/Server'
 import { User } from '../../entity/User'
-import { Channel } from '../../entity/Channel';
-import { Invitation } from '../../entity/Invitation';
+import { Channel } from '../../entity/Channel'
+import { Invitation } from '../../entity/Invitation'
 import { findIndex } from 'lodash'
+import { pubsub, USER_JOINED_SERVER, USER_LEFT_SERVER } from '../subscriptions'
+import { find } from 'lodash'
 
 @EntityRepository(Server)
 class ServerRepository extends Repository<Server> {
-  async server({ serverId }) {
+  async server({ serverId, req }) {
     try {
       const server = await this.findOne({
         where: { id: serverId }
       })
+
+      if (!find(server.users, user => user.id === req.user.id)) {
+        throw new Error('Unauthorized')
+      }
 
       return server
     } catch (error) {
@@ -22,12 +28,12 @@ class ServerRepository extends Repository<Server> {
   async getUserServers(userId: number) {
     try {
       const userServers = await this.createQueryBuilder('server')
-      .leftJoinAndSelect('server.host', 'host')
-      .innerJoin('server.users', 'user')
-      .where('user.id = :id', { id: userId })
-      .leftJoinAndSelect('server.users', 'users')
-      .getMany()
- 
+        .leftJoinAndSelect('server.host', 'host')
+        .innerJoin('server.users', 'user')
+        .where('user.id = :id', { id: userId })
+        .leftJoinAndSelect('server.users', 'users')
+        .getMany()
+
       return userServers
     } catch (error) {
       return new Error(error)
@@ -70,12 +76,19 @@ class ServerRepository extends Repository<Server> {
     try {
       const server = await this.findOne({ id: serverId })
       const user = await User.findOne({ id: userId })
-      const findUser = findIndex(server.users, serverUser => serverUser.id === user.id)
+      const findUser = findIndex(
+        server.users,
+        serverUser => serverUser.id === user.id
+      )
       if (findUser > 0) {
         throw new Error("You're already joined into this server")
       }
       server.users = [...server.users, user]
-      return await server.save()
+      const joinedServer = await server.save()
+      pubsub.publish(USER_JOINED_SERVER, {
+        userJoinedServer: { server: joinedServer, user }
+      })
+      return joinedServer
     } catch (error) {
       throw new Error(error)
     }
@@ -88,7 +101,11 @@ class ServerRepository extends Repository<Server> {
       const server = await this.findOne({ id: invitation.server.id })
       server.users = [...server.users, user]
       invitation.remove()
-      return await server.save()
+      const joinedServer = await server.save()
+      pubsub.publish(USER_JOINED_SERVER, {
+        userJoinedServer: { server: joinedServer, user }
+      })
+      return joinedServer
     } catch (error) {
       throw new Error(error)
     }
@@ -98,8 +115,11 @@ class ServerRepository extends Repository<Server> {
     const server = await this.findOne({ id: serverId })
     const user = await User.findOne({ id: userId })
     server.users = server.users.filter(serverUser => serverUser.id !== user.id)
-    server.save()
-    return await user
+    const leftServer = await server.save()
+    pubsub.publish(USER_LEFT_SERVER, {
+      removedUser: { server: leftServer, user }
+    })
+    return leftServer
   }
 }
 

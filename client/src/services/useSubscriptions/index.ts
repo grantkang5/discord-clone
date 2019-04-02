@@ -9,7 +9,8 @@ import {
   SUBSCRIBED_USERS,
   USER_LOGGED_IN,
   USER_LOGGED_OUT,
-  POSTED_MESSAGE
+  POSTED_MESSAGE,
+  USER_LEFT_SERVER
 } from '../../graphql/subscriptions'
 import * as queries from '../../graphql/queries'
 import * as fragments from '../../graphql/fragments'
@@ -81,8 +82,89 @@ export const useSubscriptions = () => {
     }
   })
 
+  useSubscription(USER_LEFT_SERVER, {
+    onSubscriptionData: async ({
+      client,
+      subscriptionData: {
+        data: { removedUser }
+      }
+    }) => {
+      try {
+        const { me } = client.readQuery({
+          query: queries.CURRENT_USER
+        })
+
+        const { userServers } = client.readQuery({
+          query: queries.GET_USER_SERVERS,
+          variables: { userId: me.id }
+        })
+
+        if (me.id === removedUser.user.id) {
+          await client.writeQuery({
+            query: queries.GET_USER_SERVERS,
+            variables: { userId: me.id },
+            data: {
+              userServers: userServers.filter(server => server.id !== removedUser.server.id)
+            }
+          })
+        }
+
+        const foundServer = find(
+          userServers,
+          server => server.id === removedUser.server.id
+        )
+        if (foundServer) {
+          await client.writeQuery({
+            query: queries.GET_SERVER,
+            variables: { serverId: removedUser.server.id },
+            data: { 
+              server: removedUser.server
+            }
+          })
+
+          try {
+            const { onlineUsers } = await client.readQuery({
+              query: queries.ONLINE_USERS,
+              variables: { serverId: removedUser.server.id }
+            })
+
+            client.writeQuery({
+              query: queries.ONLINE_USERS,
+              variables: { serverId: removedUser.server.id },
+              data: {
+                onlineUsers: onlineUsers.filter(user => user.id !== removedUser.user.id)
+              }
+            })
+          } catch (error) {
+            const {
+              data: { onlineUsers }
+            } = await client.query({
+              query: queries.ONLINE_USERS,
+              variables: { serverId: removedUser.server.id }
+            })
+
+            client.writeQuery({
+              query: queries.ONLINE_USERS,
+              variables: { serverId: removedUser.server.id },
+              data: {
+                onlineUsers: onlineUsers.filter(user => user.id !== removedUser.user.id)
+              }
+            })
+          }
+        }
+      } catch (error) {
+        //
+      }
+    }
+  })
+
   useSubscription(USER_JOINED_SERVER, {
-    onSubscriptionData: async ({ client, subscriptionData: { data } }) => {
+    onSubscriptionData: async ({
+      client,
+      subscriptionData: {
+        data: { userJoinedServer }
+      }
+    }) => {
       try {
         const { me } = client.readQuery({
           query: queries.CURRENT_USER
@@ -93,16 +175,46 @@ export const useSubscriptions = () => {
         })
         const foundServer = find(
           userServers,
-          server => server.id === data.userJoinedServer.id
+          server => server.id === userJoinedServer.server.id
         )
         if (foundServer) {
-          client.writeQuery({
+          await client.writeQuery({
             query: queries.GET_SERVER,
-            variables: { serverId: data.userJoinedServer.id },
+            variables: { serverId: userJoinedServer.server.id },
             data: {
-              server: data.userJoinedServer
+              server: userJoinedServer.server
             }
           })
+
+          try {
+            const { onlineUsers } = await client.readQuery({
+              query: queries.ONLINE_USERS,
+              variables: { serverId: userJoinedServer.server.id }
+            })
+
+            client.writeQuery({
+              query: queries.ONLINE_USERS,
+              variables: { serverId: userJoinedServer.server.id },
+              data: {
+                onlineUsers: unionBy(onlineUsers, [userJoinedServer.user], 'id')
+              }
+            })
+          } catch (error) {
+            const {
+              data: { onlineUsers }
+            } = await client.query({
+              query: queries.ONLINE_USERS,
+              variables: { serverId: userJoinedServer.server.id }
+            })
+
+            client.writeQuery({
+              query: queries.ONLINE_USERS,
+              variables: { serverId: userJoinedServer.server.id },
+              data: {
+                onlineUsers: unionBy(onlineUsers, [userJoinedServer.user], 'id')
+              }
+            })
+          }
         }
       } catch (error) {
         throw new Error(error)
@@ -215,7 +327,7 @@ export const useSubscriptions = () => {
           const myServers = userServers.filter(server => {
             return find(server.users, user => user.id === data.userLoggedIn.id)
           })
-  
+
           if (myServers) {
             myServers.map(async server => {
               try {
@@ -223,7 +335,7 @@ export const useSubscriptions = () => {
                   query: queries.ONLINE_USERS,
                   variables: { serverId: server.id }
                 })
-  
+
                 client.writeQuery({
                   query: queries.ONLINE_USERS,
                   variables: { serverId: server.id },
@@ -238,7 +350,7 @@ export const useSubscriptions = () => {
                   query: queries.ONLINE_USERS,
                   variables: { serverId: server.id }
                 })
-  
+
                 client.writeQuery({
                   query: queries.ONLINE_USERS,
                   variables: { serverId: server.id },
@@ -270,7 +382,7 @@ export const useSubscriptions = () => {
           const myServers = userServers.filter(server => {
             return find(server.users, user => user.id === data.userLoggedOut.id)
           })
-  
+
           if (myServers) {
             myServers.map(async server => {
               try {
@@ -278,7 +390,7 @@ export const useSubscriptions = () => {
                   query: queries.ONLINE_USERS,
                   variables: { serverId: server.id }
                 })
-  
+
                 client.writeQuery({
                   query: queries.ONLINE_USERS,
                   variables: { serverId: server.id },
@@ -295,7 +407,7 @@ export const useSubscriptions = () => {
                   query: queries.ONLINE_USERS,
                   variables: { serverId: server.id }
                 })
-  
+
                 client.writeQuery({
                   query: queries.ONLINE_USERS,
                   variables: { serverId: server.id },
