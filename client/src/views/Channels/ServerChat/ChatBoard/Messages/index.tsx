@@ -58,7 +58,7 @@ const Messages = ({ channel, messages, location, fetchMore }: Props) => {
           0.9
       ) {
         messagesEnd.current.scrollIntoView({ behavior: 'smooth' })
-      } else if (messages.length > 3) {
+      } else if (messages.length > 35) {
         handleJump(true)
       }
     }
