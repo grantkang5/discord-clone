@@ -27,7 +27,6 @@ const App = () => (
 export default App
 
 /*
-* TODO: Populate Home Page with github api
 * TODO: LIMIT graphql rates
 * TODO: markdown messages
 * FIXME: Fix scruffed scrollbars on windows (https://github.com/Grsmto/simplebar#3-demo)
@@ -35,18 +34,19 @@ export default App
 * TODO: Create better suspense components to load channel and servers
 * TODO: Add email verification
 * TODO: ADD VOICE
-  * TODO: Add migrations on production
-  * TODO: Lower volume storage requests
-  * TODO: Create graphql-code-generator types for client side
-  * TODO: Add notifications
-  * FIXME: Fix general text and voice channels
-  * TODO: ADD direct messaging
-  * TODO: Create Errorboundary on Main view
-  * TODO: Add refresh tokens & disable multiple sessions
-  */
- 
- /**
-  * FINISHED
+* TODO: Add migrations on production
+* TODO: Lower volume storage requests
+* TODO: Create graphql-code-generator types for client side
+* TODO: Add notifications
+* FIXME: Fix general text and voice channels
+* TODO: ADD direct messaging
+* TODO: Create Errorboundary on Main view
+* TODO: Add refresh tokens & disable multiple sessions
+*/
+
+/**
+ * FINISHED
+ * TODO: Populate Home Page with github api
   * FIXME: Fix subscriptions on online/offliner users when joining/accepting invitation to servers
   * TODO: ADD Leaving server
   * TODO: Fix virus on voice channels

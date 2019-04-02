@@ -3,7 +3,7 @@ import HomeChannels from './HomeChannels'
 import HomeHeader from './HomeHeader';
 import UserContent from '../UserContent';
 import style from './HomeContent.module.css';
-import { ReactComponent as Discord } from '../../../assets/discord.svg'
+import NewsLetter from './NewsLetter';
 
 const HomeContent = () => (
   <React.Fragment>
@@ -13,6 +13,8 @@ const HomeContent = () => (
 
       <UserContent />
     </div>
+
+    <NewsLetter />
   </React.Fragment>
 )
 

@@ -1,0 +1,73 @@
+.container {
+  background-color: var(--darker);
+  display: flex;
+  position: relative;
+  contain: layout;
+  flex: 1;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.titleWrapper {
+  flex: 0 0 auto;
+  position: relative;
+  z-index: 100;
+}
+.titleContainer {
+  flex: 0 0 auto;
+  background: var(--darker);
+  box-shadow: 0 1px 0 rgba(0,0,0,.2), 0 2px 0 rgba(0,0,0,.06);
+  color: #FFF;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  padding: 0 8px 0 12px;
+  justify-content: space-between;
+  overflow: hidden;
+}
+.title {
+  line-height: 22px;
+  font-weight: 700;
+}
+
+.newsContainer {
+  padding: 35px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  color: #b9bbbe;
+  display: flex;
+  flex-direction: column;
+}
+
+.repo {
+  margin-bottom: 8px;
+}
+.repo>a {
+  color: var(--blurple);
+}
+
+.commit {
+  display: flex;
+  align-items: center;
+  padding: 4px 0;
+  margin: 5px 0;
+  white-space: nowrap;
+  justify-content: flex-start;
+  flex-shrink: 0;
+}
+
+.commitMessage {
+  margin-left: 10px;
+  letter-spacing: 0.5px;
+  font-size: 0.9rem;
+}
+
+.commitTime {
+  color: hsla(0, 0%, 100%, 0.2);
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  margin-left: 0.3rem;
+  white-space: nowrap;
+}
