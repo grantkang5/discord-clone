@@ -14,9 +14,12 @@ class ChannelRepository extends Repository<Channel> {
     return server.channels
   }
 
-  async createChannel({ type, name, serverId }) {
+  async createChannel({ type, name, serverId, req }) {
     try {
       const server = await Server.findOne({ id: serverId })
+      if (server.host.id !== req.user.id) {
+        throw new Error('Unauthorized')
+      }
       const channel = this.create({ type, name, server })
       server.channels = [...server.channels, channel]
       return await channel.save()
@@ -25,12 +28,15 @@ class ChannelRepository extends Repository<Channel> {
     }
   }
 
-  async deleteChannel({ channelId }) {
+  async deleteChannel({ channelId, req }) {
     try {
       const channel = await Channel.findOne({
         where: { id: channelId },
         relations: ['server']
       })
+      if (channel.server.host.id !== req.user.id) {
+        throw new Error('Unauthorized')
+      }
       channel.remove()
       return channel
     } catch (error) {
@@ -38,12 +44,15 @@ class ChannelRepository extends Repository<Channel> {
     }
   }
 
-  async changeChannel({ channelId, name }) {
+  async changeChannel({ channelId, name, req }) {
     try {
       const channel = await Channel.findOne({
         where: { id: channelId },
         relations: ['server']
       })
+      if (channel.server.host.id !== req.user.id) {
+        throw new Error('Unauthorized')
+      }
       channel.name = name
       return await channel.save()
     } catch (error) {

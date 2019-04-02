@@ -3,7 +3,7 @@ import * as fragments from '../../fragments'
 
 export default gql`
   subscription {
-    userJoinedServer {
+    removedUser {
       server {
         ...Server
         users {

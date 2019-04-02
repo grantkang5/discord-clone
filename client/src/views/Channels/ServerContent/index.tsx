@@ -18,17 +18,17 @@ const ServerContent = ({ match, location }) => {
     variables: { serverId: match.params.serverId },
     suspend: true
   })
+  if (error) {
+    return <ErrorScreen error={error} />
+  }
   const channels = groupBy(data.server.channels, channels => channels.type)
-
+  
   useEffect(() => {
     if (!channelPath && data) {
       history.push(`/channels/${data.server.id}/${channels.text[0].id}`)
     }
   }, [data])
 
-  if (error) {
-    return <ErrorScreen error={error} />
-  }
 
   if (!channelPath) {
     return null

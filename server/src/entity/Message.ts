@@ -30,7 +30,8 @@ export class Message extends BaseEntity {
 
   @ManyToOne(() => Channel, channel => channel.messages, {
     cascade: ['insert', 'update'],
-    eager: true
+    eager: true,
+    onDelete: "CASCADE"
   })
   channel: Channel
 }

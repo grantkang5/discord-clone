@@ -9,6 +9,11 @@ export default gql`
     channels: [Channel]
   }
 
+  type UserAndServer {
+    server: Server
+    user: User
+  }
+
   extend type Query {
     server(serverId: ID!): Server
     servers: [Server]
@@ -20,13 +25,13 @@ export default gql`
     deleteServer(serverId: ID!): Server
     editServer: Server
     joinServer(serverId: ID!, userId: ID!): Server 
-    removeUserFromServer(serverId: ID!, userId: ID!): User
+    removeUserFromServer(serverId: ID!, userId: ID!): Server
     acceptServerInvitation(invitationId: ID!): Server
   }
 
   extend type Subscription {
     deletedServer: Server
-    removedUser: User
-    userJoinedServer: Server
+    removedUser: UserAndServer
+    userJoinedServer: UserAndServer
   }
 `

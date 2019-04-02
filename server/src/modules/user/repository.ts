@@ -23,6 +23,7 @@ class UserRepository extends Repository<User> {
       const userIds = (Object as any).values(hashUsers)
       const onlineUsers = await this.find({ id: In(userIds) })
       const users = intersectionBy(server.users, onlineUsers, 'id')
+      console.log(`CURRENT ONLINE USERS FOR SERVER ${serverId}`, onlineUsers)
       return users
     } catch (error) {
       throw new Error(error)
