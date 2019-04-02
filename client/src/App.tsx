@@ -27,11 +27,12 @@ const App = () => (
 export default App
 
 /*
+* TODO: Populate Home Page with github api
+* TODO: LIMIT graphql rates
+* TODO: markdown messages
 * FIXME: Fix scruffed scrollbars on windows (https://github.com/Grsmto/simplebar#3-demo)
 * TODO: Add dropzone to upload images, emotes, and avatars
 * TODO: Create better suspense components to load channel and servers
-* TODO: Populate Home Page with github api
-* TODO: markdown messages
 * TODO: Add email verification
 * TODO: ADD VOICE
   * TODO: Add migrations on production
