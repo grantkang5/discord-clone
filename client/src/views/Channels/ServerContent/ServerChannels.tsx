@@ -148,11 +148,6 @@ const ServerChannels = ({ server, location }: Props) => {
                 {channel.name}
                 <SettingsIcon
                   className={settingsIconStyle}
-                  onClick={() =>
-                    deleteChannel({
-                      variables: { channelId: channel.id }
-                    })
-                  }
                 />
               </div>
             )

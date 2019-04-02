@@ -27,7 +27,20 @@ const App = () => (
 export default App
 
 /*
- * TODO: Create graphql-code-generator types for client side
- * TODO: Optimize performance for queries using `client.query()` on hover links
- * TODO: Create better suspense components to load channel and servers
+  * TODO: Add migrations on production
+  * TODO: Add dropzone to upload images, emotes, and avatars
+  * FIXME: Fix subscriptions on online/offliner users when joining/accepting invitation to servers
+  * FIXME: Fix scruffed scrollbars on windows (https://github.com/Grsmto/simplebar#3-demo)
+  * TODO: Populate Home Page
+  * TODO: Create better suspense components to load channel and servers
+  * TODO: Lower volume storage requests
+  * TODO: Create graphql-code-generator types for client side
+  * TODO: Add email verification
+  * TODO: Add notifications
+  * FIXME: Fix general text and voice channels
+  * TODO: ADD direct messaging
+  * TODO: ADD Leaving server
+  * TODO: ADD VOICE
+  * TODO: Fix virus on voice channels
+  * TODO: Add refresh tokens & disable multiple sessions
  */

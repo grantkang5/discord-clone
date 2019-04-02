@@ -10,7 +10,6 @@ import { User } from '../entity/User'
 
 export const onConnect = async connectionParams => {
   const authToken = connectionParams.authToken
-  console.log('onConnect: ', authToken)
   try {
     const decoded = jwt.verify(
       authToken,
@@ -41,7 +40,6 @@ export const onConnect = async connectionParams => {
 export const onDisconnect = async (_, webSocket) => {
   const ws = await webSocket['initPromise']
   const authToken = ws.authToken
-  console.log('ON DIScoNNECT: ')
   if (authToken) {
     try {
       const decoded = jwt.verify(authToken, process.env.JWT_SECRET, jwtConfig.jwt.options)

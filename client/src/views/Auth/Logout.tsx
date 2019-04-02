@@ -16,7 +16,6 @@ const Logout = () => {
     if (me) {
       logOut().then(async () => {
         await localStorage.removeItem('Authorization')
-        console.log(localStorage.getItem('Authorization'))
         await client.clearStore()
         history.push('/login')
       })
