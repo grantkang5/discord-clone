@@ -26,6 +26,9 @@ export class User extends BaseEntity {
   @Column({ default: 'Goober' })
   name: string
 
+  @Column({ nullable: true })
+  avatar: string
+
   @OneToMany(() => Server, server => server.host)
   hostedServers: Server[]
 
