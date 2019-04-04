@@ -1,10 +1,7 @@
 /* USER */
 .userWrapper {
   flex: 0 0 auto;
-}
-
-.user {
-  height: 42px;
+  display: flex;
   padding: 0 20px;
   background-color: rgba(32,34,37,.3);
   display: flex;
@@ -14,13 +11,31 @@
   justify-content: space-between;
 }
 
+.user {
+  height: 42px;
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
 .user > .name {
   font-size: 0.8rem;
+}
+
+.avatarWrapper {
+  margin: 0 10px 0 0;
+  flex-shrink: 0;
+  float: left;
+  height: 30px;
+  width: 30px;
+  position: relative;
+  border-radius: 50%;
 }
 
 .buttonsWrapper {
   display: flex;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .buttonContainer {

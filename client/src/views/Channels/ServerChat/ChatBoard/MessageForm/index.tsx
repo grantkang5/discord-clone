@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Formik, FormikActions, FormikProps } from 'formik'
 import style from './MessageForm.module.css'
 import AddCircle from '@material-ui/icons/AddCircle'
@@ -8,6 +8,7 @@ import validationSchema from './validationSchema'
 import { useMe } from '../../../../../services/auth.service'
 import moment from 'moment'
 import { GET_MESSAGES } from '../../../../../graphql/queries'
+import { useDropzone } from 'react-dropzone'
 
 interface FormValues {
   message: string
@@ -16,6 +17,11 @@ interface FormValues {
 const MessageForm = ({ channel }) => {
   const me = useMe()
   const postMessage = useMutation(POST_MESSAGE)
+  const onDrop = useCallback(acceptedFiles => {}, [])
+  const { getRootProps, getInputProps, open, acceptedFiles } = useDropzone({
+    noClick: true,
+    noKeyboard: true
+  })
 
   return (
     <Formik
@@ -58,7 +64,7 @@ const MessageForm = ({ channel }) => {
                 <div className={style.formContainer}>
                   <div className={style.attachButtonWrapper}>
                     <button className={style.attachButton} type="button">
-                      <AddCircle className={style.addCircle} />
+                      <AddCircle className={style.addCircle} onClick={open} />
                     </button>
 
                     <div className={style.attachButtonDivider} />

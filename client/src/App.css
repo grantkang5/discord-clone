@@ -87,6 +87,7 @@ h5 {
 
 .inputWrapper {
   margin-bottom: 20px;
+  position: relative;
 }
 
 .flexContainer {
@@ -96,4 +97,27 @@ h5 {
   justify-content: flex-start;
   align-items: stretch;
   display: flex;
+}
+
+.defaultAvatar {
+  background-image: url('./assets/discord-avatar.png');
+  background-repeat: no-repeat;
+  background-clip: padding-box;
+  background-position: 50%;
+  background-size: 80% 80%;
+  border-radius: 50%;
+  height: 100%;
+  position: relative;
+  width: 100%;
+}
+
+.divider {
+  background-color: rgba(114, 118, 125, .3);
+  box-sizing: border-box;
+  height: 1px;
+  width: 100%;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  outline: 0;
+  border: 0;
 }

@@ -1,0 +1,13 @@
+.avatarWrapper {
+}
+
+.avatar {
+  background-repeat: no-repeat;
+  background-clip: padding-box;
+  background-position: 50%;
+  background-size: 80% 80%;
+  border-radius: 50%;
+  height: 100%;
+  position: relative;
+  width: 100%;
+}

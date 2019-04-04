@@ -27,10 +27,9 @@ const App = () => (
 export default App
 
 /*
-* TODO: LIMIT graphql rates
+* TODO: Add dropzone to upload images, emotes, and avatars
 * TODO: markdown messages
 * FIXME: Fix scruffed scrollbars on windows (https://github.com/Grsmto/simplebar#3-demo)
-* TODO: Add dropzone to upload images, emotes, and avatars
 * TODO: Create better suspense components to load channel and servers
 * TODO: Add email verification
 * TODO: ADD VOICE
@@ -47,6 +46,7 @@ export default App
 /**
  * FINISHED
  * TODO: Populate Home Page with github api
+ * TODO: LIMIT auth api requests
   * FIXME: Fix subscriptions on online/offliner users when joining/accepting invitation to servers
   * TODO: ADD Leaving server
   * TODO: Fix virus on voice channels

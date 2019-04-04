@@ -10,6 +10,7 @@ const Button = ({ children, ...buttonProps }) => {
     [style.full]: buttonProps.fullwidth,
     [style.small]: buttonProps.small,
     [style.inverted]: buttonProps.inverted,
+    [style.secondary]: buttonProps.secondary && !buttonProps.inverted,
     [style.loading]: buttonProps.loading
   })
 
