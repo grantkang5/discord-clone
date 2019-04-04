@@ -1,4 +1,5 @@
 import HashIds from 'hashids'
+import ColorHash from 'color-hash'
 import pathToRegexp from 'path-to-regexp'
 
 export const getPaths = location => {
@@ -12,6 +13,7 @@ export const getPaths = location => {
   }
 }
 
+export const colorHash = new ColorHash()
 export const hashids = new HashIds('scuffed-discord')
 
 export const arrowGenerator = color => {

@@ -1,0 +1,115 @@
+.accountWrapper {
+  width: 100%;
+}
+
+.accountHeader {
+  color: #f6f6f7;
+  text-transform: uppercase;
+  cursor: default;
+  margin-bottom: 20px;
+  font-weight: 600;
+  line-height: 20px;
+}
+
+.accountContainer {
+  padding: 20px;
+  background: rgba(32,34,37,.6);
+  border-radius: 5px;
+  border: 1px solid #202225;
+  width: 100%;
+  flex-wrap: nowrap;
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+.avatarContainer {
+  flex: 0 1 auto;
+  margin-right: 10px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.avatarWrapper {
+  height: 100px;
+  width: 100px;
+  position: relative;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.avatar {
+
+}
+.accountInfoContainer {
+  flex: 1 1 auto;
+  margin-left: 10px;
+  box-sizing: border-box;
+}
+.row {
+  flex: 1 1 auto;
+  display: flex;
+  justify-content: space-between;
+  margin: 12px;
+}
+
+.label {
+  color: #72767d;
+  line-height: 16px;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+.value {
+  color: #b9bbbe;
+  line-height: 20px;
+}
+
+.changeAvatar {
+  margin-top: 10px;
+  font-size: 0.8rem;
+  color: #FFF;
+  cursor: pointer;
+  font-weight: 600;
+}
+.changeAvatar:hover {
+  text-decoration: underline;
+}
+.changePassword {
+  color: #FFF;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-left: 5px;
+}
+.changePassword:hover {
+  text-decoration: underline;
+}
+.cancelPassword {
+  color: #FFF;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: 5px;
+}
+.cancelPassword:hover {
+  text-decoration: underline;
+}
+
+.buttonsContainer {
+  box-sizing: border-box;
+  flex-wrap: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 1 1 auto;
+}
+.cancelButton {
+  margin: 0 10px;
+  flex: 0 1 auto;
+}
+.saveButton {
+  flex: 0 1 auto;
+  margin-left: 10px;
+}

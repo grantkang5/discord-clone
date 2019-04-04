@@ -4,6 +4,7 @@ export interface User {
   id: string | number
   name?: string
   email?: string
+  avatar?: string
   password?: string
   hostedServers?: [Server]
   joinedServers?: [Server]
@@ -29,4 +30,14 @@ export interface Message {
   message: string
   sender?: User
   channel?: Channel
+}
+
+export interface File {
+  lastModified: Date
+  lastModifiedDate: object
+  name: string
+  path: string
+  size: number
+  type: string
+  webkitRelativePath: string
 }
