@@ -5,5 +5,6 @@ export default gql`
     id
     email
     name
+    avatar
   }
 `
