@@ -74,10 +74,8 @@ class UserRepository extends Repository<User> {
     try {
       const server = await Server.findOne({ id: serverId })
       const hashUsers = await redisClient.hgetall('users')
-      console.log('hash Users: ', hashUsers)
       const userIds = (Object as any).values(hashUsers)
       const onlineUsers = await this.find({ id: In(userIds) })
-      console.log(userIds, onlineUsers)
       const users = intersectionBy(server.users, onlineUsers, 'id')
       return users
     } catch (error) {
