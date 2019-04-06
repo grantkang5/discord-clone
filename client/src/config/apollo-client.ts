@@ -6,6 +6,7 @@ import { HttpLink } from 'apollo-link-http'
 import { WebSocketLink } from 'apollo-link-ws'
 import { getMainDefinition } from 'apollo-utilities'
 import { OperationDefinitionNode } from 'graphql'
+import { createUploadLink } from 'apollo-upload-client'
 import { getAuthHeader } from '../services/auth.service'
 
 const httpUri =
@@ -17,9 +18,13 @@ const webSocketURI = httpUri.replace(
   process.env.NODE_ENV === 'production' ? 'wss' : 'ws'
 )
 
-const httpLink = new HttpLink({
+const httpLink = createUploadLink({
   uri: httpUri
 })
+/* Replace HttpLink w/ createUploadLink for file mutations */
+// const httpLink = new HttpLink({
+//   uri: httpUri
+// })
 
 const webSocketLink = new WebSocketLink({
   uri: webSocketURI,
@@ -52,6 +57,7 @@ const terminatingLink = split(
   webSocketLink,
   authLink.concat(httpLink)
 )
+const apolloUploadLink = createUploadLink()
 
 const link = ApolloLink.from([terminatingLink])
 const cache = new InMemoryCache()
