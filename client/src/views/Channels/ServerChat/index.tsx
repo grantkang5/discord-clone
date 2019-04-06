@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import style from './ServerChat.module.css'
 import Title from './Title';
@@ -22,6 +22,11 @@ const ServerChat = ({ server, match }: Props) => {
     variables: { channelId: match.params.channelId },
     suspend: true
   })
+
+  useEffect(() => {
+    console.log('Change title name!!')
+    document.title = data.channel.name
+  }, [data])
 
   return (
     <div className={style.chatContainer}>
