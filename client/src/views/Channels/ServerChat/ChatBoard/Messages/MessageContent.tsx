@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import style from './Messages.module.css'
 import MoreVert from '@material-ui/icons/MoreVert'
 import { useMe } from '../../../../../services/auth.service'
+import Avatar from '../../../../../components/Avatar';
 
 const MessageContent = ({ message, index, previousMessage, nextMessage }) => {
   const me = useMe()
@@ -46,7 +47,9 @@ const MessageContent = ({ message, index, previousMessage, nextMessage }) => {
     <div className={messageWrapperStyle} key={message.id}>
       <div className={style.messageContainer}>
         <div className={style.messageHeaderWrapper}>
-          <div className={style.userAvatarContainer} />
+          <div className={style.userAvatarContainer}>
+            <Avatar img={message.sender.avatar} preview={undefined} />
+          </div>
           <div className={style.messageHeader}>
             <span className={style.name}>{message.sender.name}</span>
             <time className={style.time}>
