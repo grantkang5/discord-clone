@@ -5,6 +5,7 @@ export enum ChannelType {
   Voice = "VOICE"
 }
 
+export type Upload = any;
 import {
   GraphQLResolveInfo,
   GraphQLScalarType,
@@ -260,6 +261,8 @@ export namespace UserResolvers {
 
     name?: NameResolver<Maybe<string>, TypeParent, Context>;
 
+    avatar?: AvatarResolver<Maybe<string>, TypeParent, Context>;
+
     hostedServers?: HostedServersResolver<
       Maybe<(Maybe<Server>)[]>,
       TypeParent,
@@ -289,6 +292,11 @@ export namespace UserResolvers {
     Context = {}
   > = Resolver<R, Parent, Context>;
   export type NameResolver<
+    R = Maybe<string>,
+    Parent = User,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type AvatarResolver<
     R = Maybe<string>,
     Parent = User,
     Context = {}
@@ -466,6 +474,8 @@ export namespace MutationResolvers {
   export interface Resolvers<Context = {}, TypeParent = {}> {
     editName?: EditNameResolver<User, TypeParent, Context>;
 
+    editUser?: EditUserResolver<Maybe<User>, TypeParent, Context>;
+
     logOut?: LogOutResolver<Maybe<User>, TypeParent, Context>;
 
     deleteUser?: DeleteUserResolver<Maybe<User>, TypeParent, Context>;
@@ -525,6 +535,25 @@ export namespace MutationResolvers {
     userId: string;
 
     name: string;
+  }
+
+  export type EditUserResolver<
+    R = Maybe<User>,
+    Parent = {},
+    Context = {}
+  > = Resolver<R, Parent, Context, EditUserArgs>;
+  export interface EditUserArgs {
+    userId: string;
+
+    name?: Maybe<string>;
+
+    email?: Maybe<string>;
+
+    currentPassword?: Maybe<string>;
+
+    newPassword?: Maybe<string>;
+
+    avatar?: Maybe<Upload>;
   }
 
   export type LogOutResolver<
@@ -822,6 +851,32 @@ export namespace UserAndServerResolvers {
   > = Resolver<R, Parent, Context>;
 }
 
+export namespace FileResolvers {
+  export interface Resolvers<Context = {}, TypeParent = File> {
+    filename?: FilenameResolver<Maybe<string>, TypeParent, Context>;
+
+    mimetype?: MimetypeResolver<Maybe<string>, TypeParent, Context>;
+
+    encoding?: EncodingResolver<Maybe<string>, TypeParent, Context>;
+  }
+
+  export type FilenameResolver<
+    R = Maybe<string>,
+    Parent = File,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type MimetypeResolver<
+    R = Maybe<string>,
+    Parent = File,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+  export type EncodingResolver<
+    R = Maybe<string>,
+    Parent = File,
+    Context = {}
+  > = Resolver<R, Parent, Context>;
+}
+
 /** Directs the executor to skip this field or fragment when the `if` argument is true. */
 export type SkipDirectiveResolver<Result> = DirectiveResolverFn<
   Result,
@@ -858,6 +913,10 @@ export interface DeprecatedDirectiveArgs {
 export interface DateScalarConfig extends GraphQLScalarTypeConfig<Date, any> {
   name: "Date";
 }
+export interface UploadScalarConfig
+  extends GraphQLScalarTypeConfig<Upload, any> {
+  name: "Upload";
+}
 
 export interface IResolvers<Context = {}> {
   Query?: QueryResolvers.Resolvers<Context>;
@@ -869,7 +928,9 @@ export interface IResolvers<Context = {}> {
   Mutation?: MutationResolvers.Resolvers<Context>;
   Subscription?: SubscriptionResolvers.Resolvers<Context>;
   UserAndServer?: UserAndServerResolvers.Resolvers<Context>;
+  File?: FileResolvers.Resolvers<Context>;
   Date?: GraphQLScalarType;
+  Upload?: GraphQLScalarType;
 }
 
 export interface IDirectiveResolvers<Result> {

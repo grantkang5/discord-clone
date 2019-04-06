@@ -55,12 +55,18 @@
   box-sizing: border-box;
   flex-grow: 1;
   font-size: 0.9rem;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.05em;
   border-radius: 4px;
 }
 .memberContent:hover {
   background: rgba(185, 187, 190, 0.1);
   color: rgba(246, 246, 247);
+}
+.avatarWrapper {
+  margin-right: 10px;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
 }
 
 .crown {

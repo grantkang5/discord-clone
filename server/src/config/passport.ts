@@ -1,7 +1,3 @@
-// const passport = require('passport')
-// const LocalStrategy = require('passport-local').Strategy
-// const JwtStrategy = require('passport-jwt').Strategy
-// const ExtractJwt = require('passport-jwt').ExtractJwt
 import * as passport from 'passport'
 import * as passportLocal from 'passport-local'
 import * as passportJwt from 'passport-jwt'
@@ -52,7 +48,7 @@ passport.use(new JwtStrategy({
   secretOrKey: jwtConfig.jwt.secret,
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
 }, (jwtPayload, done) => {
-  User.findOne({ id: jwtPayload.user.id })
+  User.findOne({ id: jwtPayload.user })
     .then(user => {
       if (!user) throw new Error('Invalid credentials')
       return done(null, user)

@@ -3,7 +3,7 @@ import { getCustomRepository } from 'typeorm'
 import { User } from '../../entity/User'
 import UserRepository from './repository'
 import { redisPubSub, USER_LOGGED_OUT, USER_LOGGED_IN } from '../subscriptions'
-import { redisClient } from '../..';
+import { redisClient } from '../..'
 
 export const resolvers: IResolvers = {
   Query: {
@@ -44,6 +44,19 @@ export const resolvers: IResolvers = {
       redisPubSub.publish(USER_LOGGED_OUT, { userLoggedOut: verifiedUser })
       await res.clearCookie('jwt', { path: '/' })
       return user
+    },
+    editUser: async (
+      _,
+      { userId, email, name, currentPassword, newPassword, avatar }
+    ) => {
+      return await getCustomRepository(UserRepository).editUser({
+        userId,
+        email,
+        name,
+        currentPassword,
+        newPassword,
+        avatar
+      })
     }
   },
 

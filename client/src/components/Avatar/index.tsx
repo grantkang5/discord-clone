@@ -3,33 +3,35 @@ import style from './Avatar.module.css'
 import { colorHash } from '../../services/hash.service'
 import { useMe } from '../../services/auth.service'
 
-const Avatar = ({ img }) => {
-  const me = useMe()
-  const handleImage = () => {
-    console.log('Avatar props IMG: ', img)
+interface Props {
+  img?: Object | string
+  preview?: Object | string
+}
 
-    if (img.path) {
-      console.log(img.path)
-      return img.path
-    } else if (img) {
-      return img
-    } else {
-      return ''
-    }
+const Avatar = ({ img, preview }) => {
+  const me = useMe()
+  if (preview) {
+    return (
+      <div className={style.avatarWrapper}>
+        <img src={preview.preview} className={style.avatar} />
+      </div>
+    )
+  }
+
+  if (!img) {
+    return (
+      <div
+        className="defaultAvatar"
+        style={{ backgroundColor: colorHash.hex(me.id) }}
+      />
+    )
   }
 
   return (
     <React.Fragment>
-      {img ? (
-        <div className={style.avatarWrapper}>
-          <img src={handleImage()} className={style.avatar} />
-        </div>
-      ) : (
-        <div
-          className="defaultAvatar"
-          style={{ backgroundColor: colorHash.hex(me.id) }}
-        />
-      )}
+      <div className={style.avatarWrapper}>
+        <img src={`http://localhost:3050/api/images/${img}`} className={style.avatar} />
+      </div>
     </React.Fragment>
   )
 }
