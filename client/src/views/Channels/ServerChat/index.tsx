@@ -24,8 +24,7 @@ const ServerChat = ({ server, match }: Props) => {
   })
 
   useEffect(() => {
-    console.log('Change title name!!')
-    document.title = data.channel.name
+    document.title = `#${data.channel.name}`
   }, [data])
 
   return (
