@@ -1,7 +1,7 @@
 import * as Yup from 'yup'
 
 const validationSchema = Yup.object().shape({
-  username: Yup.string()
+  name: Yup.string()
     .required('Username is required')
     .min(1, 'Username must contain at least 1 character'),
   email: Yup.string()
@@ -11,8 +11,8 @@ const validationSchema = Yup.object().shape({
     .required('Please fill in your current password')
     .min(8, 'Password must contain at least 8 characters'),
   newPassword: Yup.string()
-    .min(8, 'New password must contain at least 8 characters'),
-  avatar: Yup.string()
+    .notRequired()
+    .min(8, 'New password must contain at least 8 characters')
 })
 
 export default validationSchema

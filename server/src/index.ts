@@ -6,6 +6,7 @@ import { createServer } from 'http'
 import * as passport from 'passport'
 import { createConnection } from 'typeorm'
 import schema from './modules/schema'
+import * as nodePath from 'path'
 import './config/passport'
 import auth from './modules/auth'
 import * as Redis from 'ioredis'
@@ -29,6 +30,7 @@ createConnection().then(async () => {
   const app = express()
     .use(cors())
     .use(bodyParser.json())
+    .use('/images', express.static(nodePath.join(__dirname, 'images')))
 
   app.enable('trust proxy')
   app.use(passport.initialize())

@@ -46,7 +46,8 @@
       "jsonwebtoken": "8.5.0",
       "graphql-redis-subscriptions": "2.1.0",
       "express-rate-limit": "3.4.0",
-      "cloudinary": "1.14.0"
+      "cloudinary": "1.14.0",
+      "shortid": "2.2.14"
    },
    "scripts": {
       "generate": "gql-gen",

@@ -16,8 +16,8 @@ export const onConnect = async connectionParams => {
       process.env.JWT_SECRET,
       jwtConfig.jwt.options
     )
-    redisClient.hset('users', authToken, decoded.user.id)
-    const verifiedUser = await User.findOne({ id: decoded.user.id })
+    redisClient.hset('users', authToken, decoded.user)
+    const verifiedUser = await User.findOne({ id: decoded.user })
     redisPubSub.publish(USER_LOGGED_IN, { userLoggedIn: verifiedUser })
     return { authToken }
   } catch (error) {
@@ -44,7 +44,7 @@ export const onDisconnect = async (_, webSocket) => {
     try {
       const decoded = jwt.verify(authToken, process.env.JWT_SECRET, jwtConfig.jwt.options)
       redisClient.hdel('users', authToken)
-      const verifiedUser = await User.findOne({ id: decoded.user.id })
+      const verifiedUser = await User.findOne({ id: decoded.user })
       redisPubSub.publish(USER_LOGGED_OUT, {
         userLoggedOut: verifiedUser
       })

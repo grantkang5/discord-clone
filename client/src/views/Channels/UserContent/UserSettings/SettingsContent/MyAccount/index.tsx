@@ -4,28 +4,17 @@ import Button from '../../../../../../components/Button'
 import { useMe } from '../../../../../../services/auth.service'
 import { useMutation } from 'react-apollo-hooks'
 import { CURRENT_USER } from '../../../../../../graphql/queries'
-import { EDIT_NAME } from '../../../../../../graphql/mutations'
+import { EDIT_NAME, EDIT_USER } from '../../../../../../graphql/mutations'
 import { colorHash } from '../../../../../../services/hash.service'
 import EditAccount from './EditAccount'
+import Avatar from '../../../../../../components/Avatar';
 
 const MyAccount = () => {
   const me = useMe()
-  const [editing, handleEditing] = useState(true)
+  const [editing, handleEditing] = useState(false)
   const closeEditing = () => handleEditing(false)
   const editName = useMutation(EDIT_NAME)
-  const handleClick = () => {
-    // editName({
-    //   variables: { userId: me.id, name: newName },
-    //   refetchQueries: [{ query: CURRENT_USER }],
-    //   optimisticResponse: {
-    //     editName: {
-    //       id: -1,
-    //       name: newName,
-    //       __typename: 'User'
-    //     }
-    //   }
-    // })
-  }
+  const submitEdit = useMutation(EDIT_USER)
 
   return (
     <div className={style.accountWrapper}>
@@ -33,19 +22,16 @@ const MyAccount = () => {
 
       <div className={style.accountContainer}>
         {editing ? (
-          <EditAccount closeEditing={closeEditing} me={me} />
+          <EditAccount
+            closeEditing={closeEditing}
+            me={me}
+            submitEdit={submitEdit}
+          />
         ) : (
           <React.Fragment>
             <div className={style.avatarContainer}>
               <div className={style.avatarWrapper}>
-                {me.avatar ? (
-                  <div className={style.avatar} />
-                ) : (
-                  <div
-                    className="defaultAvatar"
-                    style={{ backgroundColor: colorHash.hex(`${me.id}`) }}
-                  />
-                )}
+                <Avatar img={me.avatar} preview={undefined} />
               </div>
             </div>
 

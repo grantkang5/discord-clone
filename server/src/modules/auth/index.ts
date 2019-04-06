@@ -19,7 +19,7 @@ router.post(
 
     const token = await jwt.sign(
       {
-        user: req.user
+        user: req.user.id
       },
       jwtConfig.jwt.secret,
       jwtConfig.jwt.options
@@ -64,7 +64,7 @@ router.post(
     })
     const token = await jwt.sign(
       {
-        user: req.user
+        user: req.user.id
       },
       jwtConfig.jwt.secret,
       jwtConfig.jwt.options

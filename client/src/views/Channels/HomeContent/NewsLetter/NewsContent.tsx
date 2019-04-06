@@ -3,7 +3,6 @@ import moment from 'moment'
 import style from './NewsLetter.module.css'
 
 const NewsContent = ({ commits }) => {
-  console.log(commits)
   return (
     <div className={style.newsContainer}>
       <span className={style.repo}>

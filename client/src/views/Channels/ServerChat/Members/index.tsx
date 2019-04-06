@@ -6,6 +6,7 @@ import { differenceBy } from 'lodash'
 import { ReactComponent as Crown } from '../../../../assets/crown.svg'
 import MemberOption from './MemberOption'
 import { useMe } from '../../../../services/auth.service'
+import Avatar from '../../../../components/Avatar'
 
 const Members = ({ server }) => {
   const me = useMe()
@@ -38,6 +39,9 @@ const Members = ({ server }) => {
                       }
                     }}
                   >
+                    <div className={style.avatarWrapper}>
+                      <Avatar img={user.avatar} preview={undefined} />
+                    </div>
                     {user.name}
                     {user.id === server.host.id && (
                       <Crown className={style.crown} />
@@ -74,6 +78,9 @@ const Members = ({ server }) => {
                       }
                     }}
                   >
+                    <div className={style.avatarWrapper}>
+                      <Avatar img={user.avatar} preview={undefined} />
+                    </div>
                     {user.name}
                     {user.id === server.host.id && (
                       <Crown className={style.crown} />
