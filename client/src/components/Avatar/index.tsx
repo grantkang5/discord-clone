@@ -30,7 +30,7 @@ const Avatar = ({ img, preview }) => {
   return (
     <React.Fragment>
       <div className={style.avatarWrapper}>
-        <img src={`http://localhost:3050/api/images/${img}`} className={style.avatar} />
+        <img src={`${process.env.REACT_APP_CLIENT_URL}/${img}`} className={style.avatar} />
       </div>
     </React.Fragment>
   )
