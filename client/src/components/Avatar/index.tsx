@@ -12,8 +12,8 @@ const Avatar = ({ img, preview }) => {
   const me = useMe()
   const CLIENT_URL =
     process.env.NODE_ENV === 'production'
-      ? 'https://discordapp-clone.com/graphql'
-      : 'http://localhost:3050/graphql'
+      ? 'https://discordapp-clone.com'
+      : 'http://localhost:3050'
   if (preview) {
     return (
       <div className={style.avatarWrapper}>
