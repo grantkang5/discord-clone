@@ -10,6 +10,10 @@ interface Props {
 
 const Avatar = ({ img, preview }) => {
   const me = useMe()
+  const CLIENT_URL =
+    process.env.NODE_ENV === 'production'
+      ? 'https://discordapp-clone.com/graphql'
+      : 'http://localhost:3050/graphql'
   if (preview) {
     return (
       <div className={style.avatarWrapper}>
@@ -30,7 +34,7 @@ const Avatar = ({ img, preview }) => {
   return (
     <React.Fragment>
       <div className={style.avatarWrapper}>
-        <img src={`${process.env.REACT_APP_CLIENT_URL}/${img}`} className={style.avatar} />
+        <img src={`${CLIENT_URL}/${img}`} className={style.avatar} />
       </div>
     </React.Fragment>
   )
