@@ -17,7 +17,7 @@ const NewsLetter = () => {
     <div className={style.container}>
       <div className={style.titleWrapper}>
         <div className={style.titleContainer}>
-          <div className={style.title}>Welcome to scuffed-discord</div>
+          <div className={style.title}>Welcome to discord</div>
         </div>
       </div>
 
