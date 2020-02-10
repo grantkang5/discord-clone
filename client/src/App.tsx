@@ -12,7 +12,7 @@ const AuthLogout = requireAuth(Logout)
 const AuthMain = requireAuth(Main)
 
 const App = () => (
-  <div className="App">
+  <div className="App">   
     <Suspense fallback={<Loading delay={250} />}>
       <Switch>
         <Route exact path="/login" component={Login} />

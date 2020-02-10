@@ -1,0 +1,40 @@
+apiVersion: skaffold/v1beta2
+kind: Config
+build:
+  local:
+    push: false
+  artifacts:
+    - image: grant05/discord-clone-client
+      context: client
+      docker:
+        dockerfile: Dockerfile.dev
+      sync:
+        '**/*.ts': .
+        '**/*.tsx': .
+        '**/*.js': .
+        '**/*.css': .
+        '**/*.html': .
+    - image: grant05/discord-clone-server
+      context: server
+      docker:
+        dockerfile: Dockerfile.dev
+      sync:
+        '**/*.js': .
+        '**/*.ts': .
+    - image: grant05/discord-clone-worker
+      context: redis-server
+      docker:
+        dockerfile: Dockerfile.dev
+      sync:
+        '**/*.js': .
+        '**/*.ts': .
+deploy:
+  kubectl:
+    manifests:
+      - k8s/client-deployment.yaml
+      - k8s/server-deployment.yaml
+      - k8s/worker-deployment.yaml
+      - k8s/redis-deployment.yaml
+      - k8s/redis-cluster-ip-service.yaml
+      - k8s/server-cluster-ip-service.yaml
+      - k8s/client-cluster-ip-service.yaml
