@@ -36,6 +36,5 @@ export default App
 * TODO: Add migrations on production
 * TODO: Lower volume storage requests
 * TODO: Create graphql-code-generator types for client side
-* TODO: Add notifications
 * TODO: Add refresh tokens & disable multiple sessions
 */
