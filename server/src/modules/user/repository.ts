@@ -4,13 +4,31 @@ import { Server } from '../../entity/Server'
 import { redisClient } from '../..'
 import { intersectionBy } from 'lodash'
 import { createWriteStream, unlink } from 'fs'
-import * as bcrypt from 'bcryptjs'
-import * as shortid from 'shortid'
+import bcrypt from 'bcryptjs'
+import shortid from 'shortid'
+
+import { Stream } from 'stream';
+
+export interface Upload {
+  filename: string;
+  mimetype: string;
+  encoding: string;
+  createReadStream: () => Stream;
+}
 
 interface Image {
-  path?: string,
-  filename?: string
-  id?: string
+  path: string,
+  filename: string
+  id: string
+}
+
+interface EditUser {
+  userId: User["id"]
+  name: string
+  email: string
+  currentPassword: string
+  newPassword: string
+  avatar: Upload
 }
 
 @EntityRepository(User)
@@ -19,8 +37,9 @@ class UserRepository extends Repository<User> {
     return this.findOne({ id })
   }
 
-  async editName({ userId, name }) {
+  async editName({ userId, name }: Pick<EditUser, 'userId' | 'name'>) {
     const user = await this.findOne({ id: userId })
+    if (!user) throw new Error('This user doesn\'t exist')
     user.name = name
     return await user.save()
   }
@@ -32,8 +51,9 @@ class UserRepository extends Repository<User> {
     currentPassword,
     newPassword,
     avatar
-  }) {
+  }: EditUser) {
     const user = await this.findOne({ id: userId })
+    if (!user) throw new Error('This user doesn\'t exist')
     try {
       const match = await bcrypt.compare(currentPassword, user.password)
       if (!match) {
@@ -48,7 +68,7 @@ class UserRepository extends Repository<User> {
 
       if (avatar && user.avatar) {
         try {
-          await unlink(`src/images/${user.avatar}`, (err) => {
+           unlink(`src/images/${user.avatar}`, (err) => {
             console.log('unlink error: ', err)
           })
         } catch (error) {
@@ -57,10 +77,10 @@ class UserRepository extends Repository<User> {
       }
 
       if (avatar) {
-        const { filename, createReadStream } = await avatar
+        const { filename, createReadStream } = avatar
         const stream = createReadStream()
-        const { id }: Image = await this.uploadImage({ stream, filename })
-        user.avatar = id
+        const createdImage = await this.uploadImage({ stream, filename })
+        user.avatar = (createdImage as Image).id
       }
 
       const newUser = await user.save()
@@ -70,9 +90,10 @@ class UserRepository extends Repository<User> {
     }
   }
 
-  async onlineUsers({ serverId }) {
+  async onlineUsers({ serverId }: { serverId: number }) {
     try {
       const server = await Server.findOne({ id: serverId })
+      if (!server) throw new Error('This server doesn\'t exist')
       const hashUsers = await redisClient.hgetall('users')
       const userIds = (Object as any).values(hashUsers)
       const onlineUsers = await this.find({ id: In(userIds) })
@@ -83,7 +104,7 @@ class UserRepository extends Repository<User> {
     }
   }
 
-  async getUsersByName({ name }) {
+  async getUsersByName({ name }: { name: string }) {
     return await this.find({
       where: {
         name: Like(`${name}%`)
@@ -92,7 +113,7 @@ class UserRepository extends Repository<User> {
     })
   }
 
-  async uploadImage({ stream, filename }) {
+  async uploadImage({ stream, filename }: { stream: any, filename: string }) {
     // FIXME: Add hash id to path
     const id = shortid.generate()
     const path = `src/images/${id}`

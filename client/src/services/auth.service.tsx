@@ -15,9 +15,9 @@ export const storeAuthHeader = (token: string) => {
 export const getAuthHeader = (): string | null => {
   return localStorage.getItem('Authorization') || null
 }
-export const logIn = ({ email, password }) => axios.post('/api/auth/login', { email, password })
+export const logIn = ({ email, password }) => axios.post(`${process.env.REACT_APP_SERVER_URL}/auth/login`, { email, password })
   .then(({ data }) => storeAuthHeader(data.token))
-export const signUp = ({ email, password }) => axios.post('/api/auth/signup', { email, password })
+export const signUp = ({ email, password }) => axios.post(`${process.env.REACT_APP_SERVER_URL}/auth/signup`, { email, password })
   .then(({ data }) => storeAuthHeader(data.token))
 export const logOut = () => axios.post('/api/auth/logout')
 
