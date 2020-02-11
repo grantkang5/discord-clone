@@ -37,6 +37,5 @@ export default App
 * TODO: Lower volume storage requests
 * TODO: Create graphql-code-generator types for client side
 * TODO: Add notifications
-* FIXME: Fix general text and voice channels
 * TODO: Add refresh tokens & disable multiple sessions
 */
