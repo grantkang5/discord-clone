@@ -60,7 +60,8 @@
       "generate": "gql-gen",
       "generate:watch": "nodemon --exec npm run generate -e graphql",
       "dev": "concurrently \"npm run generate:watch\" \"nodemon --exec ts-node src/index.ts\"",
-      "start": "ts-node src/index.ts",
+      "start": "node dist/index.js",
+      "build": "tsc --sourceMap false",
       "docker": "docker-compose up --build"
    }
 }
