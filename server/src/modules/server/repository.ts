@@ -5,17 +5,26 @@ import { Channel } from '../../entity/Channel'
 import { Invitation } from '../../entity/Invitation'
 import { findIndex } from 'lodash'
 import { pubsub, USER_JOINED_SERVER, USER_LEFT_SERVER } from '../subscriptions'
+
 import { find } from 'lodash'
+
+interface ServerArgs {
+  serverId: number
+  userId: number
+  req: Express.Request
+}
 
 @EntityRepository(Server)
 class ServerRepository extends Repository<Server> {
-  async server({ serverId, req }) {
+  async server({ serverId, req }: Pick<ServerArgs, 'serverId' | 'req'>) {
     try {
+      if (!req || !req.user) throw new Error('Not authenticated')
       const server = await this.findOne({
         where: { id: serverId }
       })
+      if (!server) throw new Error('Server could not be found')
 
-      if (!find(server.users, user => user.id === req.user.id)) {
+      if (!find(server.users, user => user.id === req.user!.id)) {
         throw new Error('Unauthorized')
       }
 
@@ -42,6 +51,7 @@ class ServerRepository extends Repository<Server> {
 
   async createServer({ name, userId }: { name: string; userId: number }) {
     const host = await User.findOne({ id: userId })
+    if (!host) throw new Error('No host could be found')
     const server = await this.create({
       name,
       host,
@@ -65,6 +75,7 @@ class ServerRepository extends Repository<Server> {
   async deleteServer({ serverId }: { serverId: number }) {
     try {
       const serverToDelete = await this.findOne({ id: serverId })
+      if (!serverToDelete) throw new Error('No server could be found')
       serverToDelete.remove()
       return serverToDelete
     } catch (error) {
@@ -72,10 +83,11 @@ class ServerRepository extends Repository<Server> {
     }
   }
 
-  async joinServer({ serverId, userId }) {
+  async joinServer({ serverId, userId }: Pick<ServerArgs, 'serverId' | 'userId'>) {
     try {
       const server = await this.findOne({ id: serverId })
       const user = await User.findOne({ id: userId })
+      if (!server || !user) throw new Error('Data could not be found')
       const findUser = findIndex(
         server.users,
         serverUser => serverUser.id === user.id
@@ -94,11 +106,14 @@ class ServerRepository extends Repository<Server> {
     }
   }
 
-  async acceptServerInvitation({ invitationId }) {
+  async acceptServerInvitation({ invitationId }: { invitationId: number }) {
     try {
       const invitation = await Invitation.findOne({ id: invitationId })
+      if (!invitation) throw new Error('Invitation could not be found')
       const user = await User.findOne({ id: invitation.receiver.id })
       const server = await this.findOne({ id: invitation.server.id })
+      if (!server || !user) throw new Error('Data could not be found')
+
       server.users = [...server.users, user]
       invitation.remove()
       const joinedServer = await server.save()
@@ -111,9 +126,10 @@ class ServerRepository extends Repository<Server> {
     }
   }
 
-  async removeUserFromServer({ userId, serverId }) {
+  async removeUserFromServer({ userId, serverId }: Pick<ServerArgs, 'userId' | 'serverId'>) {
     const server = await this.findOne({ id: serverId })
     const user = await User.findOne({ id: userId })
+    if (!server || !user) throw new Error('Data could not be found')
     server.users = server.users.filter(serverUser => serverUser.id !== user.id)
     const leftServer = await server.save()
     pubsub.publish(USER_LEFT_SERVER, {

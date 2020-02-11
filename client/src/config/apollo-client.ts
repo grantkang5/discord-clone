@@ -9,10 +9,7 @@ import { OperationDefinitionNode } from 'graphql'
 import { createUploadLink } from 'apollo-upload-client'
 import { getAuthHeader } from '../services/auth.service'
 
-const httpUri =
-  process.env.NODE_ENV === 'production'
-    ? 'https://discordapp-clone.com/graphql'
-    : 'http://localhost:3050/graphql'
+const httpUri = `${process.env.REACT_APP_SERVER_URL}/graphql`
 const webSocketURI = httpUri.replace(
   /^https?/,
   process.env.NODE_ENV === 'production' ? 'wss' : 'ws'

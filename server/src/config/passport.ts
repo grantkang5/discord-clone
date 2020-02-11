@@ -1,7 +1,7 @@
-import * as passport from 'passport'
-import * as passportLocal from 'passport-local'
-import * as passportJwt from 'passport-jwt'
-import * as bcrypt from 'bcryptjs';
+import passport from 'passport'
+import passportLocal from 'passport-local'
+import passportJwt from 'passport-jwt'
+import bcrypt from 'bcryptjs';
 import { User } from '../entity/User';
 
 const LocalStrategy = passportLocal.Strategy;
@@ -10,7 +10,7 @@ const ExtractJwt = passportJwt.ExtractJwt;
 
 export const jwtConfig = {
   jwt: {
-    secret: process.env.JWT_SECRET,
+    secret: process.env.JWT_SECRET!,
     options: {
       expiresIn: '7h',
       audience: 'https://discordapp-clone.com',
