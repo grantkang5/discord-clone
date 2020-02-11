@@ -62,8 +62,3 @@ createConnection().then(async () => {
   console.error(`Typeorm Connection error: `, error)
   console.log('Make sure to run yarn docker or npm run docker to start db instances')
 })
-
-/**
- * TODO - Create error handlers for repositories
- * TODO - Create tests for graphql resolvers
- */
