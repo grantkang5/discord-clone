@@ -38,7 +38,5 @@ export default App
 * TODO: Create graphql-code-generator types for client side
 * TODO: Add notifications
 * FIXME: Fix general text and voice channels
-* TODO: ADD direct messaging
-* TODO: Create Errorboundary on Main view
 * TODO: Add refresh tokens & disable multiple sessions
 */
