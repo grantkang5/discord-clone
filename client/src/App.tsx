@@ -42,12 +42,3 @@ export default App
 * TODO: Create Errorboundary on Main view
 * TODO: Add refresh tokens & disable multiple sessions
 */
-
-/**
- * FINISHED
- * TODO: Populate Home Page with github api
- * TODO: LIMIT auth api requests
-  * FIXME: Fix subscriptions on online/offliner users when joining/accepting invitation to servers
-  * TODO: ADD Leaving server
-  * TODO: Fix virus on voice channels
-  */

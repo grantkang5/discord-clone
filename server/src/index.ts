@@ -53,6 +53,8 @@ createConnection().then(async () => {
   const ws = createServer(app)
   apolloServer.installSubscriptionHandlers(ws)
 
+  app.get('/', (_req, res) => res.send('discord-clone api'));
+
   ws.listen(PORT, () => {
     console.log(`--------------- Listening on PORT ${PORT} -----------------`)
   })
