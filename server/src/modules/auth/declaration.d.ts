@@ -1,7 +1,11 @@
-type UserModel = import("../../entity/User").User;
+type UserModel = import('../../entity/User').User
 
-// declare namespace Express {
-//   export interface Request {
-//     user?: UserModel | any;
-//   }
-// }
+export {} 
+
+declare global {
+  namespace Express {
+    interface User {
+      id: number
+    }
+  }
+}
