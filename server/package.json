@@ -59,10 +59,8 @@
    "scripts": {
       "generate": "gql-gen",
       "generate:watch": "nodemon --exec npm run generate -e graphql",
-      "start:server": "ts-node src/index.ts",
-      "start:server:watch": "nodemon --exec npm run start:server -e ts",
-      "dev": "concurrently \"npm run generate:watch\" \"npm run start:server:watch\"",
-      "start": "npm run generate && npm run start:server",
-      "dev:api": "nodemon --exec ts-node src/index.ts"
+      "dev": "concurrently \"npm run generate:watch\" \"nodemon --exec ts-node src/index.ts\"",
+      "start": "ts-node src/index.ts",
+      "docker": "docker-compose up --build"
    }
 }

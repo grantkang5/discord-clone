@@ -56,7 +56,10 @@ createConnection().then(async () => {
   ws.listen(PORT, () => {
     console.log(`--------------- Listening on PORT ${PORT} -----------------`)
   })
-}).catch(error => console.log(`Typeorm Connection error: `, error))
+}).catch(error => {
+  console.error(`Typeorm Connection error: `, error)
+  console.log('Make sure to run yarn docker or npm run docker to start db instances')
+})
 
 /**
  * TODO - Create error handlers for repositories
