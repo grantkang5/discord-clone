@@ -19,7 +19,6 @@ import "./config/passport";
 const PORT = process.env.PORT || 4000;
 const path = "/graphql";
 // Setup redis
-console.log(process.env.REDIS_URL, process.env.NODE_ENV)
 export const redisClient =
   process.env.NODE_ENV === "production"
     ? new Redis(process.env.REDIS_URL)
