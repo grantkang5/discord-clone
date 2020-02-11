@@ -16,7 +16,7 @@ import redisConf from "./config/redisConf";
 import rateLimit from "express-rate-limit";
 import "./config/passport";
 
-const PORT = 5000;
+const PORT = process.env.PORT || 4000;
 const path = "/graphql";
 // Setup redis
 export const redisClient =

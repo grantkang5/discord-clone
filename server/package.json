@@ -45,7 +45,7 @@
       "graphql-redis-subscriptions": "2.1.0",
       "hashids": "1.2.2",
       "helmet": "^3.15.1",
-      "ioredis": "4.6.2",
+      "ioredis": "^4.14.1",
       "jsonwebtoken": "8.5.0",
       "lodash": "^4.17.11",
       "passport": "^0.4.0",
@@ -55,7 +55,7 @@
       "pg-connection-string": "^2.1.0",
       "reflect-metadata": "^0.1.10",
       "shortid": "2.2.14",
-      "typeorm": "0.2.16"
+      "typeorm": "^0.2.19"
    },
    "scripts": {
       "generate": "gql-gen",
