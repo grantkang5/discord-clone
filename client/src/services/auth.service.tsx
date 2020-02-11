@@ -19,7 +19,7 @@ export const logIn = ({ email, password }) => axios.post(`${process.env.REACT_AP
   .then(({ data }) => storeAuthHeader(data.token))
 export const signUp = ({ email, password }) => axios.post(`${process.env.REACT_APP_SERVER_URL}/auth/signup`, { email, password })
   .then(({ data }) => storeAuthHeader(data.token))
-export const logOut = () => axios.post('/api/auth/logout')
+export const logOut = () => axios.post('/auth/logout')
 
 export const requireAuth = (Component: React.ComponentType) => {
   return props => {
