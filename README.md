@@ -3,7 +3,7 @@
 
 
 ![](discord-example.gif)
-*Demo*: [discordapp-clone.com](https://discord-clone.netlify.com).
+*Demo*: [discord-clone.netlify.com](https://discord-clone.netlify.com).
 
   Open-source full-stack app clone of discord made with React 16.8(Hooks and Suspense), Typescript, GraphQL-Subscriptions, TypeORM and PostgresQL.
 ___
