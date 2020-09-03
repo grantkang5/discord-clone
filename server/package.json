@@ -23,7 +23,7 @@
       "@types/passport-local": "^1.0.33",
       "@types/shortid": "^0.0.29",
       "concurrently": "^4.1.0",
-      "graphql-code-generator": "^0.16.0",
+      "graphql-code-generator": "^0.18.2",
       "graphql-codegen-typescript-common": "^0.16.0",
       "graphql-codegen-typescript-resolvers": "^0.16.0",
       "graphql-tools": "^4.0.4",
