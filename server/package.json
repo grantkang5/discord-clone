@@ -55,7 +55,7 @@
       "pg-connection-string": "^2.1.0",
       "reflect-metadata": "^0.1.10",
       "shortid": "2.2.14",
-      "typeorm": "^0.2.19"
+      "typeorm": "^0.2.25"
    },
    "scripts": {
       "generate": "gql-gen",
