@@ -38,7 +38,7 @@
     "formik": "^1.5.0",
     "graphql": "^14.1.1",
     "hashids": "1.2.2",
-    "moment": "2.24.0",
+    "moment": "2.29.2",
     "path-to-regexp": "3.0.0",
     "react": "^16.8.5",
     "react-apollo": "^2.4.1",
